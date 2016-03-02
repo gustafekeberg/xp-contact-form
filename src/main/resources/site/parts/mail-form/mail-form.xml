@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<part>
+	<display-name>Mail form</display-name>
+	<config>
+		<field-set name="mailForm">
+			<label>Config</label>
+			<items>
+				<input type="TextLine" name="title">
+					<label>Header</label>
+					<occurrences minimum="0" maximum="1"/>
+					<config/>
+				</input>
+				<input type="TextLine" name="id">
+					<label>Mail form Unique-ID</label>
+					<occurrences minimum="1" maximum="1"/>
+					<config/>
+				</input>
+				<item-set name="autoReply">
+					<label>Standard receiver for mail-form</label>
+					<items>
+						<input type="HtmlArea" name="message">
+							<label>Auto reply message</label>
+							<occurrences minimum="0" maximum="1"/>
+							<config/>
+						</input>
+						<input type="TextLine" name="copyMessage">
+							<label>Text: Below is a copy of your message...</label>
+							<occurrences minimum="0" maximum="1"/>
+							<config/>
+						</input>
+						<input type="CheckBox" name="sendCopy">
+							<label>Send copy of message to sender</label>
+							<occurrences minimum="0" maximum="1"/>
+							<config/>
+						</input>
+					</items>
+					<occurrences minimum="0" maximum="1"/>
+					<config/>
+				</item-set>
+				<item-set name="mailFormStandardReceiver">
+					<label>Standard receiver for mail-form</label>
+					<items>
+						<input type="TextLine" name="name">
+							<label>From name</label>
+							<occurrences minimum="1" maximum="1"/>
+							<config/>
+						</input>
+						<input type="TextLine" name="subject">
+							<label>Subject line</label>
+							<occurrences minimum="0" maximum="1"/>
+							<config/>
+						</input>
+						<input type="TextLine" name="from">
+							<label>Reply address/no-reply address</label>
+							<occurrences minimum="1" maximum="1"/>
+							<config/>
+						</input>
+						<input type="TextLine" name="email">
+							<label>Send message to this E-mail address</label>
+							<occurrences minimum="1" maximum="1"/>
+							<config/>
+						</input>
+					</items>
+					<occurrences minimum="1" maximum="1"/>
+					<config/>
+				</item-set>
+			</items>
+		</field-set>
+		<field-set name="labels">
+			<label>Labels and legends</label>
+			<items>
+				<input type="TextLine" name="legendPersonal">
+					<label>Legend: personal info</label>
+					<occurrences minimum="0" maximum="1"/>
+					<config/>
+				</input>
+				<input type="TextLine" name="labelName">
+					<label>Label: Name</label>
+					<occurrences minimum="0" maximum="1"/>
+					<config/>
+				</input>
+				<input type="TextLine" name="placeholderName">
+					<label>Placeholder: Name</label>
+					<occurrences minimum="0" maximum="1"/>
+					<config/>
+				</input>
+				<input type="TextLine" name="labelMail">
+					<label>Label: E-mail</label>
+					<occurrences minimum="0" maximum="1"/>
+					<config/>
+				</input>
+				<input type="TextLine" name="placeholderMail">
+					<label>Placeholder: E-mail</label>
+					<occurrences minimum="0" maximum="1"/>
+					<config/>
+				</input>
+				<input type="TextLine" name="legendMessage">
+					<label>Legend: message</label>
+					<occurrences minimum="0" maximum="1"/>
+					<config/>
+				</input>
+				<input type="TextLine" name="labelRecipient">
+					<label>Label: Recipient</label>
+					<occurrences minimum="0" maximum="1"/>
+					<config/>
+				</input>
+				<input type="TextLine" name="selectRecipientText">
+					<label>Select message recipient message</label>
+					<occurrences minimum="0" maximum="1"/>
+					<config/>
+				</input>
+				<input type="TextLine" name="labelMessage">
+					<label>Label: Message</label>
+					<occurrences minimum="0" maximum="1"/>
+					<config/>
+				</input>
+				<input type="TextLine" name="placeholderMessage">
+					<label>Placeholder: Message</label>
+					<occurrences minimum="0" maximum="1"/>
+					<config/>
+				</input>
+			</items>
+		</field-set>
+		<field-set name="configureRecipients">
+			<label>Mail form recipients</label>
+			<items>
+				<input type="CheckBox" name="hiddenList">
+					<label>Hide list and use default</label>
+					<occurrences minimum="0" maximum="1"/>
+					<config/>
+				</input>
+				<item-set name="recipients">
+					<label>Recipient</label>
+					<items>
+						<input type="TextLine" name="name">
+							<label>From name</label>
+							<occurrences minimum="1" maximum="1"/>
+							<config/>
+						</input>
+						<input type="TextLine" name="subject">
+							<label>Personal subject line</label>
+							<occurrences minimum="0" maximum="1"/>
+							<config/>
+						</input>
+						<input type="TextLine" name="from">
+							<label>Reply address/no-reply address</label>
+							<occurrences minimum="1" maximum="1"/>
+							<config/>
+						</input>
+						<input type="TextLine" name="email">
+							<label>Send message to this E-mail address</label>
+							<occurrences minimum="1" maximum="1"/>
+							<config/>
+						</input>
+						<input type="CheckBox" name="selected">
+							<label>Make this the pre-selected option</label>
+							<occurrences minimum="0" maximum="1"/>
+							<config/>
+						</input>
+						<input type="CheckBox" name="default">
+							<label>Make this default, if selection is empty</label>
+							<occurrences minimum="0" maximum="1"/>
+							<config/>
+						</input>
+					</items>
+					<occurrences minimum="1" maximum="0"/>
+					<config/>
+				</item-set>
+			</items>
+		</field-set>
+	</config>
+</part>

@@ -1,0 +1,30 @@
+{
+	"folders":
+	[
+	{
+		"folder_exclude_patterns":
+		[
+		".sass-cache",
+		".gradle",
+		"build",
+		"gradle",
+		// "*",
+		],
+		"path": ".",
+		"name": "Enonic XP - Mail app"
+	},
+
+	{
+		"folder_exclude_patterns":
+		[
+		".sass-cache",
+		".gradle",
+		"build",
+		"gradle",
+		// "*",
+		],
+		"path": "../../old/prettyelectric",
+		"name": "PrettyElectric - OLD"
+	},
+	]
+}

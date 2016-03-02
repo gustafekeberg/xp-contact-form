@@ -1,0 +1,231 @@
+<div data-th-id="${config.id}" class="mail-form">
+	<section data-th-id="${config.id + '_form'}">
+		<header>
+			<h2 data-th-text="${config.title}? ${config.title} : 'Send us a message'" />
+		</header>
+		<section class="status-message hidden alert">
+			<header class="sr-only">
+				<h3>Mail form status</h3>
+			</header>
+			<p class="message"></p>
+		</section>
+		<form class="form-vertical" method="post" data-th-action="${form.action}">
+			<div class="row">
+				<fieldset class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+					<legend class="sr-only" data-th-text="${config.legendPersonal}? ${config.legendPersonal} : 'Personal information'" />
+					<div class="form-group">
+						<label class="sr-only control-label" data-th-for="${config.id} + '-name'" data-th-text="${config.labelName}? ${config.labelName} : 'Name:'" />
+						<input data-th-id="${config.id} + '-name'" class="form-control" data-th-placeholder="${config.placholderName}? ${config.placeholderName} : 'Your name'" type="text" name="name" required="" />
+					</div>
+					<div class="form-group">
+						<label class="sr-only control-label"  data-th-for="${config.id} + '-email'" data-th-text="${config.labelMail}? ${config.labelMail} : 'E-mail:'" />
+						<input data-th-id="${config.id} + '-email'" class="form-control" data-th-placeholder="${config.placeholderMail}? ${config.placeholderMail} : 'Your email address'" type="email" name="email" required="" />
+					</div>
+					<legend class="sr-only" data-th-text="${config.legendMessage}? ${config.legendMessage} : 'Message and recipient'" />
+					<div class="form-group" data-th-remove="${config.hiddenList}? all">
+						<label class="sr-only control-label" data-th-for="${config.id} + '-recipients'" data-th-text="${config.labelRecipient}? ${config.labelRecipient} : 'Recipient:'" />
+						<select data-th-id="${config.id} + '-recipients'" name="recipients" class="form-control">
+							<option disabled="" data-th-selected="${selectedRecipient}? 'false' : 'true'" hidden="" data-th-text="${config.selectRecipientText}? ${config.selectRecipientText} : 'Choose recipient'" value="-1" />
+							<div data-th-tag="remove" data-th-each="recipient : ${config.recipients}">
+								<option data-th-value="${recipientStat.index}" data-th-text="${recipient.name}" data-th-selected="${recipient.selected}">General</option>
+							</div>
+						</select>
+					</div>
+				</fieldset>
+				<fieldset class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+					<div class="form-group">
+						<label class="sr-only control-label"  data-th-for="${config.id} + '-message'" data-th-text="${config.labelMessage}? ${config.labelMessage} : 'Message:'"></label>
+						<textarea data-th-id="${config.id} + '-message'" name="message" placeholder="Enter your message here" class="form-control" rows="10" maxlength="3000" required="" ></textarea>
+						<output data-th-id="${config.id} + '-message-helpBlock'" class="hidden help-block"></output>
+					</div>
+				</fieldset>
+			</div>
+			<div class="text-center">
+				<button type="submit" class="btn btn-default btn-success">Submit</button>
+			</div>
+		</form>
+	</section>
+
+	<script data-th-inline="javascript">
+		/*<![CDATA[*/
+		var formID          = '#' + /*[[${config.id}]]*/;
+		var formContainer   = document.querySelector(formID);
+		var form            = formContainer.querySelector('form');
+		var selectedDefault = /*[[${selectedRecipient}]]*/;
+
+		init();
+
+		function init() {
+
+			addInputListeners(form);
+			restoreFormContent();
+		}
+
+		function addInputListeners (containerElement) {
+
+			var listOfFormInputs = containerElement.querySelectorAll("input, select, textarea");
+			for (var i = 0; i < listOfFormInputs.length; i++) {
+				addInputToField(listOfFormInputs[i]);
+			}
+			function addInputToField (inputField) {
+
+					// console.log('Adding input listener to all input of form: ' + formID);
+					inputField.addEventListener('input', function(event) {
+						localStorage.setItem(inputField.id, inputField.value);
+					}, false);
+				}
+			}
+
+			function forceSaveFormContent(selector) {
+				var listOfFormInputs = selector.querySelectorAll("input, select, textarea");
+				for (var i = 0; i < listOfFormInputs.length; i++) {
+					var item = listOfFormInputs[i];
+					localStorage.setItem(item.id, item.value);
+				}
+			}
+			function restoreFormContent() {
+
+				// console.log('Restoring from localStorage to form: ' + formID);
+				var listOfFormInputs = form.querySelectorAll("input, textarea, select");
+
+				for ( var i = 0; i < listOfFormInputs.length; i++ )
+				{
+					var fieldToRestore = listOfFormInputs[i];
+					var id = fieldToRestore.id;
+					var savedValue = localStorage.getItem(id);
+					if ( savedValue !== undefined && savedValue !== null) {
+						fieldToRestore.value = savedValue;	
+					}
+				}
+
+			}
+
+			function clearForm (form) {
+
+				var inputFields = form.querySelectorAll("input, textarea");
+				var inputFieldSelect = form.querySelector("select");
+				for ( var i = 0; i < inputFields.length; i++ ) {
+					inputFields[i].value = '';
+				}
+				if (selectedDefault == null) selectedDefault = -1;
+				inputFieldSelect.value = selectedDefault;
+				forceSaveFormContent(form);
+			}
+
+			// jQuery ajax...
+
+			var url = /*[[${form.action}]]*/;
+
+			jQueryFormSelector = formID + '_form' + ' form';
+
+			$( jQueryFormSelector ).on( "submit", function( event ) {
+
+				event.preventDefault();
+				
+				var ajaxpostID = formID + '_ajaxpost';
+
+				$input = $('<input type="text" name="ajaxpost" id="' + ajaxpostID + '" class="hidden"/>').val("true");
+				$( jQueryFormSelector).append($input);
+
+				var formData = $( jQueryFormSelector ).serialize();
+				$input.remove();
+
+				$.post( url, formData, function ( data ) {
+
+						var statusMessageGlyph = '';
+						var statusMessage = data.statusMessage;
+						
+						// Update status message and clear form if 'sendStatus == true'
+						if ( data.sendStatus == true )
+						{
+							clearForm(form);
+							statusMessageGlyph = '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>';
+						}
+						else
+						{
+							statusMessageGlyph = '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>';
+						}
+
+						var statusMessageContainer = formContainer.querySelector('.status-message');
+						var statusMessageSpan = statusMessageContainer.querySelector('.message');
+						statusMessageSpan.innerHTML = statusMessageGlyph + '<span class="sr-only">' + statusMessage.srText + '</span> ' + statusMessage.text;
+						
+						// Add class with status code (bootstrap alert-succes/alert-danger)
+						statusMessageContainer.classList.add('alert-' + statusMessage.cssClass);
+						statusMessageContainer.classList.remove('hidden');
+
+					}, 'json')
+			});	
+
+
+
+			function replaceValidationUI( form ) {
+    // Suppress the default bubbles
+    form.addEventListener( "invalid", function( event ) {
+    	event.preventDefault();
+    }, true );
+
+    // Support Safari, iOS Safari, and the Android browser—each of which do not prevent
+    // form submissions by default
+    form.addEventListener( "submit", function( event ) {
+    	if ( !this.checkValidity() ) {
+    		event.preventDefault();
+    	}
+    });
+
+		// Set, and update on input, text-area output-message/help-message
+
+		var textArea, textAreaOutput, textAreaHelpMessage;
+		textArea = form.querySelector("textarea");
+		
+		// textAreaOutput = textArea.parentNode.querySelector("output");
+		// function textAreaHelpMessage ()
+		// {
+
+		// 	return 'Maximum allowed text length is ' + textArea.maxLength + ' characters. (' + textArea.value.length + '/' + textArea.maxLength + ')';
+		// }
+		// textAreaOutput.value = textAreaHelpMessage();
+		// textArea.addEventListener( "input", function(){
+		// 	textAreaOutput.value = textAreaHelpMessage();
+		// });
+
+var submitButton = form.querySelector( "button:not([type=button]), input[type=submit]" );
+submitButton.addEventListener( "click", function( event ) {
+	var invalidFields = form.querySelectorAll( ":invalid:not(fieldset)" ),
+	errorMessages = form.querySelectorAll( ".help-block:not(output)" ),
+	errorContainers = form.querySelectorAll( ".has-error" ),
+	parent, el;
+
+        // Remove any existing messages
+        for ( i = 0; i < errorMessages.length; i++ ) {
+        	errorMessages[ i ].parentNode.removeChild( errorMessages[ i ] );
+        }
+
+		// Remove .has-error from containers
+		for ( i = 0; i < errorContainers.length; i++ ) {
+			var container = errorContainers[ i ];
+			container.classList.remove('has-error');
+		}
+
+		// Add message and class to invalid fields + containers
+		for ( i = 0; i < invalidFields.length; i++ ) {
+			el = invalidFields[ i ];
+			parent = el.parentNode;
+			parent.classList.add('has-error');
+			parent.insertAdjacentHTML( "beforeend", "<p class='text-danger help-block'>" + 
+				invalidFields[ i ].validationMessage +
+				"</p>" );
+		}
+		
+        // If there are errors, give focus to the first invalid field
+        if ( invalidFields.length > 0 ) {
+        	invalidFields[ 0 ].focus();
+        }
+    });
+}
+
+replaceValidationUI( form );
+
+/*]]>*/
+</script>
+</div>
