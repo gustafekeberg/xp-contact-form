@@ -1,167 +1,85 @@
 var portal     = require('/lib/xp/portal');
 var thymeleaf  = require('/lib/xp/thymeleaf');
-var util       = require('/lib/enonic/util/util');
-var data       = require('/lib/enonic/util/data');
 var mail       = require('/lib/xp/mail');
 
-function findRecipient (listOfRecipients, which) {
-	// which = 'default' or 'selected'
-	var recipientID;
-	if (!listOfRecipients) return;
+// var data       = require('/lib/enonic/util/data');
+function log( string ) {
+	var util = require('/lib/enonic/util/util');
+	util.log(string);
+}
 
-	// Search for default recipient, choose first occurrence
-	for ( var i = 0; i < listOfRecipients.length; i++ )
-	{
-		// If a default recipient exists set variable true
-		if ( listOfRecipients[i][which] === true )
-		{
-			recipientID = i;
-			break;
+function replacePlaceholder(string, placeholders){
+
+	var rePart = "";
+	var processedString = "";
+	var key;
+	
+	// Pick placeholder keys to build rePart
+	for (key in placeholders) {
+		if (rePart === "")
+			rePart += key;
+		else
+			rePart += '|' + key;
 		}
+	
+	// Split string in placeholders keys or by character,
+	// then replace placeholders and rebuild string.
+	var re = new RegExp("\\{{2}(" + rePart + ")\\}{2}|([\\n\\r\\t\\0\\s\\S]{1,}?)", "gmi");
+	var match;
+	var matches = [];
+	
+	while ((match = re.exec(string)) !== null) {
+		   matches.push(match);
+		   }
+	for (var i = 0, len = matches.length; i < len; i ++){
+		if (matches[i][1] !== undefined)
+			{
+			key = matches[i][1];
+			processedString += placeholders[key];
+			}
+		else if (matches[i][0])
+			processedString += matches[i][0];
 	}
-	return recipientID;
+	return processedString;
 }
 
 exports.get = function(request) {
 
-	var component         = portal.getComponent();
-	var config            = component.config;
-	var recipients        = config.recipients;
-	var selectedRecipient = findRecipient(recipients, 'selected');
-	var componentUrl      = portal.componentUrl({'component': component.path });
+	var component   = portal.getComponent();
+	var config = component.config;
+	var placeholders = {title: config.title};
+	var processedString = "", documentation, view, body;
 
-	var content   = portal.getContent();
-	// var url = portal.componentUrl({
-	// 	component: 'main/0'
-	// });
-
+	if (config.textArea !== undefined)
+		processedString = replacePlaceholder(config.textArea, placeholders);
 	var form = {
-		action: componentUrl,
-		method: 'post'
+		action: 'component - url',
 	};
 
+	if (config.showDoc === true && request.mode == 'edit') {
+		view = resolve("mail-form-doc.html");
+		documentation = thymeleaf.render(view);
+	}
 	var model = {
 		form: form,
 		config: config,
-		selectedRecipient: selectedRecipient
+		documentation: documentation
 	};
-
-	var view = resolve('mail-form.html');
-	var body = thymeleaf.render(view, model);
-
-	// Page contributions
-	var jQuery         = '<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>';
-	var jQueryMigrate  = '<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>';
-	
-	var assetsUrl      = portal.assetUrl({path: '/'});
-	var stylesheet = '<link href="' + assetsUrl + '/stylesheets/mail-form.css" rel="stylesheet" />';
+	view = resolve("mail-form.html");
+	body = thymeleaf.render(view, model);
 
 	return {
 		body: body,
 		cotentType: 'text/html',
-		"pageContributions": {
-			"headEnd": [
-			jQuery, jQueryMigrate, stylesheet
-			]
-		}
 	};
 };
 
 exports.post = function(request) {
 
-	util.log(request);
+	var body = "<h1>Mail form - post</h1>";
 
-
-	var component = portal.getComponent();
-	var config    = component.config;
-
-	var recipients = config.recipients;
-	var defaultRecipient = findRecipient(recipients, 'default');
-
-	var p = request.params;
-	var mailRecipient, copyMessage, statusMessage;
-	
-	// Check for selected recipient,
-	// if it's undefined use default recipient,
-	// if no default recipient is choosen use mail-form default value	
-	if (!p.recipients)
-		mailRecipient = config.recipients[defaultRecipient];
-	else
-		mailRecipient = config.recipients[p.recipients];
-
-	// Send message to selected receiver
-	var sendFrom = mailRecipient.name + '<' + mailRecipient.from + '>';
-
-	var sendResultHtml = mail.send({
-		from: sendFrom,
-		replyTo: p.email,
-		to: mailRecipient.mail,
-		subject: mailRecipient.subject,
-		body: p.message,
-		contentType: 'text/html; charset="UTF-8"'
-	});
-
-	// Send copy to sender / auto-reply
-	var autoReply = config.autoReply;
-	if (autoReply.sendCopy)
-	{
-		if (!autoReply.message) autoReply.message = 'Thank you for sending a message to us, we will reply as soon as possible.';
-		if (!autoReply.copyMessage) autoReply.copyMessage = 'Below is a copy of your message';
-
-		copyMessage = autoReply.message + '<br/><br/>';
-		var copyMessageDivider = autoReply.copyMessage + '<br/>---<br/><br/>';
-		copyMessage += copyMessageDivider + '<em>' + p.message + '</em>';
-		
-		var sendResultHtmlCopy = mail.send({
-			from: sendFrom,
-			to: p.email,
-			subject: mailRecipient.subject,
-			body: copyMessage,
-			contentType: 'text/html; charset="UTF-8"'		
-		});
-	}
-
-	var sendStatus = sendResultHtml;
-
-	if (sendStatus === true) 
-	{
-		statusMessage = {
-			text: 'Your message was sent.',
-			srText: 'Success!',
-			cssClass: 'success',
-		};
-	}
-	else 
-	{
-		statusMessage = {
-			text: 'Your message could not be sent.',
-			srText: 'Error!',
-			cssClass: 'danger',
-		};
-	}
-
-	// Return depends on mode (ajax/html)
-
-	if (p.ajaxpost) {
-
-		body = {
-			sendStatus: sendStatus,
-			statusMessage: statusMessage
-		};
-
-		return {
-			body: body,
-			contentType: 'application/json'
-		};
-	}
-
-	else {
-
-	var body = statusMessage;
-
-		return {
-			body: body,
-			contentType: 'text/html'
-		};
-	}
+	return {
+		body: body,
+		contentType: 'text/html'
+	};
 };
