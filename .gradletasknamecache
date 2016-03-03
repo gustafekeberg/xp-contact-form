@@ -1,5 +1,5 @@
 deploy
-unpackWebJars
+watch
 assemble
 build
 buildDependents
