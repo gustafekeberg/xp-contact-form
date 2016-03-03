@@ -1,8 +1,46 @@
 <section class="well">
-	<header>
-		<p>Only visible in edit-mode!</p>
-		<h1>Mail-form documentation</h1>
-	</header>
-	<h2>How to use it?</h2>
-	<p>Enter some text, then it will work.</p>
+	<p>The documentation is only visible in edit-mode!</p>
+
+<div data-th-switch="${language}">
+<pre data-th-case="sv">
+Svenska
+</pre>
+<pre data-th-case="*">
+
+# Mail form documentation
+
+## Usage
+
+## Input fields
+
+### Default fields
+
+There is a few pre-defined fields.
+
+- `_subject`
+- `_message`
+- `_sender`
+
+### Custom fields
+
+## Response templates
+
+It is easy to format the response message. You just fill in your template for the response message in `Response templates`. You need to create one for the receiver of the form, and one for the sender of the form. The second template is only used if you've checked the option `Send a note to the sender`.
+
+### Pre-defined fields
+
+- `_subject`: subject selected from list.
+- `_message`: entered message.
+- `_sender`: senders email address.
+
+### Subject
+
+- subject can also use placeholders like `{{_subject}}` or with a custom field `{{my_field}}`. Example: `My site - contact form: {{_subject}}`
+
+### Format
+
+Templates are entered as plain text. Wherever you want to place the input from one of your custom fields just enter the name of the input field between two curly braces `{{name}}`. The curly braces will be replaced with the input of the field with that name.
+</pre>
+</div>
+
 </section>
