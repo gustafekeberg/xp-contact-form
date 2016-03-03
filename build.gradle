@@ -35,7 +35,7 @@ dependencies {
     //include "com.enonic.xp:lib-context:${xpVersion}"
     //include "com.enonic.xp:lib-http-client:${xpVersion}"
     //include "com.enonic.xp:lib-io:${xpVersion}"
-    //include "com.enonic.xp:lib-mail:${xpVersion}"
+    include "com.enonic.xp:lib-mail:${xpVersion}"
     //include "com.enonic.xp:lib-websocket:${xpVersion}"
 }
 
@@ -49,8 +49,8 @@ repositories {
 
 dependencies {
     include 'com.enonic.lib:util:1.0.0'
-    include 'com.enonic.xp:lib-mail:6.1.0'
-    include 'com.enonic.xp:lib-auth:6.2.0'
-    include 'com.enonic.lib:menu:1.1.1'
+    // include 'com.enonic.xp:lib-mail:6.1.0'
+    // include 'com.enonic.xp:lib-auth:6.2.0'
+    // include 'com.enonic.lib:menu:1.1.1'
 }
 
