@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-  <config/>
+  <config>
+  	<field-set name="config">
+  		<label>Mail app config</label>
+  		<items>
+  			<input type="TextLine" name="sendFrom">
+  				<label>Send from (no_reply-address)</label>
+  				<occurrences minimum="1" maximum="1" />
+  				<config />
+  			</input>
+  			<input type="TextLine" name="defaultSubject">
+  				<label>Default subject (if empty in part-config)</label>
+  				<occurrences minimum="1" maximum="1" />
+  				<config />
+  			</input>
+  		</items>
+  	</field-set>
+  </config>
 </site>
