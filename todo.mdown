@@ -1,3 +1,13 @@
 - [ ] Different modes
     - [ ] easy
     - [ ] advanced
+- [ ] Custom fields
+    - [ ] text
+    - [ ] mail
+    - [ ] number?
+    - [ ] textarea
+- [ ] Custom field options
+    - [ ] Required
+    - [ ] Validation?
+    - [ ] Regexp?
+    - [ ] ...?
