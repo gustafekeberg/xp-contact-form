@@ -1,8 +1,8 @@
 var portal     = require('/lib/xp/portal');
 var thymeleaf  = require('/lib/xp/thymeleaf');
 var mail       = require('/lib/xp/mail');
+var utilData       = require('/lib/enonic/util/data');
 
-// var data       = require('/lib/enonic/util/data');
 function log( string ) {
 	var util = require('/lib/enonic/util/util');
 	util.log(string);
@@ -46,19 +46,42 @@ function replacePlaceholder(string, placeholders){
 exports.get = function(request) {
 
 	var component   = portal.getComponent();
+	var content = portal.getContent();
 	var config = component.config;
 	var placeholders = {title: config.title};
 	var processedString = "", documentation, view, body;
+	var formAction = portal.componentUrl({component: component.path});
 
-	if (config.textArea !== undefined)
-		processedString = replacePlaceholder(config.textArea, placeholders);
+	// if (config.textArea !== undefined)
+	// 	processedString = replacePlaceholder(config.textArea, placeholders);
+
+	var ID = config.formId || "";
+
 	var form = {
-		action: 'component - url',
+		ID: ID,
+		action: formAction,
+		customFields: utilData.forceArray(config.customField)
 	};
+	// log(form);
 
 	if (config.showDoc === true && request.mode == 'edit') {
+
+		// Set language for documentation depending on selected language for content.
+		var language;
+		switch (content.language) {
+			case 'sv':
+			case 'sv-SE':
+			case 'no':
+			case 'nn-NO':
+			case 'no-NO':
+				language = 'en';
+				break;
+			default:
+				language = 'en';
+		}
+		model = {language: language};
 		view = resolve("mail-form-doc.html");
-		documentation = thymeleaf.render(view);
+		documentation = thymeleaf.render(view, model);
 	}
 	var model = {
 		form: form,
