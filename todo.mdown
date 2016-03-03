@@ -1,0 +1,3 @@
+- [ ] Different modes
+    - [ ] easy
+    - [ ] advanced
