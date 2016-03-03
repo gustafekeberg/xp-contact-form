@@ -1,7 +1,13 @@
-<section>
+<section data-th-id="${form.ID}">
 	<header>
-		<h1 data-th-text="${config.title}"/>
+		<h1 data-th-text="${config.title}?: 'Contact form'"></h1>
 	</header>
-	<form data-th-action="${form.action}"></form>
+	<form data-th-action="${form.action}">
+		<div data-th-each="field : ${form.customFields}" data-th-remove="tag">
+			<label data-th-if="${field.label}" data-th-text="${field.label}" data-th-attr="for=${form.ID + '_' + field.name}" />
+			<input data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}" />
+		</div>
+		<!-- <button data-th-text="${form.button.submit}" /> -->
+	</form>
 	<div data-th-if="${documentation}" data-th-utext="${documentation}" data-th-remove="tag" />
 </section>
