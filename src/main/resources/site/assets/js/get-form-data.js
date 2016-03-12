@@ -2,7 +2,6 @@
 // All different types of input fields need to have unique names
 // or else the script won't work.
 
-var logPrefix = "Form app: ";
 function logJSON(json){
 	var string = JSON.stringify(json);
 	log();
@@ -10,17 +9,20 @@ function logJSON(json){
 }
 
 function log(str) {
+	var logPrefix = "Simple contact form app:";
 	if (str)
-		console.log( logPrefix + str );
+		console.log( logPrefix + ' ' + str );
+	else
+		console.log( logPrefix );
 }
 
-function getFormData(element){
-	var formData = element.querySelectorAll("*");
+function getFormData(container){
+	var formData = container.querySelectorAll("*");
 	var data = {};
 
 	for ( var i = 0, len = formData.length; i < len; i ++ ){
-		var item = formData[i];
-		var name = item.name;
+		var item  = formData[i];
+		var name  = item.name;
 		var value = item.value;
 		if (name !== "" && name !== undefined)
 			data[name] = value;
@@ -34,21 +36,20 @@ function addListenersToForm(formContainer){
 	// Submit
 	form.addEventListener('submit', function(event){
 		event.preventDefault();
-		var actionUrl = this.action;
-		var formData = getFormData(this);
-		ajaxRequest(formData, actionUrl);
-
-		storageFunctions.clear(formContainer);
+		if (this.checkValidity()) {
+			var actionUrl = this.action;
+			ajaxRequest(formContainer, actionUrl);
+		}
 	});
 	
-	// Clear
-	clearButton = form.querySelector('button[type="clear"]');
+	// reset
+	clearButton = form.querySelector('button[type="reset"]');
 	if ( clearButton )
 	{
 		clearButton.addEventListener('click', function(event){
 			event.preventDefault();
 			if (confirm("Are you sure?")) {
-				storageFunctions.clear(formContainer);
+				storageFunctions.reset(formContainer);
 			}
 		});
 	}
@@ -84,25 +85,23 @@ var storageFunctions = {
 		var storedFormData = sessionStorage.setItem(element.id, jsonString);
 		log("Writing form data to sessionStorage");
 	},
-	clear: function(element, json){
-		// log("Form not cleared, function is disabled!");
-		var elements = element.querySelectorAll('*[name]');
-		for (var i = 0, len = elements.length; i < len ; i ++) {
-			elements[i].value = '';
-		}
+	reset: function(element, json){
+		var form = element.querySelector('form');
+		form.reset();
 		sessionStorage.removeItem(element.id);
 		log("Form cleared");
 	},
 };
 
-function ajaxRequest (data, url) {
+function ajaxRequest (container, url) {
 	log("Preparing XMLHttpRequest");
-	var xhttp = new XMLHttpRequest();
-	var dataObj = {
-		data: data,
+	var xhttp    = new XMLHttpRequest();
+	var formData = getFormData(container);
+	var dataObj  = {
+		data: formData,
 		ajax: true
 	};
-		
+
 	var dataObjString = JSON.stringify(dataObj);
 
 	xhttp.open("POST", url, true);
@@ -111,9 +110,10 @@ function ajaxRequest (data, url) {
 		if (xhttp.readyState == 4 && xhttp.status == 200) {
 			var response = xhttp.responseText;
 			log("XMLHttpRequest response: " + response);
+			storageFunctions.reset(container);
 		}
 	};
-		xhttp.send(dataObjString);
+	xhttp.send(dataObjString);
 }
 
 function contactFormInit(selector, configObj) {

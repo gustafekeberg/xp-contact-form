@@ -101,8 +101,8 @@ function handleGet(request) {
 			default:
 			language = 'en';
 		}
-		model = {language: language};
-		view = resolve("mail-form-doc.html");
+		model = { language: language };
+		view = resolve("mail-form-documentation.html");
 		documentation = thymeleaf.render(view, model);
 	}
 	var model = {
@@ -112,12 +112,13 @@ function handleGet(request) {
 		message: config.message,
 		sender: config.sender,
 	};
-	view = resolve("mail-form.html");
-	body = thymeleaf.render(view, model);
-	var style = '<link rel="stylesheet" href="' + assetUrl({path: '/css/style.css'}) + '">';
-	var getFormData = '<script src="' + assetUrl({path: '/js/get-form-data.js'}) +'"></script>';
-	var initGetFormData = '<script>window.addEventListener("load", contactFormInit("#' + form.ID + '"));</script>';
-
+	view                = resolve("mail-form.html");
+	body                = thymeleaf.render(view, model);
+	var style           = '<link rel="stylesheet" href="' + assetUrl({path: '/css/style.css'}) + '">';
+	var getFormDataJS   = '<script src="' + assetUrl({path: '/js/get-form-data.js'}) +'"></script>';
+	var getFormDataInit = '<script>window.addEventListener("load", contactFormInit("#' + form.ID + '"));</script>';
+	var webshimJS       = '<script src="' + assetUrl({path: '/js-webshim/minified/polyfiller.js'}) + '"></script>';
+	var webshimInit     = "<script>webshim.polyfill('forms');</script>";
 	return {
 		body: body,
 		cotentType: 'text/html',
@@ -126,8 +127,10 @@ function handleGet(request) {
 			style
 			],
 			"bodyEnd": [
-			getFormData,
-			initGetFormData
+			getFormDataJS,
+			getFormDataInit,
+			webshimJS,
+			webshimInit
 			]
 		}
 	};
