@@ -14,13 +14,15 @@
     - [ ] mail
     - [ ] number?
     - [ ] textarea
+    - [ ] ...?
 - [ ] Custom field options
     - [ ] Required input fields
         - [ ] Note on required fields
         - [x] Add option for required fields
-    - [ ] Validation?
+        - [x] Validation - polyfill?
     - [ ] Regexp?
     - [ ] ...?
 - [ ] handle different requests
     - [ ] AJAX
     - [ ] Form action
+- [ ] Cleanup code: element selectors...
