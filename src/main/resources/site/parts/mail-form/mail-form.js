@@ -8,6 +8,24 @@ function log( string ) {
 	util.log(string);
 }
 
+exports.get = function(request) {
+	return handleGet(request);
+};
+
+exports.post = function(request) {
+
+	var body = JSON.parse(request.body);
+	log(body);
+
+	if (body.ajax === true)
+	{
+		return handleAjax(request);
+	}
+
+	else
+		return handlePost(request);
+};
+
 function replacePlaceholder(string, placeholders){
 
 	var rePart = "";
@@ -20,7 +38,7 @@ function replacePlaceholder(string, placeholders){
 			rePart += key;
 		else
 			rePart += '|' + key;
-		}
+	}
 	
 	// Split string in placeholders keys or by character,
 	// then replace placeholders and rebuild string.
@@ -29,21 +47,25 @@ function replacePlaceholder(string, placeholders){
 	var matches = [];
 	
 	while ((match = re.exec(string)) !== null) {
-		   matches.push(match);
-		   }
+		matches.push(match);
+	}
 	for (var i = 0, len = matches.length; i < len; i ++){
 		if (matches[i][1] !== undefined)
-			{
+		{
 			key = matches[i][1];
 			processedString += placeholders[key];
-			}
+		}
 		else if (matches[i][0])
 			processedString += matches[i][0];
 	}
 	return processedString;
 }
 
-exports.get = function(request) {
+function assetUrl(url){
+	return portal.assetUrl(url);
+}
+
+function handleGet(request) {
 
 	var component   = portal.getComponent();
 	var content = portal.getContent();
@@ -74,10 +96,10 @@ exports.get = function(request) {
 			case 'no':
 			case 'nn-NO':
 			case 'no-NO':
-				language = 'en';
-				break;
+			language = 'en';
+			break;
 			default:
-				language = 'en';
+			language = 'en';
 		}
 		model = {language: language};
 		view = resolve("mail-form-doc.html");
@@ -86,23 +108,46 @@ exports.get = function(request) {
 	var model = {
 		form: form,
 		config: config,
-		documentation: documentation
+		documentation: documentation,
+		message: config.message,
+		sender: config.sender,
 	};
 	view = resolve("mail-form.html");
 	body = thymeleaf.render(view, model);
+	var style = '<link rel="stylesheet" href="' + assetUrl({path: '/css/style.css'}) + '">';
+	var getFormData = '<script src="' + assetUrl({path: '/js/get-form-data.js'}) +'"></script>';
+	var initGetFormData = '<script>window.addEventListener("load", contactFormInit("#' + form.ID + '"));</script>';
 
 	return {
 		body: body,
 		cotentType: 'text/html',
+		"pageContributions": {
+			"headEnd": [
+			style
+			],
+			"bodyEnd": [
+			getFormData,
+			initGetFormData
+			]
+		}
 	};
-};
-
-exports.post = function(request) {
-
-	var body = "<h1>Mail form - post</h1>";
+}
+function handlePost(request) {
+	var body = "<h1>Mail form - POST - no AJAX</h1>";
 
 	return {
 		body: body,
 		contentType: 'text/html'
 	};
-};
+}
+
+function handleAjax(request) {
+	var jsonObj = {
+		msg: "Ajax req success"
+	};
+	jsonObj = JSON.parse(request.body);
+	return {
+		body: jsonObj.data,
+		contentType: 'application/json'
+	};
+}

@@ -1,13 +1,31 @@
-<section data-th-id="${form.ID}">
+<section data-th-id="${form.ID}" class="easy-contact-form">
 	<header>
 		<h1 data-th-text="${config.title}?: 'Contact form'"></h1>
 	</header>
 	<form data-th-action="${form.action}">
-		<div data-th-each="field : ${form.customFields}" data-th-remove="tag">
-			<label data-th-if="${field.label}" data-th-text="${field.label}" data-th-attr="for=${form.ID + '_' + field.name}" />
-			<input data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}" />
+		<div class="row">
+			<fieldset class="col-sm-6">
+<!-- 				<div class="form-group">
+					<label data-th-if="${sender.label}" data-th-text="${sender.label}" data-th-attr="for=${form.ID + '_sender'}" />
+					<input class="form-control" data-th-attr="id=${form.ID + '_sender'}, name='_sender', placeholder=${sender.placeholder}" />
+				</div> -->
+				<div data-th-each="field : ${form.customFields}" class="form-group">
+					<label data-th-if="${field.label}" data-th-text="${field.label}" data-th-attr="for=${form.ID + '_' + field.name}" />
+					<input class="form-control" required="" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required'" />
+				</div>
+			</fieldset>
+			<fieldset class="col-sm-6">
+				<label for="${form.ID + '_message'}" data-th-text="${message.label}" data-th-if="${message.label}" />
+				<textarea class="form-control" data-th-attr="id=${form.ID + '_message'}, name='_message', placeholder=${message.placeholder}" />
+			</fieldset>
 		</div>
-		<!-- <button data-th-text="${form.button.submit}" /> -->
+		<div class="row">
+			<fieldset class="col-xs-12">
+				<div class="form-group">
+					<button class="btn btn-success center-block">Skicka</button>
+				</div>
+			</fieldset>
+		</div>
 	</form>
 	<div data-th-if="${documentation}" data-th-utext="${documentation}" data-th-remove="tag" />
 </section>

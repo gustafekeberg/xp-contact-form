@@ -2,8 +2,8 @@
 <part>
 	<display-name>Mail form</display-name>
 	<config>
-		<field-set name="Appearence">
-			<label>Appearence</label>
+		<field-set name="Config">
+			<label>Config</label>
 			<items>
 				<input type="TextLine" name="title">
 					<label>Title</label>
@@ -17,11 +17,6 @@
 						<regexp>^\w*$</regexp>
 					</config>
 				</input>
-			</items>
-		</field-set>
-		<field-set name="Config">
-			<label>Config</label>
-			<items>
 				<input type="CheckBox" name="showDoc">
 					<label>Show help in edit mode?</label>
 					<occurrences minimum="0" maximum="1" />
@@ -39,45 +34,54 @@
 					<occurrences minimum="0" maximum="1"/>
 					<config/>
 				</input>
-				<field-set name="defaultFields">
-					<label>Default fields</label>
+				<field-set name="Appearence">
+					<label>Appearence</label>
 					<items>
-						<item-set name="subjectList">
-							<label>Subject list</label>
-							<occurrences minimum="0" maximum="1" />
+						<input type="RadioButton" name="layout">
+							<label>Layout</label>
+							<occurrences minimum="0" maximum="0"/>
+							<config>
+								<option value="default">Default</option>
+								<option value="wide">Wide</option>
+							</config>
+						</input>
+					</items>
+				</field-set>
+				<field-set name="defaultInputs">
+					<label>Default inputs</label>
+					<items>
+						<!-- <item-set name="sender">
+							<label>Sender input</label>
+							<occurrences minimum="1" maximum="1" />
 							<config />
 							<items>
-								<input type="TextLine" name="subjectLabel">
-									<label>Subject label</label>
-									<occurrences minimum="0" maximum="1"/>
+								<input type="TextLine" name="label">
+									<label>Label for sender e-mail</label>
+									<occurrences minimum="0" maximum="1" />
 								</input>
-								<item-set name="subjects">
-									<label>Subject option</label>
-									<occurrences minimum="0" maximum="0" />
-									<config />
-									<items>
-										<input type="TextLine" name="title">
-											<label>Title</label>
-											<occurrences minimum="1" maximum="1" />
-										</input>
-										<input type="CheckBox" name="default">
-											<label>Default/pre-selected option?</label>
-											<occurrences minimum="0" maximum="1"/>
-										</input>
-										<input type="TextLine" name="subject">
-											<label>Subject</label>
-											<occurrences minimum="1" maximum="1" />
-										</input>
-										<input type="TextLine" name="receiver">
-											<label>Receiver</label>
-											<occurrences minimum="1" maximum="0" />
-										</input>
-									</items>
-								</item-set>
+								<input type="TextLine" name="placeholder">
+									<label>Placeholder for sender e-mail</label>
+									<occurrences minimum="0" maximum="1" />
+								</input>
+							</items>
+						</item-set> -->
+						<item-set name="message">
+							<label>Message area</label>
+							<occurrences minimum="1" maximum="1" />
+							<config />
+							<items>
+								<input type="TextLine" name="label">
+									<label>Label for message area</label>
+									<occurrences minimum="0" maximum="1" />
+								</input>
+								<input type="TextLine" name="placeholder">
+									<label>Placeholder for message area</label>
+									<occurrences minimum="0" maximum="1" />
+								</input>
 							</items>
 						</item-set>
 					</items>
-				</field-set>
+				</field-set>						
 			</items>
 		</field-set>
 		<field-set name="customFields">
@@ -96,6 +100,10 @@
 						<input type="TextLine" name="placeholder">
 							<label>Placeholder</label>
 							<occurrences minimum="1" maximum="1" />
+						</input>
+						<input type="CheckBox" name="required">
+							<label>Required field?</label>
+							<occurrences minimum="0" maximum="1" />
 						</input>
 						<input type="ComboBox" name="type">
 							<label>Type</label>
