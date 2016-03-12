@@ -1,13 +1,26 @@
+- [ ] Rebuild from 6.0 starter
+- [ ] Sending
 - [ ] Different modes
     - [ ] easy
     - [ ] advanced
+- [ ] Selectable styling
+    - [ ] Wide
+    - [ ] Tall
+    - [ ] ...
+    - [ ] upload css
+    - [ ] enter thymeleaf template
 - [ ] Custom fields
     - [ ] text
     - [ ] mail
     - [ ] number?
     - [ ] textarea
 - [ ] Custom field options
-    - [ ] Required
+    - [ ] Required input fields
+        - [ ] Note on required fields
+        - [x] Add option for required fields
     - [ ] Validation?
     - [ ] Regexp?
     - [ ] ...?
+- [ ] handle different requests
+    - [ ] AJAX
+    - [ ] Form action
