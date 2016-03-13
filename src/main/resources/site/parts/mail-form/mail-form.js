@@ -1,11 +1,15 @@
-var portal     = require('/lib/xp/portal');
-var thymeleaf  = require('/lib/xp/thymeleaf');
-var mail       = require('/lib/xp/mail');
-var utilData       = require('/lib/enonic/util/data');
+var portalLib = require('/lib/xp/portal');
+var thymeleaf = require('/lib/xp/thymeleaf');
+var mailLib   = require('/lib/xp/mail');
+var utilDataLib  = require('/lib/enonic/util/data');
 
 function log( string ) {
 	var util = require('/lib/enonic/util/util');
 	util.log(string);
+}
+
+function assetUrl(url){
+	return portalLib.assetUrl(url);
 }
 
 exports.get = function(request) {
@@ -15,7 +19,6 @@ exports.get = function(request) {
 exports.post = function(request) {
 
 	var body = JSON.parse(request.body);
-	log(body);
 
 	if (body.ajax === true)
 	{
@@ -26,65 +29,22 @@ exports.post = function(request) {
 		return handlePost(request);
 };
 
-function replacePlaceholder(string, placeholders){
-
-	var rePart = "";
-	var processedString = "";
-	var key;
-	
-	// Pick placeholder keys to build rePart
-	for (key in placeholders) {
-		if (rePart === "")
-			rePart += key;
-		else
-			rePart += '|' + key;
-	}
-	
-	// Split string in placeholders keys or by character,
-	// then replace placeholders and rebuild string.
-	var re = new RegExp("\\{{2}(" + rePart + ")\\}{2}|([\\n\\r\\t\\0\\s\\S]{1,}?)", "gmi");
-	var match;
-	var matches = [];
-	
-	while ((match = re.exec(string)) !== null) {
-		matches.push(match);
-	}
-	for (var i = 0, len = matches.length; i < len; i ++){
-		if (matches[i][1] !== undefined)
-		{
-			key = matches[i][1];
-			processedString += placeholders[key];
-		}
-		else if (matches[i][0])
-			processedString += matches[i][0];
-	}
-	return processedString;
-}
-
-function assetUrl(url){
-	return portal.assetUrl(url);
-}
-
 function handleGet(request) {
 
-	var component   = portal.getComponent();
-	var content = portal.getContent();
-	var config = component.config;
-	var placeholders = {title: config.title};
+	var component       = portalLib.getComponent();
+	var content         = portalLib.getContent();
+	var config          = component.config;
+	var placeholders    = {title: config.title};
 	var processedString = "", documentation, view, body;
-	var formAction = portal.componentUrl({component: component.path});
-
-	// if (config.textArea !== undefined)
-	// 	processedString = replacePlaceholder(config.textArea, placeholders);
+	var formAction      = portalLib.componentUrl({component: component.path});
 
 	var ID = config.formId || "";
 
 	var form = {
 		ID: ID,
 		action: formAction,
-		customFields: utilData.forceArray(config.customField)
+		customFields: utilDataLib.forceArray(config.customField)
 	};
-	// log(form);
 
 	if (config.showDoc === true && request.mode == 'edit') {
 
@@ -145,12 +105,86 @@ function handlePost(request) {
 }
 
 function handleAjax(request) {
-	var jsonObj = {
-		msg: "Ajax req success"
+	var config = portalLib.getComponent().config;
+	var body = JSON.parse(request.body);
+	var data = body.data;
+	var response = {
+		"receiver": config.templates.receiver.response,
+		"sender": config.templates.sender.response,
 	};
-	jsonObj = JSON.parse(request.body);
+	var mailStatus = {};
+
+	function processResponseFields(fieldObj){
+		// Replace placeholders in all keys of response object, return processed object.
+		var item, obj = {};
+		for (var key in fieldObj) {
+			item = fieldObj[key];
+			obj[key] = replacePlaceholders(item, data);
+		}
+		return obj;
+	}
+
+	var receiver = processResponseFields(response.receiver);
+	var sender = processResponseFields(response.sender);
+
+	mailStatus.receiver = sendMail(receiver);
+	
+	if (config.copyToSender) {
+		mailStatus.sender = sendMail(sender);
+	}
+
 	return {
-		body: jsonObj.data,
+		body: mailStatus,
 		contentType: 'application/json'
 	};
+}
+
+function sendMail(mailObj) {
+	if (mailObj.subject && mailObj.from && mailObj.to && mailObj.body)
+		return mailLib.send({
+			from: mailObj.from,
+			to: mailObj.to,
+			cc: mailObj.cc,
+			bcc: mailObj.bcc,
+			replyTo: mailObj.replyTo,
+			subject: mailObj.subject,
+			body: mailObj.body,
+		});
+	else
+		return false;
+}
+
+function replacePlaceholders(string, placeholderObj){
+
+	var rePart = "";
+	var processedString = "";
+	var key;
+	
+	// Pick placeholder keys to build rePart
+	for (key in placeholderObj) {
+		if (rePart === "")
+			rePart += key;
+		else
+			rePart += '|' + key;
+	}
+	
+	// Split string in placeholderObj keys or by character,
+	// then replace placeholderObj and rebuild string.
+	var re = new RegExp("\\{{2}(" + rePart + ")\\}{2}|([\\n\\r\\t\\0\\s\\S]{1,}?)", "gmi");
+	var match;
+	var matches = [];
+	
+	while ((match = re.exec(string)) !== null) {
+		matches.push(match);
+	}
+	for (var i = 0, len = matches.length; i < len; i ++){
+		if (matches[i][1] !== undefined)
+		{
+			key = matches[i][1];
+			processedString += placeholderObj[key];
+		}
+		else if (matches[i][0])
+			processedString += matches[i][0];
+	}
+	return processedString;
 }

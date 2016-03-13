@@ -127,44 +127,32 @@
 			</items>
 		</field-set>
 		<field-set name="Responses">
-			<label>Response messages</label>
+			<label>Response</label>
 			<items>
-				<item-set name="receiverTemplate">
-					<label>Receiver templates</label>
+				<item-set name="templates">
+					<label>Templates</label>
 					<occurrences minimum="1" maximum="1" />
 					<config />
 					<items>
-						<input type="TextLine" name="subject">
-							<label>Subject</label>
+						<item-set name="receiver">
+							<label>Receiver</label>
 							<occurrences minimum="1" maximum="1" />
-						</input>
-						<input type="TextArea" name="message">
-							<label>Message</label>
-							<occurrences minimum="1" maximum="1" />
-						</input>
-					</items>
-				</item-set>
-				<item-set name="senderTemplate">
-					<label>Sender templates</label>
-					<occurrences minimum="1" maximum="1" />
-					<config />
-					<items>
-						<input type="TextLine" name="subject">
-							<label>Subject</label>
-							<occurrences minimum="1" maximum="1" />
-						</input>
-						<input type="TextArea" name="message">
-							<label>Message</label>
-							<occurrences minimum="1" maximum="1" />
-						</input>
+							<config />
+							<items>
+								<inline mixin="responses"/>
+							</items>
+						</item-set>
+						<item-set name="sender">
+							<label>Sender</label>
+							<occurrences minimum="0" maximum="1" />
+							<config />
+							<items>
+								<inline mixin="responses"/>
+							</items>
+						</item-set>
 					</items>
 				</item-set>
 			</items>
 		</field-set>
 	</config>
 </part>
-<!-- 				<input type="TextArea" name="textArea">
-					<label>TextArea</label>
-					<occurrences minimum="0" maximum="1"/>
-					<config/>
-				</input> -->

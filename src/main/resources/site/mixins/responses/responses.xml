@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mixin>
+	<display-name>Responses</display-name>
+	<items>
+		<item-set name="response">
+			<label>Fields</label>
+			<occurrences minimum="0" maximum="1" />
+			<config />
+			<items>
+				<!-- 
+					subject
+					from
+					replyTo
+					to
+					cc
+					bcc
+					body
+				-->
+				<input type="TextLine" name="subject">
+					<label>Subject</label>
+					<occurrences minimum="1" maximum="1" />
+				</input>
+				<input type="TextLine" name="from">
+					<label>From</label>
+					<occurrences minimum="1" maximum="1" />
+				</input>
+				<input type="TextLine" name="replyTo">
+					<label>Reply to</label>
+					<occurrences minimum="0" maximum="1" />
+				</input>
+				<input type="TextLine" name="to">
+					<label>To</label>
+					<occurrences minimum="1" maximum="1" />
+				</input>
+				<input type="TextLine" name="cc">
+					<label>CC</label>
+					<occurrences minimum="0" maximum="1" />
+				</input>
+				<input type="TextLine" name="bcc">
+					<label>BCC</label>
+					<occurrences minimum="0" maximum="1" />
+				</input>
+				<input type="TextArea" name="body">
+					<label>Message</label>
+					<occurrences minimum="1" maximum="1" />
+				</input>
+			</items>
+		</item-set>
+	</items>
+</mixin>

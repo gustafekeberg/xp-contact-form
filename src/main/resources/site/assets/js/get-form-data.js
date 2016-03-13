@@ -89,7 +89,7 @@ var storageFunctions = {
 		var form = element.querySelector('form');
 		form.reset();
 		sessionStorage.removeItem(element.id);
-		log("Form cleared");
+		log("Form reset");
 	},
 };
 
