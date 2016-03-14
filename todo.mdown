@@ -21,4 +21,4 @@
 - [ ] Cleanup code: element selectors...
 - [ ] Add progress bar / status message
 - [ ] Rename files
-
+- [ ] Remove logging from Enonic JS-files
