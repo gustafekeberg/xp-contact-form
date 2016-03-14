@@ -5,7 +5,7 @@
 	<form data-th-action="${form.action}">
 		<div class="row">
 			<fieldset class="col-sm-12">
-				<div data-th-each="field : ${form.inputFields}">
+				<div data-th-remove="tag" data-th-each="field : ${form.inputFields}">
 					<div data-th-if="${field.placement} == 'top'" class="form-group">
 						<label data-th-if="${field.label}" data-th-text="${field.label}" data-th-attr="for=${form.ID + '_' + field.name}" />
 						<input data-th-unless="${field.type} == 'textArea'" class="form-control" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required', type=${field.type}" />
@@ -14,7 +14,7 @@
 				</div>
 			</fieldset>
 			<fieldset class="col-sm-6">
-				<div data-th-each="field : ${form.inputFields}">
+				<div data-th-remove="tag" data-th-each="field : ${form.inputFields}">
 					<div data-th-if="${field.placement} == 'left'" class="form-group">
 						<label data-th-if="${field.label}" data-th-text="${field.label}" data-th-attr="for=${form.ID + '_' + field.name}" />
 						<input data-th-unless="${field.type} == 'textArea'" class="form-control" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required', type=${field.type}" />
@@ -23,7 +23,7 @@
 				</div>
 			</fieldset>
 			<fieldset class="col-sm-6">
-				<div data-th-each="field : ${form.inputFields}">
+				<div data-th-remove="tag" data-th-each="field : ${form.inputFields}">
 					<div data-th-if="${field.placement} == 'right'" class="form-group">
 						<label data-th-if="${field.label}" data-th-text="${field.label}" data-th-attr="for=${form.ID + '_' + field.name}" />
 						<input data-th-unless="${field.type} == 'textArea'" class="form-control" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required', type=${field.type}" />
@@ -32,7 +32,7 @@
 				</div>
 			</fieldset>
 			<fieldset class="col-sm-12">
-				<div data-th-each="field : ${form.inputFields}">
+				<div data-th-remove="tag" data-th-each="field : ${form.inputFields}">
 					<div data-th-if="${field.placement} == 'bottom'" class="form-group">
 						<label data-th-if="${field.label}" data-th-text="${field.label}" data-th-attr="for=${form.ID + '_' + field.name}" />
 						<input data-th-unless="${field.type} == 'textArea'" class="form-control" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required', type=${field.type}" />
@@ -49,5 +49,20 @@
 			</fieldset>
 		</div>
 	</form>
+	<div class="status-message hidden">
+		<div class="container">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">Sending message</h3>
+			  </div>
+			  <div class="panel-body">
+			<div class="progress">
+				<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+				</div>
+			</div>
+			  </div>
+			</div>
+		</div>
+	</div>
 	<div data-th-if="${documentation}" data-th-utext="${documentation}" data-th-remove="tag" />
 </section>

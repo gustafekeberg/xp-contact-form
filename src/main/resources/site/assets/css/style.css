@@ -7,3 +7,32 @@
 	/*left: 15px;
 	right: 15px;*/
 }
+
+.easy-contact-form .blur {
+	-webkit-filter: blur(1px);
+	filter: blur(1px);
+	opacity: .25;
+}
+.easy-contact-form .status-message {
+	/* background-color: rgba(255,255,255,.5); */
+    position: absolute;
+    top: 0;
+    height: 100%;
+    left: 0;
+    width: 100%;
+}
+
+.easy-contact-form .container {
+	position: absolute;
+	max-width: 350px;
+	width: 100%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.easy-contact-form .panel {
+	box-shadow: 0 6px 20px -4px rgba(0,0,0,0.7);
+}
+.easy-contact-form .progress {
+	margin-bottom: 0;
+}

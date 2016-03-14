@@ -76,7 +76,7 @@ function handleGet(request) {
 	body                = thymeleaf.render(view, model);
 	var style           = '<link rel="stylesheet" href="' + assetUrl({path: '/css/style.css'}) + '">';
 	var getFormDataJS   = '<script src="' + assetUrl({path: '/js/get-form-data.js'}) +'"></script>';
-	var getFormDataInit = '<script>window.addEventListener("load", contactFormInit("#' + form.ID + '"));</script>';
+	var getFormDataInit = '<script>window.addEventListener("load", easyContactForm("#' + form.ID + '"));</script>';
 	var webshimJS       = '<script src="' + assetUrl({path: '/js-webshim/minified/polyfiller.js'}) + '"></script>';
 	var webshimInit     = "<script>webshim.polyfill('forms');</script>";
 	return {
