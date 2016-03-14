@@ -1,7 +1,15 @@
-<section>
-	<div class="alert alert-info">
+<section class="well">
+    <header>
+        <div data-th-switch="${language}">
+            <h1 data-th-case="sv">Dokumentation</h1>
+            <h1 data-th-case="*">Documentation</h1>
+        </div>
+    </header>
+    <div class="alert alert-info">
         <!-- <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> -->
-        The documentation is only visible in edit-mode!
+        <div data-th-switch="${language}">
+            <span data-th-case="*">The documentation is only visible in edit-mode!</span>
+        </div>
     </div>
 
 <div data-th-switch="${language}">
