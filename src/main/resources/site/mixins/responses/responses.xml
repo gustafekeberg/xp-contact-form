@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mixin>
-	<display-name>Responses</display-name>
+	<display-name>Response</display-name>
 	<items>
 		<item-set name="response">
-			<label>Fields</label>
-			<occurrences minimum="0" maximum="1" />
+			<label>Mail response</label>
+			<occurrences minimum="1" maximum="0" />
 			<config />
 			<items>
 				<!-- 
@@ -20,6 +20,10 @@
 					<label>Subject</label>
 					<occurrences minimum="1" maximum="1" />
 				</input>
+				<input type="TextLine" name="to">
+					<label>To</label>
+					<occurrences minimum="1" maximum="1" />
+				</input>
 				<input type="TextLine" name="from">
 					<label>From</label>
 					<occurrences minimum="1" maximum="1" />
@@ -27,10 +31,6 @@
 				<input type="TextLine" name="replyTo">
 					<label>Reply to</label>
 					<occurrences minimum="0" maximum="1" />
-				</input>
-				<input type="TextLine" name="to">
-					<label>To</label>
-					<occurrences minimum="1" maximum="1" />
 				</input>
 				<input type="TextLine" name="cc">
 					<label>CC</label>
@@ -41,7 +41,7 @@
 					<occurrences minimum="0" maximum="1" />
 				</input>
 				<input type="TextArea" name="body">
-					<label>Message</label>
+					<label>Message body</label>
 					<occurrences minimum="1" maximum="1" />
 				</input>
 			</items>

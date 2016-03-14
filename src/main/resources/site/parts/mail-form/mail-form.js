@@ -43,7 +43,7 @@ function handleGet(request) {
 	var form = {
 		ID: ID,
 		action: formAction,
-		customFields: utilDataLib.forceArray(config.customField)
+		inputFields: utilDataLib.forceArray(config.inputField)
 	};
 
 	if (config.showDoc === true && request.mode == 'edit') {
@@ -108,11 +108,12 @@ function handleAjax(request) {
 	var config = portalLib.getComponent().config;
 	var body = JSON.parse(request.body);
 	var data = body.data;
-	var response = {
-		"receiver": config.templates.receiver.response,
-		"sender": config.templates.sender.response,
-	};
-	var mailStatus = {};
+	// var response = {
+	// 	"receiver": config.templates.receiver.response,
+	// 	"sender": config.templates.sender.response,
+	// };
+	var response = utilDataLib.forceArray(config.response);
+	var mailStatus = [], status;
 
 	function processResponseFields(fieldObj){
 		// Replace placeholders in all keys of response object, return processed object.
@@ -124,13 +125,11 @@ function handleAjax(request) {
 		return obj;
 	}
 
-	var receiver = processResponseFields(response.receiver);
-	var sender = processResponseFields(response.sender);
-
-	mailStatus.receiver = sendMail(receiver);
-	
-	if (config.copyToSender) {
-		mailStatus.sender = sendMail(sender);
+	for (var i = 0, len = response.length; i < len; i ++) {
+		var item = processResponseFields(response[i]);
+		log(item);
+		status = sendMail(item);
+		mailStatus.push(status);
 	}
 
 	return {

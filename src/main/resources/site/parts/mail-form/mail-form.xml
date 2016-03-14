@@ -18,20 +18,8 @@
 					</config>
 				</input>
 				<input type="CheckBox" name="showDoc">
-					<label>Show help in edit mode?</label>
+					<label>Show documentation in edit mode?</label>
 					<occurrences minimum="0" maximum="1" />
-					<config/>
-				</input>
-				<input type="TextLine" name="receiver">
-					<label>Send form data to (email)</label>
-					<occurrences minimum="0" maximum="0"/>
-					<config>
-						<!-- <regexp>\w+([-+.']\w+)*@\w+([-.]\w+)*\.[A-Z0-9]{2,6}([-.][A-Z0-9]{2,6})*</regexp> -->
-					</config>
-				</input>
-				<input type="CheckBox" name="copyToSender">
-					<label>Send a note to sender</label>
-					<occurrences minimum="0" maximum="1"/>
 					<config/>
 				</input>
 				<field-set name="Appearence">
@@ -41,54 +29,19 @@
 							<label>Layout</label>
 							<occurrences minimum="0" maximum="0"/>
 							<config>
-								<option value="default">Default</option>
-								<option value="wide">Wide</option>
+								<option value="twoCols">Two columns (default)</option>
+								<option value="threeCols">Three columns</option>
 							</config>
 						</input>
 					</items>
 				</field-set>
-				<field-set name="defaultInputs">
-					<label>Default inputs</label>
-					<items>
-						<!-- <item-set name="sender">
-							<label>Sender input</label>
-							<occurrences minimum="1" maximum="1" />
-							<config />
-							<items>
-								<input type="TextLine" name="label">
-									<label>Label for sender e-mail</label>
-									<occurrences minimum="0" maximum="1" />
-								</input>
-								<input type="TextLine" name="placeholder">
-									<label>Placeholder for sender e-mail</label>
-									<occurrences minimum="0" maximum="1" />
-								</input>
-							</items>
-						</item-set> -->
-						<item-set name="message">
-							<label>Message area</label>
-							<occurrences minimum="1" maximum="1" />
-							<config />
-							<items>
-								<input type="TextLine" name="label">
-									<label>Label for message area</label>
-									<occurrences minimum="0" maximum="1" />
-								</input>
-								<input type="TextLine" name="placeholder">
-									<label>Placeholder for message area</label>
-									<occurrences minimum="0" maximum="1" />
-								</input>
-							</items>
-						</item-set>
-					</items>
-				</field-set>						
 			</items>
 		</field-set>
-		<field-set name="customFields">
-			<label>Custom fields</label>
+		<field-set name="fields">
+			<label>Input</label>
 			<items>
-				<item-set name="customField">
-					<label>Input field</label>
+				<item-set name="inputField">
+					<label>Field</label>
 					<occurrences minimum="0" maximum="0" />
 					<config />
 					<items>
@@ -97,24 +50,6 @@
 							<occurrences minimum="0" maximum="1" />
 							<config/>
 						</input>
-						<input type="TextLine" name="placeholder">
-							<label>Placeholder</label>
-							<occurrences minimum="1" maximum="1" />
-						</input>
-						<input type="CheckBox" name="required">
-							<label>Required field?</label>
-							<occurrences minimum="0" maximum="1" />
-						</input>
-						<input type="ComboBox" name="type">
-							<label>Type</label>
-							<occurrences minimum="1" maximum="1" />
-							<config>
-								<option value="phone">Phone number</option>
-								<option value="url">URL</option>
-								<option value="text">Text</option>
-								<option value="date">Date</option>
-							</config>
-						</input>
 						<input type="TextLine" name="name">
 							<label>Name</label>
 							<occurrences minimum="1" maximum="1" />
@@ -122,36 +57,48 @@
 								<regexp>^\w*$</regexp>
 							</config>
 						</input>
+						<input type="TextLine" name="placeholder">
+							<label>Placeholder</label>
+							<occurrences minimum="1" maximum="1" />
+						</input>
+						<input type="ComboBox" name="type">
+							<label>Type</label>
+							<occurrences minimum="1" maximum="1" />
+							<config>
+								<option value="date">Date</option>
+								<option value="datetime-local">Date and time, no time zone</option>
+								<option value="email">E-mail address</option>
+								<option value="month">Month</option>
+								<option value="number">Number</option>
+								<option value="tel">Phone number</option>
+								<option value="text">Text</option>
+								<option value="textArea">TextArea</option>
+								<option value="time">Time</option>
+								<option value="url">url</option>
+							</config>
+						</input>
+						<input type="RadioButton" name="placement">
+							<label>Placement</label>
+							<occurrences minimum="1" maximum="1"/>
+							<config>
+								<option value="left">Left</option>
+								<option value="right">Right</option>
+								<option value="top">Top</option>
+								<option value="bottom">Bottom</option>
+							</config>
+						</input>
+						<input type="CheckBox" name="required">
+							<label>Required?</label>
+							<occurrences minimum="0" maximum="1" />
+						</input>
 					</items>
 				</item-set>
 			</items>
 		</field-set>
 		<field-set name="Responses">
-			<label>Response</label>
+			<label>Responses</label>
 			<items>
-				<item-set name="templates">
-					<label>Templates</label>
-					<occurrences minimum="1" maximum="1" />
-					<config />
-					<items>
-						<item-set name="receiver">
-							<label>Receiver</label>
-							<occurrences minimum="1" maximum="1" />
-							<config />
-							<items>
-								<inline mixin="responses"/>
-							</items>
-						</item-set>
-						<item-set name="sender">
-							<label>Sender</label>
-							<occurrences minimum="0" maximum="1" />
-							<config />
-							<items>
-								<inline mixin="responses"/>
-							</items>
-						</item-set>
-					</items>
-				</item-set>
+				<inline mixin="responses"/>
 			</items>
 		</field-set>
 	</config>

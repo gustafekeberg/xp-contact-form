@@ -4,19 +4,41 @@
 	</header>
 	<form data-th-action="${form.action}">
 		<div class="row">
-			<fieldset class="col-sm-6">
-<!-- 				<div class="form-group">
-					<label data-th-if="${sender.label}" data-th-text="${sender.label}" data-th-attr="for=${form.ID + '_sender'}" />
-					<input class="form-control" data-th-attr="id=${form.ID + '_sender'}, name='_sender', placeholder=${sender.placeholder}" />
-				</div> -->
-				<div data-th-each="field : ${form.customFields}" class="form-group">
-					<label data-th-if="${field.label}" data-th-text="${field.label}" data-th-attr="for=${form.ID + '_' + field.name}" />
-					<input class="form-control" required="" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required'" />
+			<fieldset class="col-sm-12">
+				<div data-th-each="field : ${form.inputFields}">
+					<div data-th-if="${field.placement} == 'top'" class="form-group">
+						<label data-th-if="${field.label}" data-th-text="${field.label}" data-th-attr="for=${form.ID + '_' + field.name}" />
+						<input data-th-unless="${field.type} == 'textArea'" class="form-control" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required', type=${field.type}" />
+						<textarea data-th-if="${field.type} == 'textArea'" class="form-control" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required'"></textarea>
+					</div>
 				</div>
 			</fieldset>
 			<fieldset class="col-sm-6">
-				<label for="${form.ID + '_message'}" data-th-text="${message.label}" data-th-if="${message.label}" />
-				<textarea class="form-control" data-th-attr="id=${form.ID + '_message'}, name='_message', placeholder=${message.placeholder}" />
+				<div data-th-each="field : ${form.inputFields}">
+					<div data-th-if="${field.placement} == 'left'" class="form-group">
+						<label data-th-if="${field.label}" data-th-text="${field.label}" data-th-attr="for=${form.ID + '_' + field.name}" />
+						<input data-th-unless="${field.type} == 'textArea'" class="form-control" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required', type=${field.type}" />
+						<textarea data-th-if="${field.type} == 'textArea'" class="form-control" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required'"></textarea>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset class="col-sm-6">
+				<div data-th-each="field : ${form.inputFields}">
+					<div data-th-if="${field.placement} == 'right'" class="form-group">
+						<label data-th-if="${field.label}" data-th-text="${field.label}" data-th-attr="for=${form.ID + '_' + field.name}" />
+						<input data-th-unless="${field.type} == 'textArea'" class="form-control" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required', type=${field.type}" />
+						<textarea data-th-if="${field.type} == 'textArea'" class="form-control" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required'"></textarea>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset class="col-sm-12">
+				<div data-th-each="field : ${form.inputFields}">
+					<div data-th-if="${field.placement} == 'bottom'" class="form-group">
+						<label data-th-if="${field.label}" data-th-text="${field.label}" data-th-attr="for=${form.ID + '_' + field.name}" />
+						<input data-th-unless="${field.type} == 'textArea'" class="form-control" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required', type=${field.type}" />
+						<textarea data-th-if="${field.type} == 'textArea'" class="form-control" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required'"></textarea>
+					</div>
+				</div>
 			</fieldset>
 		</div>
 		<div class="row">
