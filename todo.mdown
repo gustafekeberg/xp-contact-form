@@ -19,3 +19,6 @@
         - [x] Add option for required fields
         - [x] Validation - polyfill?
 - [ ] Cleanup code: element selectors...
+- [ ] Add progress bar / status message
+- [ ] Rename files
+
