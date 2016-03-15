@@ -1,3 +1,6 @@
+.easy-contact-form form {
+    transition: all 0.25s ease-in-out;	
+}
 .easy-contact-form textarea {
 	min-height: 200px;
 	margin-bottom: 30px;
@@ -8,10 +11,12 @@
 	right: 15px;*/
 }
 
+
 .easy-contact-form .blur {
 	-webkit-filter: blur(1px);
 	filter: blur(1px);
 	opacity: .25;
+    /* transition: all 0.5s ease-in-out; */
 }
 .easy-contact-form .status-message {
 	/* background-color: rgba(255,255,255,.5); */
@@ -30,9 +35,11 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
+
 .easy-contact-form .panel {
 	box-shadow: 0 6px 20px -4px rgba(0,0,0,0.7);
 }
+
 .easy-contact-form .progress {
 	margin-bottom: 0;
 }

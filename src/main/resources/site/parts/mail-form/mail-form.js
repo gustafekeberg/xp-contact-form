@@ -108,10 +108,7 @@ function handleAjax(request) {
 	var config = portalLib.getComponent().config;
 	var body = JSON.parse(request.body);
 	var data = body.data;
-	// var response = {
-	// 	"receiver": config.templates.receiver.response,
-	// 	"sender": config.templates.sender.response,
-	// };
+
 	var response = utilDataLib.forceArray(config.response);
 	var mailStatus = [], status;
 
@@ -131,9 +128,10 @@ function handleAjax(request) {
 		status = sendMail(item);
 		mailStatus.push(status);
 	}
-
+	var returnStatus = { status: mailStatus };
+	returnStatus = returnStatus;
 	return {
-		body: mailStatus,
+		body: returnStatus,
 		contentType: 'application/json'
 	};
 }
