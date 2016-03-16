@@ -105,12 +105,12 @@ function handlePost(request) {
 }
 
 function handleAjax(request) {
+
 	var config = portalLib.getComponent().config;
 	var body = JSON.parse(request.body);
 	var data = body.data;
 
 	var response = utilDataLib.forceArray(config.response);
-	var mailStatus = [], status;
 
 	function processResponseFields(fieldObj){
 		// Replace placeholders in all keys of response object, return processed object.
@@ -122,16 +122,34 @@ function handleAjax(request) {
 		return obj;
 	}
 
+	// Process all response-templates and send, sum up different statuses of sent mails.
+	var mailStatus = [], status;
+	var error = 0, success = 0, errorLocations = [];
 	for (var i = 0, len = response.length; i < len; i ++) {
 		var item = processResponseFields(response[i]);
-		log(item);
+		// log(item);
 		status = sendMail(item);
 		mailStatus.push(status);
+		if (status === false)
+		{
+			error += 1;
+			errorLocations.push(i);
+		}
+		else
+			success += 1;
 	}
-	var returnStatus = { status: mailStatus };
-	returnStatus = returnStatus;
+	// Prepare status message and return
+	var statusMessage = {
+		errorLocations: errorLocations,
+		status: 'danger'
+	};
+	if (error === 0 && success > 0)
+		statusMessage.status = 'success';
+	else if (error > 0 && success > 0)
+		statusMessage.status = 'warning';
+	
 	return {
-		body: returnStatus,
+		body: statusMessage,
 		contentType: 'application/json'
 	};
 }

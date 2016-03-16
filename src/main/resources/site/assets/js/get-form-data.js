@@ -2,7 +2,7 @@
 // All different types of input fields need to have unique names
 // or else the script won't work.
 
-function easyContactForm(formSelector, formResponse){
+function easyContactForm(formSelector, statusMessages){
 	
 	function log(str) {
 		var logPrefix = "Simple contact form app:";
@@ -103,25 +103,14 @@ function easyContactForm(formSelector, formResponse){
 		xhttp.onreadystatechange = function() {
 			if (xhttp.readyState == 4 && xhttp.status == 200) {
 				var response = JSON.parse(xhttp.responseText);
-				var errors = 0, success = 0;
-
-				// Count server responses false = form not sent, true = form sent.
-				for (var i = 0, len = response.status.length; i < len; i ++) {
-					var current = response.status[i];
-					if (current === false)
-						errors += 1;
-					else
-						success += 1;
-				}
-				log("XMLHttpRequest succes: " + success + ", errors: " + errors);
-				// Display corresponding status message.
-				if (errors === 0 && success > 0)
-					status.done();
-				else
-					status.error();
+				log("XMLHttpRequest: " + response.message);
+				
+				// Display status panel.
+				status.done(response);
 			}
 			else
-				status.error();
+				// Display status panel with error message.
+			status.error();
 		};
 		xhttp.send(dataObjString);
 	}
@@ -162,7 +151,8 @@ function easyContactForm(formSelector, formResponse){
 		},
 		newPanel: function(obj){
 			var panelClass = 'panel-default';
-			if (obj.type == 'error') panelClass = 'panel-danger';
+			if (obj.type == 'danger') panelClass = 'panel-danger';
+			if (obj.type == 'warning') panelClass = 'panel-warning';
 			var panel        = newElement({element: 'div', class: ['panel', panelClass]});
 			var panelHeading = newElement({element: 'div', class: ['panel-heading']});
 			var panelTitle   = newElement({element: 'h3', class: ['panel-title'], content: obj.title});
@@ -178,37 +168,49 @@ function easyContactForm(formSelector, formResponse){
 			statusEl.classList.remove("hidden");			
 		},
 		sending: function(){
-			status.show();
+
+			var title = statusMessages.sending.title;
 			var progress     = newElement({element: 'div', class: ['progress'] });
 			var progressBar  = newElement({element: 'div', class: ['progress-bar','progress-bar-striped','active'],attr: {"role": "progressbar","style": "width: 100%" }});
 			progress.appendChild(progressBar);
-			var panel = status.newPanel({title: formResponse.sendingTitle, content: progress});
+			var panel = status.newPanel({title: title, content: progress});
 			status.getContainer().replaceChild(panel, status.getPanel());
-		},
-		done: function(){
 			status.show();
-			var button = newElement({element: 'button', type: 'button', class: ['btn', 'btn-success', 'center-block'], content: formResponse.confirm});
-			button.addEventListener('click', function(event){
-				event.preventDefault();
-				status.remove();
-				storageFunctions.reset();
-			});
-			var panel = status.newPanel({title: formResponse.doneTitle, content: button});
-			status.getContainer().replaceChild(panel, status.getPanel());
 		},
-		error: function(){
-			status.show();
+		error: function() {
+			status.done({ status: 'danger' });
+		},
+		done: function(statusObj){
+			
+			var stat = statusObj.status;
+			var message = statusMessages[stat].message;
+			var title = statusMessages[stat].title;
+			var errLoc = [];
+			if (statusObj.errorLocations)
+				errLoc = statusObj.errorLocations;
+			var confirm = statusMessages.confirm;
+
+			var btnDynClass = 'btn-success';
+			if (stat == 'danger') btnDynClass = 'btn-danger';
+			else if (stat == 'warning') btnDynClass = 'btn-warning';
+
 			var container = newElement({element: 'div'});
-			var content = newElement({element: 'p', content: formResponse.errorBody});
-			var button = newElement({element: 'button', type: 'button', class: ['btn', 'btn-danger', 'center-block'], content: formResponse.confirm});
+			var content = newElement({element: 'p', content: message + errLoc.join(', ')});
+			var button = newElement({element: 'button', type: 'button', class: ['btn', btnDynClass, 'center-block'], content: confirm});
+			
 			button.addEventListener('click', function(event){
 				event.preventDefault();
 				status.remove();
+				if (stat == 'success')
+					storageFunctions.reset();
 			});
+			
 			container.appendChild(content);
 			container.appendChild(button);
-			var panel = status.newPanel({title: formResponse.errorTitle, content: container, type: 'error'});
+			var panel = status.newPanel({title: title, content: container, type: stat});
+
 			status.getContainer().replaceChild(panel, status.getPanel());
+			status.show();
 		},
 		remove: function(){
 			var panel = status.getPanel();
@@ -227,20 +229,30 @@ function easyContactForm(formSelector, formResponse){
 	var statusEl = formContainer.querySelector('.status-message');
 
 	// Check if form variables is set, else populate with default values.
-	var defaultFormResponse = {
-		sendingTitle: "Sending message",
-		doneTitle: "Message sent",
-		confirm: "OK",
-		errorTitle: "Error",
-		errorBody: "Your message could not be sent! Please try again later.",
+	var defaultStatusMessages = {
+		sending: {
+			title: 'Sending',
+			message: 'Your message was sent',
+		},
+		success: {
+			title: 'Success!',
+			message: 'Your message was sent',
+			status: 'success'
+		},
+		danger: {
+			title: 'Error!',
+			message: 'Something went wrong. Your message could not be sent. Please try again later.',
+			status: 'error'
+		},
+		warning: {
+			title: 'Warning!',
+			message: 'There were some errors in response no: ',
+			status: 'warning',
+		},
+		confirm: 'OK',
 	};
-	if (formResponse === undefined) formResponse = defaultFormResponse;
-	else
-		for (var key in defaultFormResponse) {
-			if (formResponse[key] === undefined)
-				formResponse[key] = defaultFormResponse[key];
-		}
 
-		addListenersToForm();
-		storageFunctions.restore();
-	}
+	if (!statusMessages) statusMessages = defaultStatusMessages;
+	addListenersToForm();
+	storageFunctions.restore();
+}
