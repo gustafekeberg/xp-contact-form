@@ -20,6 +20,7 @@
 }
 .easy-contact-form .status-message {
 	z-index: 10000;
+	background-color: #000;
 	background-color: rgba(0,0,0,.7);
     position: fixed;
     top: 0;
