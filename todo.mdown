@@ -19,6 +19,8 @@
         - [x] Add option for required fields
         - [x] Validation - polyfill?
 - [ ] Cleanup code: element selectors...
-- [ ] Add progress bar / status message
+- [x] Add progress bar / status message
 - [ ] Rename files
 - [ ] Remove logging from Enonic JS-files
+- [ ] Customizable status messages (site.xml)
+- [ ] Don't select form by `id`, use `class` instead, `id` should be used for `anchor links`
