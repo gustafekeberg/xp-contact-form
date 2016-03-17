@@ -169,11 +169,18 @@ function easyContactForm(formSelector, statusMessages){
 		},
 		sending: function(){
 
-			var title = statusMessages.sending.title;
-			var progress     = newElement({element: 'div', class: ['progress'] });
-			var progressBar  = newElement({element: 'div', class: ['progress-bar','progress-bar-striped','active'],attr: {"role": "progressbar","style": "width: 100%" }});
+			var title   = statusMessages.sending.title;
+			var message = statusMessages.sending.message;
+
+			var container   = newElement({element: 'div'});
+			var content     = newElement({element: 'p', content: message});
+			var progress    = newElement({element: 'div', class: ['progress'] });
+			var progressBar = newElement({element: 'div', class: ['progress-bar','progress-bar-striped','active'],attr: {"role": "progressbar","style": "width: 100%" }});
 			progress.appendChild(progressBar);
-			var panel = status.newPanel({title: title, content: progress});
+			container.appendChild(content);
+			container.appendChild(progress);
+
+			var panel = status.newPanel({title: title, content: container});
 			status.getContainer().replaceChild(panel, status.getPanel());
 			status.show();
 		},
@@ -182,9 +189,13 @@ function easyContactForm(formSelector, statusMessages){
 			var stat = statusObj.status;
 			var message = statusMessages[stat].message;
 			var title = statusMessages[stat].title;
-			var errLoc = [];
+
 			if (statusObj.errorLocations)
-				errLoc = statusObj.errorLocations;
+			{
+				var errLoc = statusObj.errorLocations;
+				var error = "Error in response: " + errLoc.join(', ');
+				log(error, "error");
+			}
 			var confirm = statusMessages.confirm;
 
 			var btnDynClass = 'btn-success';
@@ -192,7 +203,7 @@ function easyContactForm(formSelector, statusMessages){
 			else if (stat == 'warning') btnDynClass = 'btn-warning';
 
 			var container = newElement({element: 'div'});
-			var content = newElement({element: 'p', content: message + errLoc.join(', ')});
+			var content = newElement({element: 'p', content: message});
 			var button = newElement({element: 'button', type: 'button', class: ['btn', btnDynClass, 'center-block'], content: confirm});
 			
 			button.addEventListener('click', function(event){
@@ -232,21 +243,21 @@ function easyContactForm(formSelector, statusMessages){
 	var defaultStatusMessages = {
 		sending: {
 			title: 'Sending',
-			message: 'Your message was sent',
+			message: 'Processing your message.',
 		},
 		success: {
 			title: 'Success!',
-			message: 'Your message was sent',
+			message: 'Your message was sent!',
 			status: 'success'
 		},
 		danger: {
 			title: 'Error!',
-			message: 'Something went wrong. Your message could not be sent. Please try again later.',
+			message: 'Your message could not be sent. Please try again later.',
 			status: 'error'
 		},
 		warning: {
 			title: 'Warning!',
-			message: 'There were some errors in response no: ',
+			message: 'There were some errors when processing your message. Please try again later.',
 			status: 'warning',
 		},
 		confirm: 'OK',
