@@ -103,7 +103,7 @@ function easyContactForm(formSelector, statusMessages){
 		xhttp.onreadystatechange = function() {
 			if (xhttp.readyState == 4 && xhttp.status == 200) {
 				var response = JSON.parse(xhttp.responseText);
-				log("XMLHttpRequest: " + response.message);
+				log("XMLHttpRequest: " + response.status);
 				
 				// Display status panel.
 				status.done(response);
@@ -214,7 +214,7 @@ function easyContactForm(formSelector, statusMessages){
 			var message = statusMessages[stat].message;
 			var title = statusMessages[stat].title;
 
-			if (statusObj.errorLocations)
+			if (stat == 'error' || stat == 'warning')
 			{
 				var errLoc = statusObj.errorLocations;
 				var error = "Error in response: " + errLoc.join(', ');
