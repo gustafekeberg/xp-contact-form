@@ -177,9 +177,6 @@ function easyContactForm(formSelector, statusMessages){
 			status.getContainer().replaceChild(panel, status.getPanel());
 			status.show();
 		},
-		error: function() {
-			status.done({ status: 'danger' });
-		},
 		done: function(statusObj){
 			
 			var stat = statusObj.status;
@@ -211,6 +208,9 @@ function easyContactForm(formSelector, statusMessages){
 
 			status.getContainer().replaceChild(panel, status.getPanel());
 			status.show();
+		},
+		error: function() {
+			status.done({ status: 'danger' });
 		},
 		remove: function(){
 			var panel = status.getPanel();
