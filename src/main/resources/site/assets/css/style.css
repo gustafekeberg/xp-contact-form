@@ -12,6 +12,16 @@
 }
 
 
+.easy-contact-form .fade {
+	transition: .15s;
+	visibility: hidden;
+	opacity: 0;
+}
+.easy-contact-form .fade.in {
+	visibility: visible;
+	opacity: 1;
+}
+
 .easy-contact-form .blur {
 	/* -webkit-filter: blur(1px);
 	filter: blur(1px);

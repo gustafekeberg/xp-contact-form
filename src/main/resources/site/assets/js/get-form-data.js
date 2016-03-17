@@ -163,9 +163,33 @@ function easyContactForm(formSelector, statusMessages){
 			panel.appendChild(panelBody);
 			return panel;
 		},
+		newModal: function(obj){
+			var modalClass = 'modal fade';
+			if (obj.type == 'danger') modalClass = 'panel-danger';
+			if (obj.type == 'warning') modalClass = 'panel-warning';
+			var panel        = newElement({element: 'div', class: ['panel', modalClass]});
+			var panelHeading = newElement({element: 'div', class: ['panel-heading']});
+			var panelTitle   = newElement({element: 'h3', class: ['panel-title'], content: obj.title});
+			var panelBody    = newElement({element: 'div', class: ['panel-body']});
+			panelBody.appendChild(obj.content);
+			panelHeading.appendChild(panelTitle);
+			panel.appendChild(panelHeading);
+			panel.appendChild(panelBody);
+			return panel;
+		},
 		show: function(){
-			form.classList.add("blur");
+			// form.classList.add("blur");
 			statusEl.classList.remove("hidden");			
+			statusEl.classList.add("in");			
+		},
+		remove: function(){
+			var panelParent = status.getPanel().parentNode;
+			while (panelParent.firstChild) {
+				panelParent.removeChild(panelParent.firstChild);
+			}
+			// status.getContainer().parentNode.classList.add("hidden");
+			status.getContainer().parentNode.classList.remove("in");
+			// form.classList.remove("blur");
 		},
 		sending: function(){
 
@@ -181,7 +205,7 @@ function easyContactForm(formSelector, statusMessages){
 			container.appendChild(progress);
 
 			var panel = status.newPanel({title: title, content: container});
-			status.getContainer().replaceChild(panel, status.getPanel());
+			status.getContainer().appendChild(panel);
 			status.show();
 		},
 		done: function(statusObj){
@@ -216,20 +240,15 @@ function easyContactForm(formSelector, statusMessages){
 			container.appendChild(content);
 			container.appendChild(button);
 			var panel = status.newPanel({title: title, content: container, type: stat});
+			if (status.getPanel())
+				status.getContainer().replaceChild(panel, status.getPanel());
+			else
+				status.getContainer().appendChild(panel);
 
-			status.getContainer().replaceChild(panel, status.getPanel());
 			status.show();
 		},
 		error: function() {
 			status.done({ status: 'danger' });
-		},
-		remove: function(){
-			var panel = status.getPanel();
-			while (panel.firstChild) {
-				panel.removeChild(panel.firstChild);
-			}
-			status.getContainer().parentNode.classList.add("hidden");
-			form.classList.remove("blur");
 		},
 		
 	};
