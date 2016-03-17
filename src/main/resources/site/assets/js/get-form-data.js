@@ -26,7 +26,15 @@ function easyContactForm(formSelector, statusMessages){
 		return data;
 	}
 
-	function addListenersToForm(){
+	function initForm(){
+
+		// Store status of form.ajaxRequest to prevent triggering of multiple requests
+		form.ajaxRequest = false;
+
+		// Restore form data
+		storageFunctions.restore();
+
+		//Add listeners
 		
 		// Submit
 		form.addEventListener('submit', function(event){
@@ -87,32 +95,35 @@ function easyContactForm(formSelector, statusMessages){
 	};
 
 	function ajaxRequest() {
-		var url = form.action;
-		log("Preparing XMLHttpRequest");
-		var xhttp    = new XMLHttpRequest();
-		var formData = getFormData();
-		var dataObj  = {
-			data: formData,
-			ajax: true
-		};
+		if (form.ajaxRequest === false)
+		{		
+			form.ajaxRequest = true;
+			var url = form.action;
+			log("Preparing XMLHttpRequest");
+			var xhttp    = new XMLHttpRequest();
+			var formData = getFormData();
+			var dataObj  = {
+				data: formData,
+				ajax: true
+			};
 
-		var dataObjString = JSON.stringify(dataObj);
-		status.sending();
-		xhttp.open("POST", url, true);
-		xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-		xhttp.onreadystatechange = function() {
-			if (xhttp.readyState == 4 && xhttp.status == 200) {
-				var response = JSON.parse(xhttp.responseText);
-				log("XMLHttpRequest: " + response.status);
-				
-				// Display status panel.
-				status.done(response);
-			}
-			else
-				// Display status panel with error message.
-			status.error();
-		};
-		xhttp.send(dataObjString);
+			var dataObjString = JSON.stringify(dataObj);
+			status.sending();
+			xhttp.open("POST", url, true);
+			xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			xhttp.onreadystatechange = function() {
+				if (xhttp.readyState == 4 && xhttp.status == 200) {
+					var response = JSON.parse(xhttp.responseText);
+					log("XMLHttpRequest: " + response.status);
+
+					status.done(response);
+				}
+				else
+					status.error();
+				form.ajaxRequest = false;
+			};
+			xhttp.send(dataObjString);
+		}
 	}
 
 	function newElement(obj){
@@ -163,23 +174,7 @@ function easyContactForm(formSelector, statusMessages){
 			panel.appendChild(panelBody);
 			return panel;
 		},
-		newModal: function(obj){
-			var modalClass = 'modal fade';
-			if (obj.type == 'danger') modalClass = 'panel-danger';
-			if (obj.type == 'warning') modalClass = 'panel-warning';
-			var panel        = newElement({element: 'div', class: ['panel', modalClass]});
-			var panelHeading = newElement({element: 'div', class: ['panel-heading']});
-			var panelTitle   = newElement({element: 'h3', class: ['panel-title'], content: obj.title});
-			var panelBody    = newElement({element: 'div', class: ['panel-body']});
-			panelBody.appendChild(obj.content);
-			panelHeading.appendChild(panelTitle);
-			panel.appendChild(panelHeading);
-			panel.appendChild(panelBody);
-			return panel;
-		},
 		show: function(){
-			// form.classList.add("blur");
-			statusEl.classList.remove("hidden");			
 			statusEl.classList.add("in");			
 		},
 		remove: function(){
@@ -187,9 +182,7 @@ function easyContactForm(formSelector, statusMessages){
 			while (panelParent.firstChild) {
 				panelParent.removeChild(panelParent.firstChild);
 			}
-			// status.getContainer().parentNode.classList.add("hidden");
 			status.getContainer().parentNode.classList.remove("in");
-			// form.classList.remove("blur");
 		},
 		sending: function(){
 
@@ -206,6 +199,7 @@ function easyContactForm(formSelector, statusMessages){
 
 			var panel = status.newPanel({title: title, content: container});
 			status.getContainer().appendChild(panel);
+			panel.focus();
 			status.show();
 		},
 		done: function(statusObj){
@@ -244,7 +238,7 @@ function easyContactForm(formSelector, statusMessages){
 				status.getContainer().replaceChild(panel, status.getPanel());
 			else
 				status.getContainer().appendChild(panel);
-
+			button.focus();
 			status.show();
 		},
 		error: function() {
@@ -283,6 +277,5 @@ function easyContactForm(formSelector, statusMessages){
 	};
 
 	if (!statusMessages) statusMessages = defaultStatusMessages;
-	addListenersToForm();
-	storageFunctions.restore();
+	initForm();
 }
