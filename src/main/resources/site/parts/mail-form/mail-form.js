@@ -70,29 +70,33 @@ function handleGet(request) {
 	var fieldsetClass = "col-sm-6";
 	if (config.layout == '3') fieldsetClass = "col-md-4";
 
-	var scph = siteConfig.phrases;
+	var customPhrases = siteConfig.phrases;
 	var phrases = {
 		sending: {
-			title: scph.sending.title ? scph.sending.title : localize('sending_title'),
-			message: scph.sending.message ? scph.sending.message : localize('sending_message'),
+			title: customPhrases.sending.title ? customPhrases.sending.title : localize('sending_title'),
+			message: customPhrases.sending.message ? customPhrases.sending.message : localize('sending_message'),
 		},
 		success: {
-			title: scph.success.title ? scph.success.title : localize('success_title'),
-			message: scph.success.message ? scph.success.message : localize('success_message'),
+			title: customPhrases.success.title ? customPhrases.success.title : localize('success_title'),
+			message: customPhrases.success.message ? customPhrases.success.message : localize('success_message'),
 			status: 'success'
 		},
 		danger: {
-			title: scph.danger.title ? scph.danger.title : localize('danger_title'),
-			message: scph.danger.message ? scph.danger.message : localize('danger_message'),
+			title: customPhrases.danger.title ? customPhrases.danger.title : localize('danger_title'),
+			message: customPhrases.danger.message ? customPhrases.danger.message : localize('danger_message'),
 			status: 'error'
 		},
 		warning: {
-			title: scph.warning.title ? scph.warning.title : localize('warning_title'),
-			message: scph.warning.message ? scph.warning.message : localize('warning_message'),
+			title: customPhrases.warning.title ? customPhrases.warning.title : localize('warning_title'),
+			message: customPhrases.warning.message ? customPhrases.warning.message : localize('warning_message'),
 			status: 'warning',
 		},
-		confirm: scph.confirm ? scph.confirm : localize('confirm'),
-		submit: scph.submit ? scph.submit : localize('submit'),
+		confirm: customPhrases.confirm ? customPhrases.confirm : localize('confirm'),
+		submit: customPhrases.submit ? customPhrases.submit : localize('submit'),
+		required_field: {
+			marker: customPhrases.required_field.marker ? customPhrases.required_field.marker : localize('required_field_marker'),
+			note: customPhrases.required_field.note ? customPhrases.required_field.note : localize('required_field_note'),
+		},
 	};
 	model = {
 		form: form,

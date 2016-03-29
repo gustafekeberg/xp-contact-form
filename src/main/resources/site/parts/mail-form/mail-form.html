@@ -1,21 +1,28 @@
-<div data-th-remove="all"> === Thymeleaf fragment for fields! === </div>
+<div THYMELEAF-FIELD-FRAGMENT="BEGIN" data-th-remove="tag" />
+
 <div data-th-remove="all" data-th-fragment="fieldFragment (field, position)">
 	<div data-th-if="${field.placement} == ${position}" class="form-group">
+		
 		<label data-th-if="${field.label}" data-th-attr="for=${form.ID + '_' + field.name}" >
-		<span data-th-remove="tag" data-th-text="${field.label}"></span><span class="required-marker" data-th-if="${field.required}"  data-th-text="${siteConfig.requiredField.marker == null}? ' *' : ' ' + ${siteConfig.requiredField.marker}" />
+			<span data-th-remove="tag" data-th-text="${field.label}"></span><span class="required-marker" data-th-if="${field.required}"  data-th-text="${phrases.required_field.marker == null}? ' *' : ' ' + ${phrases.required_field.marker}" />
 		</label>
+		
 		<input data-th-unless="${field.type} == 'textArea'" class="form-control" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required', type=${field.type}" />
+		
 		<textarea data-th-if="${field.type} == 'textArea'" data-th-class="'form-control ' + ${field.textAreaHeight}" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required'"></textarea>
 	</div>
 </div>
-<div data-th-remove="all"> === Thymeleaf fragment for fields! === </div>
+
+<div THYMELEAF-FIELD-FRAGMENT="END" data-th-remove="tag" />
 
 <section data-th-id="${form.ID}" class="easy-contact-form">
 	<header>
 		<h1 data-th-text="${config.title}?: ${portal.localize({'_key=form_title'})}" />
 	</header>
+	
 	<style data-th-if="${siteConfig.customCSS.CSS}" data-th-utext="${siteConfig.customCSS.CSS}" />
 	<style data-th-if="${config.customCSS.CSS}" data-th-utext="${config.customCSS.CSS}" />
+	
 	<form data-th-action="${form.action}">
 		<div class="row">
 			<fieldset class="col-sm-12">
@@ -47,7 +54,7 @@
 		<div class="row">
 			<fieldset class="col-xs-12" data-th-if="${config.requiredNote}">
 				<div class="form-group">
-				<p class="help-block"><span class="required-marker" data-th-text="${siteConfig.requiredField.marker == null}? '* ' : ${siteConfig.requiredField.marker} + ' '" /><span data-th-text="${siteConfig.requiredField.note}?: 'Required field.'" /></p>
+					<p class="help-block"><span class="required-marker" data-th-text="${phrases.required_field.marker} + ' '" /><span data-th-text="${phrases.required_field.note}" /></p>
 				</div>
 			</fieldset>
 			<fieldset class="col-xs-12">
