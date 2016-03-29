@@ -1,23 +1,3 @@
-<section class="well">
-    <header>
-        <div data-th-switch="${language}">
-            <h1 data-th-case="sv">Dokumentation</h1>
-            <h1 data-th-case="*">Documentation</h1>
-        </div>
-    </header>
-    <div class="alert alert-info">
-        <!-- <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> -->
-        <div data-th-switch="${language}">
-            <span data-th-case="*">This documentation is only visible in edit-mode!</span>
-        </div>
-    </div>
-
-<div data-th-switch="${language}">
-<pre data-th-case="sv">
-Svenska
-</pre>
-<pre data-th-case="*">
-
 # Mail form documentation
 
 ## Usage
@@ -39,8 +19,3 @@ It is easy to format response messages. You just fill in your template for the r
 #### Format a response message
 
 Response messages is entered as plain text. Whenever you want to use data from one of the input fields you enter the *value* of the `Field identifier` between two curly braces: `{{value}}`. The curly braces and it's content will then be replaced with the data of the input field with the corresponding name.
-
-</pre>
-</div>
-
-</section>
