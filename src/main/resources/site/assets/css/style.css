@@ -70,7 +70,8 @@
 	right: 15px;*/
 }
 
-.easy-contact-form .textarea-height-default { height: auto;}
+.easy-contact-form .textarea-height-0 { height: auto;}
+.easy-contact-form .textarea-height-1 { height: 39px;}
 .easy-contact-form .textarea-height-2 { height: 93px;}
 .easy-contact-form .textarea-height-3 { height: 147px}
 .easy-contact-form .textarea-height-4 { height: 201px;}

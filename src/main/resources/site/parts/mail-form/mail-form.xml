@@ -15,17 +15,18 @@
 				<input type="TextLine" name="title">
 					<label>Title</label>
 					<occurrences minimum="0" maximum="1"/>
-					<config/>
 				</input>
-				<input type="CheckBox" name="requiredNote">
-					<label>Show 'required field' note?</label>
+				<input type="CheckBox" name="requiredMarkersShow">
+					<label>Show 'required field' markers?</label>
 					<occurrences minimum="0" maximum="1" />
-					<config/>
+				</input>
+				<input type="CheckBox" name="requiredNoteShow">
+					<label>Show 'required field' note (only visible with markers)?</label>
+					<occurrences minimum="0" maximum="1" />
 				</input>
 				<input type="CheckBox" name="showDoc">
 					<label>Show documentation in edit mode?</label>
 					<occurrences minimum="0" maximum="1" />
-					<config/>
 				</input>
 				<field-set name="Appearence">
 					<label>Appearence</label>
@@ -60,7 +61,6 @@
 						<input type="TextLine" name="label">
 							<label>Label</label>
 							<occurrences minimum="0" maximum="1" />
-							<config/>
 						</input>
 						<input type="TextLine" name="placeholder">
 							<label>Placeholder</label>
@@ -97,7 +97,8 @@
 							<label>TextArea height</label>
 							<occurrences minimum="0" maximum="1" />
 							<config>
-								<option value="textarea-height-default">Default height</option>
+								<option value="textarea-height-0">Default height</option>
+								<option value="textarea-height-1">1 × input field height</option>
 								<option value="textarea-height-2">2 × input field height</option>
 								<option value="textarea-height-3">3 × input field height</option>
 								<option value="textarea-height-4">4 × input field height</option>
