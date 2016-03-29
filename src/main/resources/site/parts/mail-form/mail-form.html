@@ -12,7 +12,7 @@
 
 <section data-th-id="${form.ID}" class="easy-contact-form">
 	<header>
-		<h1 data-th-text="${config.title}?: 'Contact form'"></h1>
+		<h1 data-th-text="${config.title}?: ${portal.localize({'_key=form_title'})}" />
 	</header>
 	<style data-th-if="${siteConfig.customCSS.CSS}" data-th-utext="${siteConfig.customCSS.CSS}" />
 	<style data-th-if="${config.customCSS.CSS}" data-th-utext="${config.customCSS.CSS}" />
@@ -52,7 +52,7 @@
 			</fieldset>
 			<fieldset class="col-xs-12">
 				<div class="form-group">
-					<button class="btn btn-success center-block" data-th-text="${phrases.send}"/>
+					<button class="btn btn-success center-block" data-th-text="${phrases.submit}"/>
 				</div>
 			</fieldset>
 		</div>

@@ -56,8 +56,8 @@
               <label>Confirm</label>
               <occurrences minimum="0" maximum="1" />
             </input>
-            <input type="TextLine" name="send">
-              <label>Send</label>
+            <input type="TextLine" name="submit">
+              <label>Submit</label>
               <occurrences minimum="0" maximum="1" />
             </input>
           </items>

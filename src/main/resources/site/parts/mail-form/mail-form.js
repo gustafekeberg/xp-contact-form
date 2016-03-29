@@ -92,7 +92,7 @@ function handleGet(request) {
 			status: 'warning',
 		},
 		confirm: scph.confirm ? scph.confirm : localize('confirm'),
-		send: scph.confirm ? scph.confirm : localize('send'),
+		submit: scph.submit ? scph.submit : localize('submit'),
 	};
 	model = {
 		form: form,
