@@ -2,13 +2,13 @@
 <mixin>
 	<display-name>Messages</display-name>
 	<items>
-				<input type="TextLine" name="title">
-					<label>Title</label>
-					<occurrences minimum="0" maximum="1" />
-				</input>
-				<input type="TextLine" name="message">
-					<label>Message</label>
-					<occurrences minimum="0" maximum="1" />
-				</input>
+		<input type="TextLine" name="title">
+			<label>Title</label>
+			<occurrences minimum="0" maximum="1" />
+		</input>
+		<input type="TextLine" name="message">
+			<label>Message</label>
+			<occurrences minimum="0" maximum="1" />
+		</input>
 	</items>
 </mixin>

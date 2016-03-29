@@ -4,6 +4,21 @@
   	<field-set name="config">
   		<label>Mail app config</label>
   		<items>
+        <item-set name="requiredField">
+          <label>Required field</label>
+          <occurrences minimum="0" maximum="1" />
+          <items>
+            <input type="TextLine" name="note">
+              <label>Note</label>
+              <occurrences minimum="0" maximum="1" />
+            </input>
+            <input type="TextLine" name="marker">
+              <label>Marker</label>
+              <occurrences minimum="0" maximum="1" />
+            </input>
+          </items>
+        </item-set>
+        <inline mixin="custom-css"/>
         <item-set name="statusMessages">
           <label>Status messages</label>
           <occurrences minimum="0" maximum="1" />
@@ -37,6 +52,14 @@
                 <inline mixin="statusmessages" />
               </items> 
             </item-set>
+            <input type="TextLine" name="confirm">
+              <label>Confirm</label>
+              <occurrences minimum="0" maximum="1" />
+            </input>
+            <input type="TextLine" name="send">
+              <label>Send</label>
+              <occurrences minimum="0" maximum="1" />
+            </input>
           </items>
         </item-set>
       </items>

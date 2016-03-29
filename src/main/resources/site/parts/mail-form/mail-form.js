@@ -34,8 +34,9 @@ function handleGet(request) {
 	var component       = portalLib.getComponent();
 	var content         = portalLib.getContent();
 	var config          = component.config;
+	var siteConfig      = portalLib.getSiteConfig();
 	var placeholders    = {title: config.title};
-	var processedString = "", documentation, view, body;
+	var processedString = "", documentation, view, body, model;
 	var formAction      = portalLib.componentUrl({component: component.path});
 
 	var ID = config.formId || "";
@@ -65,18 +66,48 @@ function handleGet(request) {
 		view = resolve("mail-form-documentation.html");
 		documentation = thymeleaf.render(view, model);
 	}
-	var model = {
+	var fieldsetClass = "col-sm-6";
+	if (config.layout == '3') fieldsetClass = "col-md-4";
+
+	model = {
 		form: form,
 		config: config,
 		documentation: documentation,
 		message: config.message,
 		sender: config.sender,
+		fieldsetClass: fieldsetClass,
+		siteConfig: siteConfig,
 	};
 	view                = resolve("mail-form.html");
 	body                = thymeleaf.render(view, model);
+	var globalMessages = siteConfig.statusMessages;
+	var statusMessages = {
+		sending: {
+			title: globalMessages.sending.title ? globalMessages.sending.title : 'Sending',
+			message: globalMessages.sending.message ? globalMessages.sending.message : 'Processing your message.',
+		},
+		success: {
+			title: globalMessages.success.title ? globalMessages.success.title : 'Success!',
+			message: globalMessages.success.message ? globalMessages.success.message : 'Your message was sent!',
+			status: 'success'
+		},
+		danger: {
+			title: globalMessages.danger.title ? globalMessages.danger.title : 'Error!',
+			message: globalMessages.danger.message ? globalMessages.danger.message : 'Your message could not be sent. Please try again later.',
+			status: 'error'
+		},
+		warning: {
+			title: globalMessages.warning.title ? globalMessages.warning.title : 'Warning!',
+			message: globalMessages.warning.message ? globalMessages.warning.message : 'There were some errors when processing your message. Please try again later.',
+			status: 'warning',
+		},
+		confirm: globalMessages.confirm ? globalMessages.confirm : 'OK',
+		send: globalMessages.confirm ? globalMessages.confirm : 'Send',
+	};
+
 	var style           = '<link rel="stylesheet" href="' + assetUrl({path: '/css/style.css'}) + '">';
 	var getFormDataJS   = '<script src="' + assetUrl({path: '/js/get-form-data.js'}) +'"></script>';
-	var getFormDataInit = '<script>window.addEventListener("load", easyContactForm("#' + form.ID + '"));</script>';
+	var getFormDataInit = '<script>var statusMessages = ' + JSON.stringify(statusMessages) + '; window.addEventListener("load", easyContactForm("#' + form.ID + '", statusMessages));</script>';
 	var webshimJS       = '<script src="' + assetUrl({path: '/js-webshim/minified/polyfiller.js'}) + '"></script>';
 	var webshimInit     = "<script>webshim.polyfill('forms');</script>";
 	return {
@@ -96,7 +127,7 @@ function handleGet(request) {
 	};
 }
 function handlePost(request) {
-	var body = "<h1>Mail form - POST - no AJAX</h1>";
+	var body = "<h1>Mail form - POST - no AJAX - no message sent</h1>";
 
 	return {
 		body: body,

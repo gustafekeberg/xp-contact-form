@@ -14,8 +14,13 @@
 					<label>Form ID</label>
 					<occurrences minimum="1" maximum="1"/>
 					<config>
-						<regexp>^\w*$</regexp>
+						<regexp>[A-Za-z-_]*</regexp>
 					</config>
+				</input>
+				<input type="CheckBox" name="requiredNote">
+					<label>Show required field note?</label>
+					<occurrences minimum="0" maximum="1" />
+					<config/>
 				</input>
 				<input type="CheckBox" name="showDoc">
 					<label>Show documentation in edit mode?</label>
@@ -29,8 +34,8 @@
 							<label>Layout</label>
 							<occurrences minimum="0" maximum="0"/>
 							<config>
-								<option value="twoCols">Two columns (default)</option>
-								<option value="threeCols">Three columns</option>
+								<option value="2">Two columns (default)</option>
+								<option value="3">Three columns</option>
 							</config>
 						</input>
 					</items>
@@ -45,21 +50,21 @@
 					<occurrences minimum="0" maximum="0" />
 					<config />
 					<items>
-						<input type="TextLine" name="label">
-							<label>Label</label>
-							<occurrences minimum="0" maximum="1" />
-							<config/>
-						</input>
 						<input type="TextLine" name="name">
-							<label>Name</label>
+							<label>Field identifier</label>
 							<occurrences minimum="1" maximum="1" />
 							<config>
 								<regexp>^\w*$</regexp>
 							</config>
 						</input>
+						<input type="TextLine" name="label">
+							<label>Label</label>
+							<occurrences minimum="0" maximum="1" />
+							<config/>
+						</input>
 						<input type="TextLine" name="placeholder">
 							<label>Placeholder</label>
-							<occurrences minimum="1" maximum="1" />
+							<occurrences minimum="0" maximum="1" />
 						</input>
 						<input type="ComboBox" name="type">
 							<label>Type</label>
@@ -82,11 +87,28 @@
 							<occurrences minimum="1" maximum="1"/>
 							<config>
 								<option value="left">Left</option>
+								<option value="middle">Middle</option>
 								<option value="right">Right</option>
 								<option value="top">Top</option>
 								<option value="bottom">Bottom</option>
 							</config>
 						</input>
+						<input type="ComboBox" name="textAreaHeight">
+							<label>TextArea height</label>
+							<occurrences minimum="0" maximum="1" />
+							<config>
+								<option value="textarea-height-default">Default height</option>
+								<option value="textarea-height-2">2 × input field height</option>
+								<option value="textarea-height-3">3 × input field height</option>
+								<option value="textarea-height-4">4 × input field height</option>
+								<option value="textarea-height-5">5 × input field height</option>
+								<option value="textarea-height-6">6 × input field height</option>
+								<option value="textarea-height-7">7 × input field height</option>
+								<option value="textarea-height-8">8 × input field height</option>
+								<option value="textarea-height-9">9 × input field height</option>
+							</config>
+						</input>
+
 						<input type="CheckBox" name="required">
 							<label>Required?</label>
 							<occurrences minimum="0" maximum="1" />
@@ -101,5 +123,6 @@
 				<inline mixin="responses"/>
 			</items>
 		</field-set>
+        <inline mixin="custom-css"/>
 	</config>
 </part>

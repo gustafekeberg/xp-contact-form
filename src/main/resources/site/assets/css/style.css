@@ -1,16 +1,6 @@
 .easy-contact-form form {
     transition: all 0.25s ease-in-out;	
 }
-.easy-contact-form textarea {
-	min-height: 200px;
-	margin-bottom: 30px;
-	/*position: absolute;
-	top: 0;*/
-	/*bottom: -10px;*/
-	/*left: 15px;
-	right: 15px;*/
-}
-
 
 .easy-contact-form .fade {
 	transition: .15s;
@@ -64,3 +54,34 @@
 .easy-contact-form .progress {
 	margin-bottom: 0;
 }
+
+.easy-contact-form .required-marker {
+	color: #C74053;
+	font-weight: 100;
+	/* margin-left: .125em; */
+}
+.easy-contact-form textarea {
+	/* min-height: 200px; */
+/* 	margin-bottom: 30px; */
+	/*position: absolute;
+	top: 0;*/
+	/*bottom: -10px;*/
+	/*left: 15px;
+	right: 15px;*/
+}
+
+.easy-contact-form .textarea-height-default { height: auto;}
+.easy-contact-form .textarea-height-2 { height: 93px;}
+.easy-contact-form .textarea-height-3 { height: 147px}
+.easy-contact-form .textarea-height-4 { height: 201px;}
+.easy-contact-form .textarea-height-5 { height: 255px;}
+.easy-contact-form .textarea-height-6 { height: 309px;}
+.easy-contact-form .textarea-height-7 { height: 363px;}
+.easy-contact-form .textarea-height-8 { height: 417px;}
+.easy-contact-form .textarea-height-9 { height: 471px;}
+
+
+
+
+
+

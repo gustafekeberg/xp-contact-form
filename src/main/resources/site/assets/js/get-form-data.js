@@ -252,8 +252,8 @@ function easyContactForm(formSelector, statusMessages){
 	var form = formContainer.querySelector('form');
 	var statusEl = formContainer.querySelector('.status-message');
 
-	// Check if form variables is set, else populate with default values.
-	var defaultStatusMessages = {
+	// Check if form variables is set, else use default values.
+	if (!statusMessages) statusMessages = {
 		sending: {
 			title: 'Sending',
 			message: 'Processing your message.',
@@ -276,6 +276,5 @@ function easyContactForm(formSelector, statusMessages){
 		confirm: 'OK',
 	};
 
-	if (!statusMessages) statusMessages = defaultStatusMessages;
 	initForm();
 }

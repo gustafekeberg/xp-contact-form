@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mixin>
+  <display-name>Custom CSS</display-name>
+  <items>
+    <item-set name="customCSS">
+      <label>Custom CSS</label>
+      <occurrences minimum="0" maximum="1" />
+      <items>
+        <input type="TextArea" name="CSS">
+          <label>Enter custom CSS</label>
+          <occurrences minimum="0" maximum="1" />
+        </input>
+              <!-- <input type="AttachemtUploader" name="cssFile">
+                <label>Upload custom CSS file(s)</label>
+                <occurrences minimum="0" maximum="0" />
+              </input> -->
+            </items>
+          </item-set>
+
+        </items>
+      </mixin>

@@ -1,23 +1,21 @@
-<div data-th-remove="all">
-<!-- Thymeleaf fragment for fields -->
-</div>
+<div data-th-remove="all"> === Thymeleaf fragment for fields! === </div>
 <div data-th-remove="all" data-th-fragment="fieldFragment (field, position)">
 	<div data-th-if="${field.placement} == ${position}" class="form-group">
-		<label data-th-if="${field.label}" data-th-text="${field.label}" data-th-attr="for=${form.ID + '_' + field.name}" />
+		<label data-th-if="${field.label}" data-th-attr="for=${form.ID + '_' + field.name}" >
+		<span data-th-remove="tag" data-th-text="${field.label}"></span><span class="required-marker" data-th-if="${field.required}"  data-th-text="${siteConfig.requiredField.marker == null}? ' *' : ' ' + ${siteConfig.requiredField.marker}" />
+		</label>
 		<input data-th-unless="${field.type} == 'textArea'" class="form-control" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required', type=${field.type}" />
-		<textarea data-th-if="${field.type} == 'textArea'" class="form-control" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required'"></textarea>
+		<textarea data-th-if="${field.type} == 'textArea'" data-th-class="'form-control ' + ${field.textAreaHeight}" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required'"></textarea>
 	</div>
 </div>
-<div data-th-remove="all">
-<!-- Thymeleaf fragment for fields -->
-</div>
-
+<div data-th-remove="all"> === Thymeleaf fragment for fields! === </div>
 
 <section data-th-id="${form.ID}" class="easy-contact-form">
 	<header>
 		<h1 data-th-text="${config.title}?: 'Contact form'"></h1>
 	</header>
-
+	<style data-th-if="${siteConfig.customCSS.CSS}" data-th-utext="${siteConfig.customCSS.CSS}" />
+	<style data-th-if="${config.customCSS.CSS}" data-th-utext="${config.customCSS.CSS}" />
 	<form data-th-action="${form.action}">
 		<div class="row">
 			<fieldset class="col-sm-12">
@@ -25,34 +23,43 @@
 					<div data-th-remove="tag" data-th-include="::fieldFragment (field=${field}, position='top')" />
 				</div>
 			</fieldset>
-			<fieldset class="col-sm-6">
+			<fieldset data-th-class="${fieldsetClass}">
 				<div data-th-remove="tag" data-th-each="field : ${form.inputFields}">
 					<div data-th-remove="tag" data-th-include="::fieldFragment (field=${field}, position='left')" />
 				</div>
 			</fieldset>
-			<fieldset class="col-sm-6">
+			<fieldset data-th-class="${fieldsetClass}" data-th-if="${config.layout} == '3'">
+				<div data-th-remove="tag" data-th-each="field : ${form.inputFields}">
+					<div data-th-remove="tag" data-th-include="::fieldFragment (field=${field}, position='middle')" />
+				</div>
+			</fieldset>
+			<fieldset data-th-class="${fieldsetClass}">
 				<div data-th-remove="tag" data-th-each="field : ${form.inputFields}">
 					<div data-th-remove="tag" data-th-include="::fieldFragment (field=${field}, position='right')" />
 				</div>
 			</fieldset>
 			<fieldset class="col-sm-12">
 				<div data-th-remove="tag" data-th-each="field : ${form.inputFields}">
-				<div data-th-remove="tag" data-th-include="::fieldFragment (field=${field}, position='bottom')" />
+					<div data-th-remove="tag" data-th-include="::fieldFragment (field=${field}, position='bottom')" />
 				</div>
 			</fieldset>
 		</div>
 		<div class="row">
+			<fieldset class="col-xs-12" data-th-if="${config.requiredNote}">
+				<div class="form-group">
+				<p class="help-block"><span class="required-marker" data-th-text="${siteConfig.requiredField.marker == null}? '* ' : ${siteConfig.requiredField.marker} + ' '" /><span data-th-text="${siteConfig.requiredField.note}?: 'Required field.'" /></p>
+				</div>
+			</fieldset>
 			<fieldset class="col-xs-12">
 				<div class="form-group">
-					<button class="btn btn-success center-block">Skicka</button>
+					<button class="btn btn-success center-block" data-th-text="${siteConfig.statusMessages.send}?: 'Send'"/>
 				</div>
 			</fieldset>
 		</div>
 	</form>
 
 	<div class="status-message fade">
-		<div class="container">
-		</div>
+		<div class="container" />
 	</div>
 	
 	<div data-th-if="${documentation}" data-th-utext="${documentation}" data-th-remove="tag" />
