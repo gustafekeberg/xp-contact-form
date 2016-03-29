@@ -19,7 +19,7 @@
           </items>
         </item-set>
         <inline mixin="custom-css"/>
-        <item-set name="statusMessages">
+        <item-set name="phrases">
           <label>Status messages</label>
           <occurrences minimum="0" maximum="1" />
           <config />

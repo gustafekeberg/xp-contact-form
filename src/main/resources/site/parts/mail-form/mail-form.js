@@ -2,6 +2,7 @@ var portalLib = require('/lib/xp/portal');
 var thymeleaf = require('/lib/xp/thymeleaf');
 var mailLib   = require('/lib/xp/mail');
 var utilDataLib  = require('/lib/enonic/util/data');
+var i18nLib = require('/lib/xp/i18n');
 
 function log( string ) {
 	var util = require('/lib/enonic/util/util');
@@ -69,6 +70,30 @@ function handleGet(request) {
 	var fieldsetClass = "col-sm-6";
 	if (config.layout == '3') fieldsetClass = "col-md-4";
 
+	var scph = siteConfig.phrases;
+	var phrases = {
+		sending: {
+			title: scph.sending.title ? scph.sending.title : localize('sending_title'),
+			message: scph.sending.message ? scph.sending.message : localize('sending_message'),
+		},
+		success: {
+			title: scph.success.title ? scph.success.title : localize('success_title'),
+			message: scph.success.message ? scph.success.message : localize('success_message'),
+			status: 'success'
+		},
+		danger: {
+			title: scph.danger.title ? scph.danger.title : localize('danger_title'),
+			message: scph.danger.message ? scph.danger.message : localize('danger_message'),
+			status: 'error'
+		},
+		warning: {
+			title: scph.warning.title ? scph.warning.title : localize('warning_title'),
+			message: scph.warning.message ? scph.warning.message : localize('warning_message'),
+			status: 'warning',
+		},
+		confirm: scph.confirm ? scph.confirm : localize('confirm'),
+		send: scph.confirm ? scph.confirm : localize('send'),
+	};
 	model = {
 		form: form,
 		config: config,
@@ -77,37 +102,14 @@ function handleGet(request) {
 		sender: config.sender,
 		fieldsetClass: fieldsetClass,
 		siteConfig: siteConfig,
+		phrases: phrases,
 	};
 	view                = resolve("mail-form.html");
 	body                = thymeleaf.render(view, model);
-	var globalMessages = siteConfig.statusMessages;
-	var statusMessages = {
-		sending: {
-			title: globalMessages.sending.title ? globalMessages.sending.title : 'Sending',
-			message: globalMessages.sending.message ? globalMessages.sending.message : 'Processing your message.',
-		},
-		success: {
-			title: globalMessages.success.title ? globalMessages.success.title : 'Success!',
-			message: globalMessages.success.message ? globalMessages.success.message : 'Your message was sent!',
-			status: 'success'
-		},
-		danger: {
-			title: globalMessages.danger.title ? globalMessages.danger.title : 'Error!',
-			message: globalMessages.danger.message ? globalMessages.danger.message : 'Your message could not be sent. Please try again later.',
-			status: 'error'
-		},
-		warning: {
-			title: globalMessages.warning.title ? globalMessages.warning.title : 'Warning!',
-			message: globalMessages.warning.message ? globalMessages.warning.message : 'There were some errors when processing your message. Please try again later.',
-			status: 'warning',
-		},
-		confirm: globalMessages.confirm ? globalMessages.confirm : 'OK',
-		send: globalMessages.confirm ? globalMessages.confirm : 'Send',
-	};
 
 	var style           = '<link rel="stylesheet" href="' + assetUrl({path: '/css/style.css'}) + '">';
 	var getFormDataJS   = '<script src="' + assetUrl({path: '/js/get-form-data.js'}) +'"></script>';
-	var getFormDataInit = '<script>var statusMessages = ' + JSON.stringify(statusMessages) + '; window.addEventListener("load", easyContactForm("#' + form.ID + '", statusMessages));</script>';
+	var getFormDataInit = '<script>var phrases = ' + JSON.stringify(phrases) + '; window.addEventListener("load", easyContactForm("#' + form.ID + '", phrases));</script>';
 	var webshimJS       = '<script src="' + assetUrl({path: '/js-webshim/minified/polyfiller.js'}) + '"></script>';
 	var webshimInit     = "<script>webshim.polyfill('forms');</script>";
 	return {
@@ -198,6 +200,10 @@ function sendMail(mailObj) {
 		});
 	else
 		return false;
+}
+
+function localize(key) {
+	return i18nLib.localize({key: key});
 }
 
 function replacePlaceholders(string, placeholderObj){

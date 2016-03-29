@@ -2,7 +2,7 @@
 // All different types of input fields need to have unique names
 // or else the script won't work.
 
-function easyContactForm(formSelector, statusMessages){
+function easyContactForm(formSelector, phrases){
 	
 	function log(str) {
 		var logPrefix = "Simple contact form app:";
@@ -186,8 +186,8 @@ function easyContactForm(formSelector, statusMessages){
 		},
 		sending: function(){
 
-			var title   = statusMessages.sending.title;
-			var message = statusMessages.sending.message;
+			var title   = phrases.sending.title;
+			var message = phrases.sending.message;
 
 			var container   = newElement({element: 'div'});
 			var content     = newElement({element: 'p', content: message});
@@ -205,8 +205,8 @@ function easyContactForm(formSelector, statusMessages){
 		done: function(statusObj){
 			
 			var stat = statusObj.status;
-			var message = statusMessages[stat].message;
-			var title = statusMessages[stat].title;
+			var message = phrases[stat].message;
+			var title = phrases[stat].title;
 
 			if (stat == 'error' || stat == 'warning')
 			{
@@ -214,7 +214,7 @@ function easyContactForm(formSelector, statusMessages){
 				var error = "Error in response: " + errLoc.join(', ');
 				log(error, "error");
 			}
-			var confirm = statusMessages.confirm;
+			var confirm = phrases.confirm;
 
 			var btnDynClass = 'btn-success';
 			if (stat == 'danger') btnDynClass = 'btn-danger';
@@ -253,7 +253,7 @@ function easyContactForm(formSelector, statusMessages){
 	var statusEl = formContainer.querySelector('.status-message');
 
 	// Check if form variables is set, else use default values.
-	if (!statusMessages) statusMessages = {
+	if (!phrases) phrases = {
 		sending: {
 			title: 'Sending',
 			message: 'Processing your message.',
