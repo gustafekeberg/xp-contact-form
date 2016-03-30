@@ -113,7 +113,8 @@ function handleGet(request) {
 
 	var style           = '<link rel="stylesheet" href="' + assetUrl({path: '/css/style.css'}) + '">';
 	var getFormDataJS   = '<script src="' + assetUrl({path: '/js/get-form-data.js'}) +'"></script>';
-	var getFormDataInit = '<script>var phrases = ' + JSON.stringify(phrases) + '; window.addEventListener("load", easyContactForm("#' + form.ID + '", phrases));</script>';
+	// var getFormDataInit = '<script>var phrases = ' + JSON.stringify(phrases) + '; window.addEventListener("load", easyContactForm(phrases));</script>';
+	var getFormDataInit = '<script>var phrases = ' + JSON.stringify(phrases) + '; easyContactForm(phrases);</script>';
 	var webshimJS       = '<script src="' + assetUrl({path: '/js-webshim/minified/polyfiller.js'}) + '"></script>';
 	var webshimInit     = "<script>webshim.polyfill('forms');</script>";
 	return {

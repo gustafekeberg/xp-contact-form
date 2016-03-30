@@ -2,7 +2,9 @@
 // All different types of input fields need to have unique names
 // or else the script won't work.
 
-function easyContactForm(formSelector, phrases){
+function easyContactForm(phrases){
+	var formSelector          = '.easy-contact-form';
+	var sessionStorageKeyName = 'Easy Contact Form - Data ';
 	
 	function log(str) {
 		var logPrefix = "Simple contact form app:";
@@ -12,7 +14,8 @@ function easyContactForm(formSelector, phrases){
 			console.log( logPrefix );
 	}
 
-	function getFormData(){
+
+	function getFormData(formContainer){
 		var formData = formContainer.querySelectorAll("*");
 		var data = {};
 
@@ -26,26 +29,26 @@ function easyContactForm(formSelector, phrases){
 		return data;
 	}
 
-	function initForm(){
+	function initForm(formContainer){
 
 		// Store status of form.ajaxRequest to prevent triggering of multiple requests
-		form.ajaxRequest = false;
+		formContainer.ajaxRequest = false;
 
 		// Restore form data
-		storageFunctions.restore();
+		storageFunctions.restore(formContainer);
 
 		//Add listeners
-		
+		var form = formContainer.querySelector('form');
 		// Submit
 		form.addEventListener('submit', function(event){
 			event.preventDefault();
 			if (this.checkValidity()) {
-				ajaxRequest();
+				ajaxRequest(formContainer);
 			}
 		});
 
 		// Reset - is this one needed?
-		clearButton = form.querySelector('button[type="reset"]');
+		var clearButton = form.querySelector('button[type="reset"]');
 		if ( clearButton )
 		{
 			clearButton.addEventListener('click', function(event){
@@ -58,19 +61,19 @@ function easyContactForm(formSelector, phrases){
 
 		// Input
 		form.addEventListener('input', function(event){
-			storageFunctions.store();
+			storageFunctions.store(formContainer);
 		});
 	}
 
 	var storageFunctions = {
 		// Functions to use with sessionStorage when data is entered to the form
-		restore: function(){
+		restore: function(formContainer){
 			function restoreFormData(obj){
 				var element = formContainer.querySelector('*[name="'+ obj.name +'"]');
 				element.value = obj.value;
 			}
 
-			var loadedFormData = sessionStorage.getItem(formContainer.id);
+			var loadedFormData = sessionStorage.getItem(formContainer.sessionStorageKey);
 			if (loadedFormData != "undefined" ){
 				var loadedFormObject = JSON.parse(loadedFormData);
 				log("Restored form data from sessionStorage");
@@ -81,27 +84,29 @@ function easyContactForm(formSelector, phrases){
 			}
 			else log("Nothing to restore from sessionStorage");
 		},
-		store: function(json){
-			var formData = getFormData();
+		store: function(formContainer){
+			var formData = getFormData(formContainer);
 			var jsonString = JSON.stringify(formData);
-			var storedFormData = sessionStorage.setItem(formContainer.id, jsonString);
+			var storedFormData = sessionStorage.setItem(formContainer.sessionStorageKey, jsonString);
 			log("Writing form data to sessionStorage");
 		},
-		reset: function(json){
+		reset: function(formContainer){
+			var form = formContainer.querySelector('form');
 			form.reset();
-			sessionStorage.removeItem(formContainer.id);
+			sessionStorage.removeItem(formContainer.sessionStorageKey);
 			log("Form reset");
 		},
 	};
 
-	function ajaxRequest() {
-		if (form.ajaxRequest === false)
+	function ajaxRequest(formContainer) {
+		var form = formContainer.querySelector('form');
+		if (formContainer.ajaxRequest === false)
 		{		
-			form.ajaxRequest = true;
+			formContainer.ajaxRequest = true;
 			var url = form.action;
 			log("Preparing XMLHttpRequest");
 			var xhttp    = new XMLHttpRequest();
-			var formData = getFormData();
+			var formData = getFormData(formContainer);
 			var dataObj  = {
 				data: formData,
 				ajax: true
@@ -116,7 +121,7 @@ function easyContactForm(formSelector, phrases){
 					var response = JSON.parse(xhttp.responseText);
 					log("XMLHttpRequest: " + response.status);
 
-					status.done(response);
+					status.done(formContainer, response);
 				}
 				else
 					status.error();
@@ -152,7 +157,7 @@ function easyContactForm(formSelector, phrases){
 	}
 
 	var status = {
-		getContainer: function(){
+		getContainer: function(formContainer){
 			var container = statusEl.querySelector('.container');
 			return container;
 		},
@@ -177,14 +182,14 @@ function easyContactForm(formSelector, phrases){
 		show: function(){
 			statusEl.classList.add("in");			
 		},
-		remove: function(){
+		remove: function(formContainer){
 			var panelParent = status.getPanel().parentNode;
 			while (panelParent.firstChild) {
 				panelParent.removeChild(panelParent.firstChild);
 			}
-			status.getContainer().parentNode.classList.remove("in");
+			status.getContainer(formContainer).parentNode.classList.remove("in");
 		},
-		sending: function(){
+		sending: function(formContainer){
 
 			var title   = phrases.sending.title;
 			var message = phrases.sending.message;
@@ -198,11 +203,11 @@ function easyContactForm(formSelector, phrases){
 			container.appendChild(progress);
 
 			var panel = status.newPanel({title: title, content: container});
-			status.getContainer().appendChild(panel);
+			status.getContainer(formContainer).appendChild(panel);
 			panel.focus();
 			status.show();
 		},
-		done: function(statusObj){
+		done: function(formContainer, statusObj){
 			
 			var stat = statusObj.status;
 			var message = phrases[stat].message;
@@ -228,28 +233,28 @@ function easyContactForm(formSelector, phrases){
 				event.preventDefault();
 				status.remove();
 				if (stat == 'success')
-					storageFunctions.reset();
+					storageFunctions.reset(formContainer);
 			});
 			
 			container.appendChild(content);
 			container.appendChild(button);
 			var panel = status.newPanel({title: title, content: container, type: stat});
 			if (status.getPanel())
-				status.getContainer().replaceChild(panel, status.getPanel());
+				status.getContainer(formContainer).replaceChild(panel, status.getPanel());
 			else
-				status.getContainer().appendChild(panel);
-			button.focus();
+				status.getContainer(formContainer).appendChild(panel);
+			panel.focus();
 			status.show();
 		},
 		error: function() {
-			status.done({ status: 'danger' });
+			status.done(formContainer, { status: 'danger' });
 		},
 		
 	};
 
 	log("Initializing form functions");
 	var formContainer = document.querySelector(formSelector);
-	var form = formContainer.querySelector('form');
+	// var form = formContainer.querySelector('form');
 	var statusEl = formContainer.querySelector('.status-message');
 
 	// Check if form variables is set, else use default values.
@@ -276,5 +281,12 @@ function easyContactForm(formSelector, phrases){
 		confirm: 'OK',
 	};
 
-	initForm();
+	// Find all forms in document and initialize form functions
+
+	var formsInDocument = document.querySelectorAll(formSelector);
+	for (var i = 0, len = formsInDocument.length; i < len; i ++ ) {
+		var currentForm = formsInDocument[i];
+		currentForm.sessionStorageKey = sessionStorageKeyName + i;
+		initForm(currentForm);
+	}
 }
