@@ -125,7 +125,7 @@ function easyContactForm(phrases){
 				}
 				else
 					status.error();
-				form.ajaxRequest = false;
+				formContainer.ajaxRequest = false;
 			};
 			xhttp.send(dataObjString);
 		}
