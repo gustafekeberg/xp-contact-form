@@ -1,8 +1,9 @@
-var portalLib = require('/lib/xp/portal');
-var thymeleaf = require('/lib/xp/thymeleaf');
-var mailLib   = require('/lib/xp/mail');
-var utilDataLib  = require('/lib/enonic/util/data');
-var i18nLib = require('/lib/xp/i18n');
+var portalLib   = require('/lib/xp/portal');
+var contentLib  = require('/lib/xp/content');
+var thymeleaf   = require('/lib/xp/thymeleaf');
+var mailLib     = require('/lib/xp/mail');
+var utilDataLib = require('/lib/enonic/util/data');
+var i18nLib     = require('/lib/xp/i18n');
 
 function log( string ) {
 	var util = require('/lib/enonic/util/util');
@@ -31,8 +32,12 @@ exports.post = function(request) {
 };
 
 function handleGet(request) {
-
-	var component       = portalLib.getComponent();
+	// var component       = portalLib.getComponent();
+	var selectedForm = portalLib.getComponent().config.selectedForm;
+	if (!selectedForm)
+		selectedForm = portalLib.getContent()._id;
+	var component = contentLib.get({key: selectedForm});
+	component.config = component.data;
 	var content         = portalLib.getContent();
 	var config          = component.config;
 	var siteConfig      = portalLib.getSiteConfig();
@@ -143,8 +148,14 @@ function handlePost(request) {
 }
 
 function handleAjax(request) {
+	var selectedForm = portalLib.getComponent().config.selectedForm;
+	var component = contentLib.get({key: selectedForm});
+	// component.config = component.data;
+	// log(component);
+	// var content         = portalLib.getContent();
+	var config          = component.data;
 
-	var config = portalLib.getComponent().config;
+	// var config = portalLib.getComponent().config;
 	var body = JSON.parse(request.body);
 	var data = body.data;
 
