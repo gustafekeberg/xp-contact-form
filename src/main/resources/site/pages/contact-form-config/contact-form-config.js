@@ -22,8 +22,8 @@ exports.get = function(req) {
 	}
 	
 	var mainRegion = content.page.regions.main;
-	log("mainRegion");
-	var view = resolve('form-template.html');
+	// log("mainRegion");
+	var view = resolve('contact-form-config.html');
 	var model = {mainRegion: mainRegion};
 	var body = thymeleaf.render(view, model);
 

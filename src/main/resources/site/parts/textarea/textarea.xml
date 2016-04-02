@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <part>
-	<display-name>Text Area</display-name>
+	<display-name>Contact form: Text Area</display-name>
 	<config>
 		<field-set name="input_field">
 			<label>Text Area</label>

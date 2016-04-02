@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <part>
-	<display-name>Input field</display-name>
+	<display-name>Contact form: Input Field</display-name>
 	<config>
 		<field-set name="input_field">
 			<label>Input field</label>

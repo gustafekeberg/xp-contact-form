@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layout>
-	<display-name>Form - 2 columns</display-name>
+	<display-name>Contact Form: 2 columns</display-name>
 	<config>
 		<input type="TextLine" name="legends">
 			<label>Legend</label>
