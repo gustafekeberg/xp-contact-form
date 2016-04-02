@@ -36,7 +36,7 @@ function handleGet(request) {
 	var selectedForm = portalLib.getComponent().config.selectedForm;
 	if (!selectedForm)
 		// selectedForm = portalLib.getContent()._id;
-	return {body: "<span>Form not found.</span>"};
+	return {body: "<span>No form selected.</span>"};
 	else {
 		var component = contentLib.get({key: selectedForm});
 		// log(component);
@@ -122,7 +122,7 @@ function handleGet(request) {
 			formData: formData,
 			// componentUrl: componentUrl,
 		};
-		// log(model.mainRegion);
+		// log(formData);
 
 		view                = resolve("contact-form-display.html");
 		body                = thymeleaf.render(view, model);
