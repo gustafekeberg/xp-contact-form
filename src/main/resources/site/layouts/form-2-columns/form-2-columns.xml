@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+	<display-name>Form - 2 columns</display-name>
+	<config>
+		<input type="TextLine" name="legends">
+			<label>Legend</label>
+			<occurrences minimum="0" maximum="2" />
+		</input>
+	</config>
+	<regions>
+		<region name="column_1"/>
+		<region name="column_2"/>
+	</regions>
+</layout>

@@ -1,0 +1,59 @@
+
+
+<section class="easy-contact-form">
+	<header>
+		<h2>Form template</h2>
+	</header>
+	<form action="#">
+		<div data-th-each="component : ${formData.components}" data-th-remove="tag">
+			<div data-th-if="${component.type} == 'layout'" class="row">
+
+				<div data-th-remove="all" data-th-fragment="regionFragment (region)">
+					<div class="form-group">
+						<div data-th-each="field : ${region.value.components}">
+
+							<div data-th-remove="all" data-th-fragment="labelFragment (fieldConfig)">
+								<label data-th-attr="for=${form.ID + '_' + fieldConfig.name}" >
+									<span data-th-remove="tag" data-th-text="${field.config.label}"></span><!-- <span class="required-marker" data-th-if="${config.requiredMarkersShow} AND ${field.config.required}" data-th-text="${phrases.required_field.config.marker == null}? ' *' : ' ' + ${phrases.required_field.config.marker}" /> -->
+								</label>
+							</div>
+							<div data-th-if="${field.name} == 'Input field'" >
+								<div data-th-if="${field.config.label}" data-th-include="::labelFragment (fieldConfig=${field.config})" />
+								<input class="form-control" data-th-attr="id=${form.ID + '_' + field.config.name}, name=${field.config.name}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', type=${field.config.type}" />
+							</div>
+							<div data-th-if="${field.name} == 'Text Area'" >
+								<div data-th-if="${field.config.label}" data-th-include="::labelFragment (fieldConfig=${field.config})" />
+								<textarea data-th-class="'form-control ' + ${field.config.textAreaHeight}" data-th-attr="id=${form.ID + '_' + field.config.name}, name=${field.config.name}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required'" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div data-th-if="${component.name} == 'Form - 1 column'" data-th-remove="tag">
+					<fieldset data-th-each="column : ${component.regions}" data-th-class="col-xs-12">
+						<div data-th-include="::regionFragment (region=${column})" data-th-remove="tag" />
+					</fieldset>
+				</div>
+
+				<div data-th-if="${component.name} == 'Form - 2 columns'" data-th-remove="tag">
+					<fieldset data-th-each="column : ${component.regions}" data-th-class="col-md-6">
+						<div data-th-include="::regionFragment (region=${column})" data-th-remove="tag" />
+					</fieldset>
+				</div>
+
+				<div data-th-if="${component.name} == 'Form - 3 columns'" data-th-remove="tag">
+					<fieldset data-th-each="column : ${component.regions}" data-th-class="col-md-4">
+						<div data-th-include="::regionFragment (region=${column})" data-th-remove="tag" />
+					</fieldset>
+				</div>
+
+			</div>	
+		</div>
+		<fieldset class="col-xs-12">
+			<div class="form-group">
+				<button class="btn btn-success center-block" data-th-text="'${phrases.submit}'"/>
+			</div>
+		</fieldset>
+
+	</form>
+</section>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<display-name>Contact form - template page</display-name>
+	<config>
+		<!-- input fields... -->
+	</config>
+	<regions>
+		<region name="main"/>
+	</regions>
+</page>

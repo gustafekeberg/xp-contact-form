@@ -37,6 +37,7 @@ function handleGet(request) {
 	if (!selectedForm)
 		selectedForm = portalLib.getContent()._id;
 	var component = contentLib.get({key: selectedForm});
+	// log(component);
 	component.config = component.data;
 	var content         = portalLib.getContent();
 	var config          = component.config;
@@ -44,9 +45,6 @@ function handleGet(request) {
 	var placeholders    = {title: config.title};
 	var processedString = "", documentation, view, body, model;
 	var formAction      = portalLib.componentUrl({component: component.path});
-
-	var selectedContent = contentLib.get({key: selectedForm});
-	log(selectedContent);
 
 	var ID = config.formId || "";
 
@@ -106,6 +104,10 @@ function handleGet(request) {
 			note: customPhrases.required_field.note ? customPhrases.required_field.note : localize('required_field_note'),
 		},
 	};
+	// var componentUrl = portalLib.contentUrl({component: component.path});
+	var selectetFormObj = contentLib.get({key: selectedForm});
+	var formData = selectetFormObj.page.regions.main;
+	log(config);
 	model = {
 		form: form,
 		config: config,
@@ -115,9 +117,12 @@ function handleGet(request) {
 		fieldsetClass: fieldsetClass,
 		siteConfig: siteConfig,
 		phrases: phrases,
-		mainRegion: selectedContent.page.regions.main,
+		formData: formData,
+		// componentUrl: componentUrl,
 	};
-	view                = resolve("mail-form-test.html");
+	// log(model.mainRegion);
+
+	view                = resolve("show-form.html");
 	body                = thymeleaf.render(view, model);
 
 	var style           = '<link rel="stylesheet" href="' + assetUrl({path: '/css/style.css'}) + '">';
@@ -126,24 +131,21 @@ function handleGet(request) {
 	var getFormDataInit = '<script>var phrases = ' + JSON.stringify(phrases) + '; easyContactForm(phrases);</script>';
 	var webshimJS       = '<script src="' + assetUrl({path: '/js-webshim/minified/polyfiller.js'}) + '"></script>';
 	var webshimInit     = "<script>webshim.polyfill('forms');</script>";
-	
-
-
-	// return {
-	// 	body: body,
-	// 	cotentType: 'text/html',
-	// 	"pageContributions": {
-	// 		"headEnd": [
-	// 		style
-	// 		],
-	// 		"bodyEnd": [
-	// 		getFormDataJS,
-	// 		getFormDataInit,
-	// 		webshimJS,
-	// 		webshimInit
-	// 		]
-	// 	}
-	// };
+	return {
+		body: body,
+		cotentType: 'text/html',
+		"pageContributions": {
+			"headEnd": [
+			style
+			],
+			"bodyEnd": [
+			getFormDataJS,
+			getFormDataInit,
+			webshimJS,
+			webshimInit
+			]
+		}
+	};
 }
 function handlePost(request) {
 	var body = "<h1>Mail form - POST - no AJAX - no message sent</h1>";

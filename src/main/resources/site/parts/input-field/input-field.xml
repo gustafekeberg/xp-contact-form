@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<part>
+	<display-name>Input field</display-name>
+	<config>
+		<field-set name="input_field">
+			<label>Input field</label>
+			<items>
+				<input type="TextLine" name="name">
+					<label>Identifier</label>
+					<occurrences minimum="1" maximum="1" />
+					<config>
+						<regexp>^\w*$</regexp>
+					</config>
+				</input>
+				<input type="TextLine" name="label">
+					<label>Label</label>
+					<occurrences minimum="0" maximum="1" />
+				</input>
+				<input type="TextLine" name="placeholder">
+					<label>Placeholder</label>
+					<occurrences minimum="0" maximum="1" />
+				</input>
+				<input type="ComboBox" name="type">
+					<label>Type</label>
+					<occurrences minimum="1" maximum="1" />
+					<config>
+						<option value="date">Date</option>
+						<option value="datetime-local">Date and time, no time zone</option>
+						<option value="email">E-mail address</option>
+						<option value="month">Month</option>
+						<option value="number">Number</option>
+						<option value="tel">Phone number</option>
+						<option value="text">Text</option>
+						<option value="textArea">TextArea</option>
+						<option value="time">Time</option>
+						<option value="url">url</option>
+					</config>
+				</input>
+				<input type="CheckBox" name="required">
+					<label>Required?</label>
+					<occurrences minimum="0" maximum="1" />
+				</input>
+			</items>
+		</field-set>
+	</config>
+</part>

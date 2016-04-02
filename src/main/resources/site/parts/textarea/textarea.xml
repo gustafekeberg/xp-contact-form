@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<part>
+	<display-name>Text Area</display-name>
+	<config>
+		<field-set name="input_field">
+			<label>Text Area</label>
+			<items>
+				<input type="TextLine" name="name">
+					<label>Identifier</label>
+					<occurrences minimum="1" maximum="1" />
+					<config>
+						<regexp>^\w*$</regexp>
+					</config>
+				</input>
+				<input type="TextLine" name="label">
+					<label>Label</label>
+					<occurrences minimum="0" maximum="1" />
+				</input>
+				<input type="TextLine" name="placeholder">
+					<label>Placeholder</label>
+					<occurrences minimum="0" maximum="1" />
+				</input>
+				<input type="CheckBox" name="required">
+					<label>Required?</label>
+					<occurrences minimum="0" maximum="1" />
+				</input>
+				<input type="ComboBox" name="height">
+					<label>TextArea height</label>
+					<occurrences minimum="0" maximum="1" />
+					<config>
+						<option value="textarea-height-0">Default height</option>
+						<option value="textarea-height-9">Custom height</option>
+						<option value="textarea-height-1">1 × input field height</option>
+						<option value="textarea-height-2">2 × input field height</option>
+						<option value="textarea-height-3">3 × input field height</option>
+						<option value="textarea-height-4">4 × input field height</option>
+						<option value="textarea-height-5">5 × input field height</option>
+						<option value="textarea-height-6">6 × input field height</option>
+						<option value="textarea-height-7">7 × input field height</option>
+						<option value="textarea-height-8">8 × input field height</option>
+						<option value="textarea-height-9">9 × input field height</option>
+					</config>
+				</input>
+				<input type="TextLine" name="customHeight">
+					<label>Custom height</label>
+					<occurrences minimum="0" maximum="1" />
+					<config>
+						<!-- <regexp></regexp> -->
+					</config>
+				</input>
+			</items>
+		</field-set>
+	</config>
+</part>
