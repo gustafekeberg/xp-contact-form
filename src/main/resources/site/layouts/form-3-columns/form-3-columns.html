@@ -1,23 +1,17 @@
 <div class="row" data-th-attr="data-portal-component-type=${component.type}">
 	<fieldset class="col-xs-4" data-portal-region="column_1">
-		<div class="form-group">
-			<div data-th-each="component : ${column_1.components}" data-th-remove="tag">
-				<div data-portal-component="${component.path}" data-th-remove="tag" />
-			</div>
+		<div data-th-each="component : ${column_1.components}" data-th-remove="tag">
+			<div data-portal-component="${component.path}" data-th-remove="tag" />
 		</div>
 	</fieldset>
 	<fieldset class="col-xs-4" data-portal-region="column_2">
-		<div class="form-group">
-			<div data-th-each="component : ${column_2.components}" data-th-remove="tag">
-				<div data-portal-component="${component.path}" data-th-remove="tag" />
-			</div>
+		<div data-th-each="component : ${column_2.components}" data-th-remove="tag">
+			<div data-portal-component="${component.path}" data-th-remove="tag" />
 		</div>
 	</fieldset>
 	<fieldset class="col-xs-4" data-portal-region="column_3">
-		<div class="form-group">
-			<div data-th-each="component : ${column_3.components}" data-th-remove="tag">
-				<div data-portal-component="${component.path}" data-th-remove="tag" />
-			</div>
+		<div data-th-each="component : ${column_3.components}" data-th-remove="tag">
+			<div data-portal-component="${component.path}" data-th-remove="tag" />
 		</div>
 	</fieldset>
 </div>
