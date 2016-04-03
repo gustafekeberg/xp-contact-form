@@ -4,31 +4,37 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>Contact form config</title>
+	<title>Contact form setup - <span data-th-text="${content.displayName}" data-th-remove="tag" /></title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 </head>
 <body>
+<div class="container-fluid">
+		<header class="container page-header">
+			<h1>Contact form setup</h1>
+		</header>
+	</div>
 	<div class="container">
+
 		<section class="easy-contact-form">
 			<header>
-				<h2>Contact form config</h2>
+				<h2 data-th-text="${content.displayName}" />
 			</header>
 			<!-- <form action="#"> -->
-				<div data-portal-region="main">
-					<div data-th-each="component : ${mainRegion.components}" data-th-remove="tag">
-						<div data-portal-component="${component.path}"  data-th-remove="tag" />
-			<!-- <p data-th-utext="${component}" /> -->
-						
-					</div>
+			<div data-portal-region="main">
+				<div data-th-each="component : ${mainRegion.components}" data-th-remove="tag">
+					<div data-portal-component="${component.path}"  data-th-remove="tag" />
+					<!-- <p data-th-utext="${component}" /> -->
+
 				</div>
+			</div>
 				<!-- <fieldset class="col-xs-12">
 					<div class="form-group">
 					<button class="btn btn-success center-block" data-th-text="'${phrases.submit}'"/>
 					</div>
 				</fieldset> -->
 
-			<!-- </form> -->
-		</section>
-	</div>
-</body>
-</html>
+				<!-- </form> -->
+			</section>
+		</div>
+	</body>
+	</html>

@@ -1,0 +1,26 @@
+<div data-th-unless="${config.identifier}">
+	<div class="contact-form-setup-field-wrapper">
+		<p class="text-danger">Identifier cannot be empty!</p>
+	</div>
+</div>
+<div class="" data-th-if="${config.identifier}" >
+	<div class="contact-form-setup-field-wrapper">
+<!-- <label data-th-if="${config.label}" data-th-attr="for=${formData.id + '_' + config.identifier}" >
+	<span data-th-remove="tag" data-th-text="${config.label}"></span><span class="required-marker" data-th-if="${formData.show_required_markers} AND ${formData.show_required_note}" data-th-text="${phrases.required_field.marker == null}? ' *' : ' ' + ${phrases.required_field.marker}" />
+</label> -->
+<div data-th-if="${formInputType} == 'textarea'">
+	<!-- <textarea data-th-class="${config.height_class}? 'form-control ' + ${config.height_class} : 'form-control'" data-th-attr="id=${formData.id + '_' + config.identifier}, name=${config.identifier}, placeholder=${config.placeholder}, required=${config.required}? 'required', style=${config.height_class == 'textarea-height-custom'}? 'height: ' + ${config.height_value}"></textarea> -->
+	<strong>TextArea: </strong>
+	<div data-th-each="key, iterStat : ${config}" data-th-remove="tag">
+		<span class="label label-default"><u data-th-text="${key.key}" data-th-remove="none"/>: <span class="" data-th-text="${key.value}" /></span><!-- <span data-th-unless="${iterStat.last}"> | </span> -->
+	</div>
+</div>
+<div data-th-if="${formInputType} == 'input'">
+	<!-- <input class="form-control" data-th-attr="id=${formData.id + '_' + config.identifier}, name=${config.identifier}, placeholder=${config.placeholder}, required=${config.required}? 'required', type=${config.type}" /> -->
+		<strong>Input: </strong>
+	<div data-th-each="key, iterStat : ${config}" data-th-remove="tag">
+		<span class="label label-default"><u data-th-text="${key.key}" data-th-remove="none"/>: <span class="" data-th-text="${key.value}" /></span><!-- <span data-th-unless="${iterStat.last}"> | </span> -->
+	</div>
+</div>
+</div>
+</div>

@@ -5,7 +5,7 @@
 		<field-set name="input_field">
 			<label>Input field</label>
 			<items>
-				<input type="TextLine" name="name">
+				<input type="TextLine" name="identifier">
 					<label>Identifier</label>
 					<occurrences minimum="1" maximum="1" />
 					<config>
@@ -31,7 +31,6 @@
 						<option value="number">Number</option>
 						<option value="tel">Phone number</option>
 						<option value="text">Text</option>
-						<option value="textArea">TextArea</option>
 						<option value="time">Time</option>
 						<option value="url">url</option>
 					</config>

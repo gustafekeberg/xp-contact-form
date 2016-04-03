@@ -9,17 +9,18 @@
 						<div data-th-each="field : ${region.value.components}" data-th-remove="tag">
 						<div class="form-group">
 							<div data-th-remove="all" data-th-fragment="labelFragment (fieldConfig)">
-								<label data-th-attr="for=${form.ID + '_' + fieldConfig.name}" >
-									<span data-th-remove="tag" data-th-text="${field.config.label}"></span><!-- <span class="required-marker" data-th-if="${config.requiredMarkersShow} AND ${field.config.required}" data-th-text="${phrases.required_field.config.marker == null}? ' *' : ' ' + ${phrases.required_field.config.marker}" /> -->
+								<label data-th-attr="for=${form.ID + '_' + fieldConfig.identifier}" >
+									<span data-th-remove="tag" data-th-text="${field.config.label}"></span><span class="required-marker" data-th-if="${config.show_required_markers} AND ${field.config.required}" data-th-text="${phrases.required_field.marker == null}? ' *' : ' ' + ${phrases.required_field.marker}" />
 								</label>
 							</div>
 							<div data-th-if="${field.name} == 'Contact Form: Input Field'" data-th-remove="tag">
 								<div data-th-if="${field.config.label}" data-th-include="::labelFragment (fieldConfig=${field.config})" />
-								<input class="form-control" data-th-attr="id=${form.ID + '_' + field.config.name}, name=${field.config.name}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', type=${field.config.type}" />
+								<input class="form-control" data-th-attr="id=${form.ID + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', type=${field.config.type}" />
 							</div>
 							<div data-th-if="${field.name} == 'Contact Form: Text Area'" data-th-remove="tag">
 								<div data-th-if="${field.config.label}" data-th-include="::labelFragment (fieldConfig=${field.config})" />
-								<textarea data-th-class="'form-control ' + ${field.config.textAreaHeight}" data-th-attr="id=${form.ID + '_' + field.config.name}, name=${field.config.name}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required'" />
+								<!-- <textarea data-th-class="'form-control ' + ${field.config.textAreaHeight}" data-th-attr="id=${form.ID + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required'" ></textarea> -->
+								<textarea data-th-class="${field.config.height_class}? 'form-control ' + ${field.config.height_class} : 'form-control'" data-th-attr="id=${form.ID + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', style=${field.config.height_class == 'textarea-height-custom'}? 'height: ' + ${field.config.height_value}"></textarea>
 							</div>
 						</div>	
 					</div>
@@ -47,7 +48,7 @@
 		</div>
 		<fieldset class="col-xs-12">
 			<div class="form-group">
-				<button class="btn btn-success center-block" data-th-text="'${phrases.submit}'"/>
+				<button class="btn btn-success center-block" data-th-text="${phrases.submit}"/>
 			</div>
 		</fieldset>
 

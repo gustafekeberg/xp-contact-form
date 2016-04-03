@@ -4,7 +4,7 @@
 	<div data-th-if="${field.placement} == ${position}" class="form-group">
 		
 		<label data-th-if="${field.label}" data-th-attr="for=${form.ID + '_' + field.name}" >
-			<span data-th-remove="tag" data-th-text="${field.label}"></span><span class="required-marker" data-th-if="${config.requiredMarkersShow} AND ${field.required}" data-th-text="${phrases.required_field.marker == null}? ' *' : ' ' + ${phrases.required_field.marker}" />
+			<span data-th-remove="tag" data-th-text="${field.label}"></span><span class="required-marker" data-th-if="${config.show_required_markers} AND ${field.required}" data-th-text="${phrases.required_field.marker == null}? ' *' : ' ' + ${phrases.required_field.marker}" />
 		</label>
 		
 		<input data-th-unless="${field.type} == 'textArea'" class="form-control" data-th-attr="id=${form.ID + '_' + field.name}, name=${field.name}, placeholder=${field.placeholder}, required=${field.required}? 'required', type=${field.type}" />
@@ -52,7 +52,7 @@
 			</fieldset>
 		</div>
 		<div class="row">
-			<fieldset class="col-xs-12" data-th-if="${config.requiredNoteShow} AND ${config.requiredMarkersShow}">
+			<fieldset class="col-xs-12" data-th-if="${config.show_required_note} AND ${config.requiredMarkersShow}">
 				<div class="form-group">
 					<p class="help-block"><span class="required-marker" data-th-text="${phrases.required_field.marker} + ' '" /><span data-th-text="${phrases.required_field.note}" /></p>
 				</div>
