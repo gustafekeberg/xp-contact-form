@@ -83,18 +83,29 @@
 
 .contact-form-setup-layout {
 	border: 2px solid #fff;
-	padding: 5px 0;
-	background-color: rgba(216, 230, 238, .5);
+	// padding: 5px 0;
+	background-color: rgba(0, 0, 0, .1);
 	// border-radius: 7px;
+	margin: 0;
 }
+.contact-form-setup-layout > div {
+	border: 2px solid #E6E6E6;
+	background-color: #D2D2D2
+}
+
 
 .contact-form-setup-field-wrapper {
-	// border: 1px dashed #3F3F3F;
+	// margin: 8px -7px;
+	margin: 2px 0;
+	border: 2px solid #505050;
+}
+.contact-form-setup-field-wrapper > div {
 	background-color: #FFFFFF;
 	padding: 6px 9px;
-	margin: 4px -7px;
+	overflow: auto;
 }
 
+.contact-form-setup-layout .label { display: inline-block; }
 .contact-form-setup-layout [name="required"] { background-color: #9D5E00; }
 .contact-form-setup-layout [name="identifier"] { background-color: #008000; }
 .contact-form-setup-layout [name="placeholder"] { background-color: #2E5B80; }

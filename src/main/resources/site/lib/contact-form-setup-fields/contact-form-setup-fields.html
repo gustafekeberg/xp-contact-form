@@ -3,19 +3,17 @@
 		<p class="text-danger">Identifier cannot be empty!</p>
 	</div>
 </div>
-<div class="" data-th-if="${config.identifier}" >
-	<div class="contact-form-setup-field-wrapper">
-<div data-th-if="${formInputType} == 'textarea'">
-	<strong>TextArea: </strong>
-	<div data-th-each="key, iterStat : ${config}" data-th-remove="tag">
-		<span class="label label-default" data-th-name="${key.key}"><u data-th-text="${key.key}" data-th-remove="none"/>: <span class="" data-th-text="${key.value}" /></span>
+<div data-th-if="${config.identifier}" class="contact-form-setup-field-wrapper">
+	<div data-th-if="${formInputType} == 'textarea'">
+		<strong>TextArea: </strong>
+		<div data-th-each="key, iterStat : ${config}" data-th-remove="tag">
+			<span class="label label-default" data-th-name="${key.key}"><u data-th-text="${key.key}" data-th-remove="none"/>: <span class="" data-th-text="${key.value}" /></span>
+		</div>
 	</div>
-</div>
-<div data-th-if="${formInputType} == 'input'">
+	<div data-th-if="${formInputType} == 'input'">
 		<strong>Input: </strong>
-	<div data-th-each="key, iterStat : ${config}" data-th-remove="tag">
-		<span class="label label-default" data-th-name="${key.key}"><u data-th-text="${key.key}" data-th-remove="none"/>: <span class="" data-th-text="${key.value}" /></span>
+		<div data-th-each="key, iterStat : ${config}" data-th-remove="tag">
+			<span class="label label-default" data-th-name="${key.key}"><u data-th-text="${key.key}" data-th-remove="none"/>: <span class="" data-th-text="${key.value}" /></span>
+		</div>
 	</div>
-</div>
-</div>
 </div>

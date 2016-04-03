@@ -1,10 +1,10 @@
 <div class="row contact-form-setup-layout" data-th-attr="data-portal-component-type=${component.type}">
-	<fieldset class="col-xs-12">
+	<div class="col-xs-12">
 		<div data-portal-region="column">
 			<legend data-th-if="${component.config.legend}" data-th-text="${component.config.legend}" />
 			<div data-th-each="component : ${column.components}" data-th-remove="tag">
 				<div data-portal-component="${component.path}" data-th-remove="tag" 	/>
 			</div>
 		</div>
-	</fieldset>
+	</div>
 </div>

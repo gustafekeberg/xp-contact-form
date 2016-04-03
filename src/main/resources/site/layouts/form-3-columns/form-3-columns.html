@@ -1,17 +1,17 @@
 <div class="row contact-form-setup-layout" data-th-attr="data-portal-component-type=${component.type}">
-	<fieldset class="col-xs-4" data-portal-region="column_1">
+	<div class="col-xs-4" data-portal-region="column_1">
 		<div data-th-each="component : ${column_1.components}" data-th-remove="tag">
 			<div data-portal-component="${component.path}" data-th-remove="tag" />
 		</div>
-	</fieldset>
-	<fieldset class="col-xs-4" data-portal-region="column_2">
+	</div>
+	<div class="col-xs-4" data-portal-region="column_2">
 		<div data-th-each="component : ${column_2.components}" data-th-remove="tag">
 			<div data-portal-component="${component.path}" data-th-remove="tag" />
 		</div>
-	</fieldset>
-	<fieldset class="col-xs-4" data-portal-region="column_3">
+	</div>
+	<div class="col-xs-4" data-portal-region="column_3">
 		<div data-th-each="component : ${column_3.components}" data-th-remove="tag">
 			<div data-portal-component="${component.path}" data-th-remove="tag" />
 		</div>
-	</fieldset>
+	</div>
 </div>
