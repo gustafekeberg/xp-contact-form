@@ -32,26 +32,30 @@ exports.post = function(request) {
 };
 
 function handleGet(request) {
-	// var component       = portalLib.getComponent();
-	var selectedForm = portalLib.getComponent().config.selectedForm;
+	// Get selected form or return message
+	var component = portalLib.getComponent();
+	var selectedForm = component.config.selectedForm;
 	if (!selectedForm)
-		// selectedForm = portalLib.getContent()._id;
-	return {body: "<span>No form selected.</span>"};
+		return {body: '<span class="text-danger">Please select a form.</span>'};
 	else {
-		var component = contentLib.get({key: selectedForm});
-		// log(component);
-		component.config = component.data;
+		var selectedComponent = contentLib.get({key: selectedForm});
 		var content         = portalLib.getContent();
-		var config          = component.config;
+		var config          = selectedComponent.data;
 		var siteConfig      = portalLib.getSiteConfig();
 		var placeholders    = {title: config.title};
 		var processedString = "", documentation, view, body, model;
-		var formAction      = portalLib.componentUrl({component: component.path});
+		var formAction      = portalLib.componentUrl({component: selectedComponent.path});
 
-		var ID = config.formId || "";
+		var id = config.id;
+		if (!id) id = selectedForm;
+		
+		// log(config);
+		var title = component.config.title;
+		if (!title) title = config.title;
 
 		var form = {
-			ID: ID,
+			title: title,
+			id: id,
 			action: formAction,
 			inputFields: utilDataLib.forceArray(config.inputField)
 		};
@@ -72,8 +76,8 @@ function handleGet(request) {
 				language = 'en';
 			}
 			model = { language: language };
-			view = resolve("mail-form-documentation.html");
-			documentation = thymeleaf.render(view, model);
+			// view = resolve("mail-form-documentation.html");
+			// documentation = thymeleaf.render(view, model);
 		}
 		var fieldsetClass = "col-sm-6";
 		if (config.layout == '3') fieldsetClass = "col-md-4";
@@ -162,7 +166,7 @@ function handlePost(request) {
 function handleAjax(request) {
 	var selectedForm = portalLib.getComponent().config.selectedForm;
 	var component = contentLib.get({key: selectedForm});
-	// component.config = component.data;
+	// component.data = component.data;
 	// log(component);
 	// var content         = portalLib.getContent();
 	var config          = component.data;

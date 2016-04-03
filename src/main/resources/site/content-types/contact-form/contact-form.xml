@@ -7,10 +7,10 @@
 		<field-set name="Config">
 			<label>Config</label>
 			<items>
-				<!-- <input type="TextLine" name="title">
+				<input type="TextLine" name="title">
 					<label>Title</label>
 					<occurrences minimum="0" maximum="1"/>
-				</input> -->
+				</input>
 				<input type="TextLine" name="id">
 					<label>Form ID</label>
 					<occurrences minimum="0" maximum="1"/>

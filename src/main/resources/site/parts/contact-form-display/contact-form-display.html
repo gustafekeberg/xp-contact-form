@@ -1,26 +1,28 @@
-<section class="easy-contact-form">
+<!-- <style data-th-if="${siteConfig.customCSS.CSS}" data-th-utext="${siteConfig.customCSS.CSS}" /> -->
+<!-- <style data-th-if="${config.customCSS.CSS}" data-th-utext="${config.customCSS.CSS}" /> -->
+
+<section data-th-id="${form.id}" class="easy-contact-form">
 	<header>
-		<h2>Contact form display form</h2>
+		<h2 data-th-text="${form.title}">Contact form display form</h2>
 	</header>
-	<form action="#">
+	<form data-th-action="${form.action}">
 		<div data-th-each="component : ${formData.components}" data-th-remove="tag">
 			<div data-th-if="${component.type} == 'layout'" class="row">
 				<div data-th-remove="all" data-th-fragment="regionFragment (region)">
-						<div data-th-each="field : ${region.value.components}" data-th-remove="tag">
+					<div data-th-each="field : ${region.value.components}" data-th-remove="tag">
 						<div class="form-group">
 							<div data-th-remove="all" data-th-fragment="labelFragment (fieldConfig)">
-								<label data-th-attr="for=${form.ID + '_' + fieldConfig.identifier}" >
+								<label data-th-attr="for=${form.id + '_' + fieldConfig.identifier}" >
 									<span data-th-remove="tag" data-th-text="${field.config.label}"></span><span class="required-marker" data-th-if="${config.show_required_markers} AND ${field.config.required}" data-th-text="${phrases.required_field.marker == null}? ' *' : ' ' + ${phrases.required_field.marker}" />
 								</label>
 							</div>
 							<div data-th-if="${field.name} == 'Contact Form: Input Field'" data-th-remove="tag">
 								<div data-th-if="${field.config.label}" data-th-include="::labelFragment (fieldConfig=${field.config})" />
-								<input class="form-control" data-th-attr="id=${form.ID + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', type=${field.config.type}" />
+								<input class="form-control" data-th-attr="id=${form.id + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', type=${field.config.type}" />
 							</div>
 							<div data-th-if="${field.name} == 'Contact Form: Text Area'" data-th-remove="tag">
 								<div data-th-if="${field.config.label}" data-th-include="::labelFragment (fieldConfig=${field.config})" />
-								<!-- <textarea data-th-class="'form-control ' + ${field.config.textAreaHeight}" data-th-attr="id=${form.ID + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required'" ></textarea> -->
-								<textarea data-th-class="${field.config.height_class}? 'form-control ' + ${field.config.height_class} : 'form-control'" data-th-attr="id=${form.ID + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', style=${field.config.height_class == 'textarea-height-custom'}? 'height: ' + ${field.config.height_value}"></textarea>
+								<textarea data-th-class="${field.config.height_class}? 'form-control ' + ${field.config.height_class} : 'form-control'" data-th-attr="id=${form.id + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', style=${field.config.height_class == 'textarea-height-custom'}? 'height: ' + ${field.config.height_value}"></textarea>
 							</div>
 						</div>	
 					</div>
@@ -51,6 +53,10 @@
 				<button class="btn btn-success center-block" data-th-text="${phrases.submit}"/>
 			</div>
 		</fieldset>
-
 	</form>
+
+	<div class="status-message fade">
+		<div class="container" />
+	</div>
+
 </section>
