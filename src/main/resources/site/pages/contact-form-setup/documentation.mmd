@@ -1,0 +1,154 @@
+# Mail form documentation
+
+## Usage
+
+1. First thing to do is to define your input fields. 
+2. Now you can define the response message(s) which will be sent when someone is submitting the form.
+
+## Form configuration
+
+Form title
+: Title of the form (`header > h2`)
+
+Form ID
+: ID on the form wrapper
+
+Layout
+: 2- or 3-column layout  
+
+Markers
+: Display markers on required fields
+
+Required note
+: Explanation for markers on required fields.
+
+### Layouts (2- or 3-columns)
+
+<style>
+   .layout-view-wrapper * {
+        box-sizing: border-box;        
+        display: inline-block;
+    }
+    .layout-view-wrapper .col {
+        color: #000000;
+        position: relative;
+        padding: 5px 10px;
+        text-align: center;
+        line-height: 2.5em;
+    }
+    .layout-view-wrapper .col::after {
+        content: "";
+        background: #9CC2D9;
+        border: 1px solid #7F7F7F;
+        border-radius: 5px;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        right: 2px;
+        bottom: 2px;
+        z-index: -1;
+    }
+    .layout-view-wrapper .col-1-1 { width: 100%; }
+    .layout-view-wrapper .col-1-2 { width: 50%; float: left; }
+    .layout-view-wrapper .col-1-3 { width: 33.3333333%; float: left; }
+</style>
+
+The placement of the form input fields is configurable. You select which column you want the content on the corresponding radio button when configuring the part. If you select the middle column, when displaying the "two-column"-layout, the input field will not show.
+
+The order of which the input fields appear in the configuration will set the order of their appearance in the contact form.
+
+#### Example with 2 columns
+
+<div class="layout-view-wrapper">
+    <div class="col col-1-1">Top</div>
+    <div class="col col-1-2">Column 1 - row 1</div>
+    <div class="col col-1-2">Column 2 - row 1</div>
+<!--     <div class="col col-1-2">Column 1 - row 2</div> -->
+<!--     <div class="col col-1-2">Column 2 - row 2</div> -->
+    <div class="col col-1-1">Bottom</div>
+</div>
+
+#### Example with 3 columns
+
+<div class="layout-view-wrapper">
+    <div class="col col-1-1">Top</div>
+    <div class="col col-1-3">Column 1 - row 1</div>
+    <div class="col col-1-3">Column 2 - row 1</div>
+    <div class="col col-1-3">Column 3 - row 1</div>
+    <!-- <div class="col col-1-3">Column 1 - row 2</div> -->
+    <!-- <div class="col col-1-3">Column 2 - row 2</div> -->
+    <!-- <div class="col col-1-3">Column 3 - row 2</div> -->
+    <div class="col col-1-1">Bottom</div>
+</div>
+
+### Input fields
+
+You will need to define the identifier, what type of input field, and where it should be placed (look at the figure below).
+
+### Responses
+
+It is easy to format response messages. You just fill in your template for the response message in `Response templates`. You can create as many responses as you need. It could for instance be one response message to the one who should receive the message from the contact form, and a copy the the one who sent it.
+
+### Format a response message
+
+Response messages is entered as plain text. Whenever you want to use data from one of the input fields you enter the *value* of the `Field identifier` between two curly braces: `{{value}}`. The curly braces and it's content will then be replaced with the data of the input field with corresponding name.
+
+#### Example
+
+Example of a response template for the `Message body`:
+
+```
+{{name}} sent a message.
+Phone: {{phone}}
+E-mail: {{email}}
+
+Copy of message below line:
+----------
+
+{{message}}
+```
+
+If the values of the input fields is filled in like this:
+
+```
+name    = This Person
+phone   = 123 456 789
+email   = my@email.com
+message = This is my message to you. Can you send me a reply?
+```
+
+The generated message will look like this:
+
+```
+This Person sent a message.
+Phone: 123 456 789
+E-mail: my@email.com
+
+Copy of message below line:
+----------
+
+This is my message to you. Can you send me a reply?
+```
+
+The `field identifiers` is used in the other fields too.
+
+- To format the `Subject` it's possible to enter: `Message from contact form - sender: {{name}}`. This will generate this subject to the message: `Message from contact form - sender: This Person`
+- `Reply to` can be formatted with a plain e-mail-address: `no-reply@domain`, or with a `field identifier`: `{{email}}`
+
+## Customization
+
+### Custom text in form
+
+The text for status messages, labels, buttons, etc. can be overridden in the app-config.
+
+### CSS
+
+It's possible to add custom CSS. Use css-class `easy-contact-form` to style the form.
+
+The textarea have a special class that set it's height to the height of a input field multiplied by the number of fields: `textarea-height-1`, `textarea-height-2`, `textarea-height-3`, `textarea-height-...` (this is useful if you want to match the height of the textarea to the height of the input fields when using multiple columns). If you select the default height the class will be set to `.textarea-height-0` which has the css-rule `height: auto`.
+
+To customize the height of the textarea you can enter something like this in the field for custom CSS:
+
+```
+.easy-contact-form .textarea-height-0 { height: 300px; }
+```

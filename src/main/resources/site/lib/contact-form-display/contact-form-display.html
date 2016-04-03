@@ -1,7 +1,7 @@
-<!-- <style data-th-if="${siteConfig.customCSS.CSS}" data-th-utext="${siteConfig.customCSS.CSS}" /> -->
-<!-- <style data-th-if="${config.customCSS.CSS}" data-th-utext="${config.customCSS.CSS}" /> -->
 
 <section data-th-id="${form.id}" class="easy-contact-form">
+<!-- <style data-th-if="${siteConfig.customCSS.CSS}" data-th-utext="${siteConfig.customCSS.CSS}" /> -->
+<!-- <style data-th-if="${config.customCSS.CSS}" data-th-utext="${config.customCSS.CSS}" /> -->
 	<header>
 		<h2 data-th-text="${form.title}">Contact form display form</h2>
 	</header>
@@ -48,11 +48,13 @@
 
 			</div>	
 		</div>
-		<fieldset class="col-xs-12">
-			<div class="form-group">
-				<button class="btn btn-success center-block" data-th-text="${phrases.submit}"/>
-			</div>
-		</fieldset>
+		<div class="row">
+			<fieldset class="col-xs-12">
+				<div class="form-group">
+					<button class="btn btn-success center-block" data-th-text="${phrases.submit}"/>
+				</div>
+			</fieldset>
+		</div>
 	</form>
 
 	<div class="status-message fade">

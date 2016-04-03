@@ -26,8 +26,12 @@
 					<label>Show 'required field' note (only visible with markers)?</label>
 					<occurrences minimum="0" maximum="1" />
 				</input> -->
-				<input type="CheckBox" name="showDoc">
-					<label>Show documentation? (only visible in edit mode)</label>
+				<input type="CheckBox" name="show_preview">
+					<label>Preview form?</label>
+					<occurrences minimum="0" maximum="1" />
+				</input>
+				<input type="CheckBox" name="show_help">
+					<label>Show help?</label>
 					<occurrences minimum="0" maximum="1" />
 				</input>
 			</items>

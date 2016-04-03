@@ -4,7 +4,7 @@ var thymeleaf   = require('/lib/xp/thymeleaf');
 var mailLib     = require('/lib/xp/mail');
 var utilDataLib = require('/lib/enonic/util/data');
 var i18nLib     = require('/lib/xp/i18n');
-var displayForm = require('/lib/contact-form-display');
+
 function log( string ) {
 	var util = require('/lib/enonic/util/util');
 	util.log(string);
@@ -14,33 +14,27 @@ function assetUrl(url){
 	return portalLib.assetUrl(url);
 }
 
-exports.get = function(request) {
-	var component = portalLib.getComponent();
-	var selectedForm = component.config.selectedForm;
-	return displayForm.get(request, selectedForm);
-	// return handleGet(request);
+exports.get = function(request, selectedForm) {
+	return handleGet(request, selectedForm);
 };
 
-exports.post = function(request) {
-	var component = portalLib.getComponent();
-	var selectedForm = component.config.selectedForm;
-	return displayForm.post(request, selectedForm);
+exports.post = function(request, selectedForm) {
 
-	// var body = JSON.parse(request.body);
+	var body = JSON.parse(request.body);
 
-	// if (body.ajax === true)
-	// {
-	// 	return handleAjax(request);
-	// }
+	if (body.ajax === true)
+	{
+		return handleAjax(request, selectedForm);
+	}
 
-	// else
-	// 	return handlePost(request);
+	else
+		return handlePost(request, selectedForm);
 };
 
-function handleGet(request) {
+function handleGet(request, selectedForm) {
 	// Get selected form or return message
 	var component = portalLib.getComponent();
-	var selectedForm = component.config.selectedForm;
+	// var selectedForm = component.config.selectedForm;
 	if (!selectedForm)
 		return {body: '<span class="text-danger">Please select a form.</span>'};
 	else {
@@ -56,8 +50,7 @@ function handleGet(request) {
 		if (!id) id = selectedForm;
 		
 		// log(config);
-		var title = component.config.title;
-		if (!title) title = config.title;
+		var title = config.title;
 
 		var form = {
 			title: title,
@@ -119,7 +112,6 @@ function handleGet(request) {
 		// var componentUrl = portalLib.contentUrl({component: component.path});
 		var selectetFormObj = contentLib.get({key: selectedForm});
 		var formData = selectetFormObj.page.regions.main;
-		log(config);
 		model = {
 			form: form,
 			config: config,
@@ -160,7 +152,7 @@ function handleGet(request) {
 		};
 	}
 }
-function handlePost(request) {
+function handlePost(request, selectedForm) {
 	var body = "<h1>Mail form - POST - no AJAX - no message sent</h1>";
 
 	return {
@@ -169,8 +161,8 @@ function handlePost(request) {
 	};
 }
 
-function handleAjax(request) {
-	var selectedForm = portalLib.getComponent().config.selectedForm;
+function handleAjax(request, selectedForm) {
+	// var selectedForm = portalLib.getComponent().config.selectedForm;
 	var component = contentLib.get({key: selectedForm});
 	// component.data = component.data;
 	// log(component);
