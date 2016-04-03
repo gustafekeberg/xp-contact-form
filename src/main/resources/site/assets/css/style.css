@@ -95,3 +95,8 @@
 	margin: 4px -7px;
 }
 
+.contact-form-setup-layout [name="required"] { background-color: #9D5E00; }
+.contact-form-setup-layout [name="identifier"] { background-color: #008000; }
+.contact-form-setup-layout [name="placeholder"] { background-color: #2E5B80; }
+.contact-form-setup-layout [name="label"] { background-color: #6A0980; }
+.contact-form-setup-layout [name="type"] { background-color: #7A8003; }
