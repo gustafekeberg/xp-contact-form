@@ -1,24 +1,31 @@
-<div data-th-unless="${config.identifier}">
-	<div class="contact-form-setup-field-wrapper">
-		<p class="text-danger">Identifier cannot be empty!</p>
+<div class="contact-form-setup-field-wrapper">
+	<div class="field-padding">
+		
+		<div data-th-switch="${input_type}" data-th-remove="tag">	
+
+			<div data-th-case="'textarea'" data-th-remove="tag">
+				<div><strong>TextArea</strong></div>
+				<div data-th-fragment="field_attributes" data-th-remove="tag">
+					<p data-th-unless="${config.identifier}" class="text-danger">Please enter something in the identifier field!</p>
+					<div data-th-each="key, iterStat : ${config}" data-th-remove="tag">
+						<span class="label label-default" data-th-name="${key.key}">
+							<span class="key" data-th-text="${key.key}" data-th-remove="none"/>: <span class="value" data-th-text="${key.value}" />
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<div data-th-case="'input'" data-th-remove="tag">
+				<div><strong>Input field</strong></div>
+				<div data-th-include="::field_attributes" />
+			</div>
+
+			<div data-th-case="*">
+				<div><strong>Unknown type</strong></div>
+				<div data-th-include="::field_attributes" />
+			</div>
+		</div>
+
 	</div>
 </div>
 
-<div data-th-if="${config.identifier}" class="contact-form-setup-field-wrapper">
-	<div class="field-padding">
-		<div data-th-if="${input_type} == 'textarea'" data-th-remove="tag">
-			<div><strong>TextArea</strong></div>
-			<div data-th-fragment="field_attributes (config)" data-th-remove="tag">
-				<div data-th-each="key, iterStat : ${config}" data-th-remove="tag">
-					<span class="label" data-th-name="${key.key}">
-						<span class="key" data-th-text="${key.key}" data-th-remove="none"/>: <span class="value" data-th-text="${key.value}" />
-					</span>
-				</div>
-			</div>
-		</div>
-		<div data-th-if="${input_type} == 'input'" data-th-remove="tag">
-			<div><strong>Input field</strong></div>
-			<div data-th-include="::field_attributes (config=${config})" />
-		</div>
-	</div>
-</div>
