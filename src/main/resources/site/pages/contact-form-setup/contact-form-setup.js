@@ -20,21 +20,21 @@ exports.get = function(req) {
 
 	if (data.show_help) {
 		// Set language for documentation depending on selected language for content.
-		var language;
-		switch (content.language) {
-			case 'sv':
-			case 'sv-SE':
-			case 'no':
-			case 'nn-NO':
-			case 'no-NO':
-			language = 'en';
-			break;
-			default:
-			language = 'en';
-		}
-		model = { language: language };
+		// var language;
+		// switch (content.language) {
+		// 	case 'sv':
+		// 	case 'sv-SE':
+		// 	case 'no':
+		// 	case 'nn-NO':
+		// 	case 'no-NO':
+		// 	language = 'en';
+		// 	break;
+		// 	default:
+		// 	language = 'en';
+		// }
+		// model = { language: language };
 		view = resolve("contact-form-documentation.html");
-		documentation = thymeleaf.render(view, model);
+		documentation = thymeleaf.render(view);
 	}
 	// log(content);
 	var preview;
@@ -54,13 +54,15 @@ exports.get = function(req) {
 	};
 	
 	var body = thymeleaf.render(view, model);
-	var style           = '<link rel="stylesheet" href="' + assetUrl({path: '/css/style.css'}) + '">';	
+	var builder_style = '<link rel="stylesheet" href="' + assetUrl({path: '/css/form-builder-style.css'}) + '">';
+	var style = '<link rel="stylesheet" href="' + assetUrl({path: '/css/style.css'}) + '">';
 	return {
 		body: body,
 		contentType: 'text/html',
 		pageContributions: {
 				"headEnd": [
-				style
+				style,
+				builder_style
 				],
 			}
 	};
@@ -68,3 +70,7 @@ exports.get = function(req) {
 
 // Handles a POST request
 exports.post = function(req) {};
+
+function assetUrl(url){
+	return portalLib.assetUrl(url);
+}
