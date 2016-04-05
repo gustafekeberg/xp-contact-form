@@ -42,7 +42,7 @@
 					</config>
 				</input>
 				<input type="TextLine" name="height_value">
-					<label>Custom height</label>
+					<label>Custom height (CSS-value)</label>
 					<occurrences minimum="0" maximum="1" />
 					<config>
 						<!-- <regexp></regexp> -->
