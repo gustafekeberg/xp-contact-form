@@ -3,3 +3,4 @@
 build
 gradle
 *.sublime-workspace
+personal_env_file.sh

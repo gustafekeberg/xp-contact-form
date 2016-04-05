@@ -8,9 +8,15 @@
 		".gradle",
 		"build",
 		"gradle",
-		// "*",
 		],
 		"path": ".",
-	},
-	]
-}
+		},
+		],
+		"settings":
+		{
+			"env_file":
+			{
+				"Darwin": "./personal_env_file.sh",
+				},
+			}
+		}
