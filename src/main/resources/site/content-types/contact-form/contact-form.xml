@@ -22,10 +22,6 @@
 					<label>Show 'required field' markers?</label>
 					<occurrences minimum="0" maximum="1" />
 				</input>
-				<!-- <input type="CheckBox" name="show_required_note">
-					<label>Show 'required field' note (only visible with markers)?</label>
-					<occurrences minimum="0" maximum="1" />
-				</input> -->
 				<input type="CheckBox" name="show_preview">
 					<label>Preview form?</label>
 					<occurrences minimum="0" maximum="1" />
