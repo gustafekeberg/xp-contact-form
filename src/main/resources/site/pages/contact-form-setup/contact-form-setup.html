@@ -11,7 +11,7 @@
 	<div class="container-fluid">
 		<header class="container page-header">
 			<h1 data-th-if="${content.data.title}">
-				<span data-th-text="${content.data.title}" /><br /><span class="small" data-th-text="' (' + ${content.displayName} + ')'" />
+				<span data-th-text="${content.data.title}" /><br /><span class="small" data-th-text="' [ ' + ${content.displayName} + ' ]'" />
 			</h1>
 			<h1 data-th-unless="${content.data.title}">
 				<span data-th-text="${content.displayName}" />
@@ -22,7 +22,7 @@
 
 		<section>
 			<header>
-				<h2>Form config</h2>
+				<h2>Config</h2>
 			</header>
 			<div data-portal-region="main">
 				<div data-th-each="component : ${mainRegion.components}" data-th-remove="tag">
@@ -35,7 +35,8 @@
 		<hr />
 		<section data-th-if="${data.show_preview}">
 			<header>
-				<h2>Form preview</h2>
+				<h2>Preview</h2>
+				<p class="text-muted">[ Save form to update preview. ]</p>
 			</header>
 			<div data-th-utext="${preview}" class="well" />
 		</section>
