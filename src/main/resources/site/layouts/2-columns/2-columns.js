@@ -8,10 +8,11 @@ exports.get = function(req) {
   var config = component.config;
 
   // Resolve the view
-  var view = resolve('form-2-columns.html');
+  var view = resolve('/views/form-config-layouts.html');
 
   // Define the model
   var model = {
+    column_count: '2',
     component: component,
     column_1: component.regions.column_1,
     column_2: component.regions.column_2,

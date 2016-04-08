@@ -8,14 +8,13 @@ exports.get = function(req) {
   var config = component.config;
 
   // Resolve the view
-  var view = resolve('form-3-columns.html');
+  var view = resolve('/views/form-config-layouts.html');
 
   // Define the model
   var model = {
+    column_count: '1',
     component: component,
-    column_1: component.regions.column_1,
-    column_2: component.regions.column_2,
-    column_3: component.regions.column_3,
+    column: component.regions.column,
   };
 
   // Render a thymeleaf template
