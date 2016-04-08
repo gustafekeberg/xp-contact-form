@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<part>
+	<display-name>Contact Form Input: Multiple</display-name>
+	<config>
+		<field-set name="input_field">
+			<label>Input field</label>
+			<items>
+				<input type="TextLine" name="identifier">
+					<label>Identifier</label>
+					<occurrences minimum="1" maximum="1" />
+					<config>
+						<regexp>^\w*$</regexp>
+					</config>
+				</input>
+				<input type="TextLine" name="label">
+					<label>Label</label>
+					<occurrences minimum="0" maximum="1" />
+				</input>
+				<input type="TextLine" name="placeholder">
+					<label>Placeholder</label>
+					<occurrences minimum="0" maximum="1" />
+				</input>
+				<input type="ComboBox" name="type">
+					<label>Type</label>
+					<occurrences minimum="1" maximum="1" />
+					<config>
+						<option value="radio">Radiobuttons</option>
+						<option value="select">Select</option>
+					</config>
+				</input>
+				<input type="CheckBox" name="required">
+					<label>Required?</label>
+					<occurrences minimum="0" maximum="1" />
+				</input>
+			</items>
+		</field-set>
+	</config>
+</part>

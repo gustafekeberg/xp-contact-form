@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<part>
+	<display-name>Contact Form: Custom Helper Text</display-name>
+	<config>
+		<field-set name="input_field">
+			<label>Custom Helper Text</label>
+			<items>
+				<input type="HtmlArea" name="custom_helper_text">
+					<label>Custom helper text</label>
+					<occurrences minimum="1" maximum="1" />
+					<config/>
+				</input>
+			</items>		
+		</field-set>
+	</config>
+</part>
