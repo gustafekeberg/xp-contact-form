@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layout>
-	<display-name>Contact Form: 3 columns</display-name>
+	<display-name>Contact Form Layout: 3 columns</display-name>
 	<config>
-		<input type="TextLine" name="legends">
-			<label>Legend</label>
-			<occurrences minimum="0" maximum="3" />
-		</input>
+		<item-set name="legends">
+			<label>Legends</label>
+			<occurrences minimum="3" maximum="3" />
+			<items>
+				<input type="TextLine" name="text">
+					<label>Legend</label>
+					<occurrences minimum="0" maximum="1" />
+				</input>
+			</items>
+		</item-set>
 	</config>
 	<regions>
 		<region name="column_1"/>

@@ -7,10 +7,6 @@
 		<field-set name="Config">
 			<label>Config</label>
 			<items>
-				<input type="TextLine" name="title">
-					<label>Title</label>
-					<occurrences minimum="0" maximum="1"/>
-				</input>
 				<input type="TextLine" name="id">
 					<label>Form ID</label>
 					<occurrences minimum="0" maximum="1"/>
@@ -22,14 +18,27 @@
 					<label>Show 'required field' markers?</label>
 					<occurrences minimum="0" maximum="1" />
 				</input>
-				<input type="CheckBox" name="show_preview">
-					<label>Preview form?</label>
+				<input type="HtmlArea" name="required_field_helper_text">
+					<label>Helper text for 'required field'</label>
 					<occurrences minimum="0" maximum="1" />
 				</input>
-				<input type="CheckBox" name="show_help">
-					<label>Show help?</label>
-					<occurrences minimum="0" maximum="1" />
-				</input>
+				<field-set name="Display">
+					<label>Display in editor?</label>
+					<items>
+						<input type="CheckBox" name="show_editor">
+							<label>Display form editor?</label>
+							<occurrences minimum="0" maximum="1" />
+						</input>
+						<input type="CheckBox" name="show_preview">
+							<label>Display form preview?</label>
+							<occurrences minimum="0" maximum="1" />
+						</input>
+						<input type="CheckBox" name="show_help">
+							<label>Display form editor help?</label>
+							<occurrences minimum="0" maximum="1" />
+						</input>
+					</items>
+				</field-set>
 			</items>
 		</field-set>
 		<field-set name="Responses">
@@ -38,6 +47,6 @@
 				<inline mixin="responses"/>
 			</items>
 		</field-set>
-        <inline mixin="custom-css"/>
+		<inline mixin="custom-css"/>
 	</form>
 </content-type>
