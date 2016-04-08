@@ -37,10 +37,10 @@ exports.get = function(req) {
 		documentation = thymeleaf.render(view);
 	}
 	// log(content);
-	var preview;
+	var rendered_form;
 	if (data.show_preview) {
-		var displayForm = require('/lib/contact-form-display');
-		preview = displayForm.get(req, content._id).body;
+		var renderForm = require('/lib/render-form');
+		rendered_form = renderForm.get(req, content._id).body;
 	}
 
 	var mainRegion = content.page.regions.main;
@@ -50,7 +50,7 @@ exports.get = function(req) {
 		mainRegion: mainRegion,
 		data: data,
 		documentation: documentation,
-		preview: preview,
+		preview: rendered_form,
 	};
 	
 	var body = thymeleaf.render(view, model);

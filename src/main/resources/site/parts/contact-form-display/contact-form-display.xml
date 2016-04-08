@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <part>
-	<display-name>Contact form: Display form</display-name>
+	<display-name>Contact Form: Display form</display-name>
 	<config>
 		<field-set name="Config">
 			<label>Config</label>
 			<items>
 				<input type="TextLine" name="title">
-					<label>Form title (leave empty to use value from setup)</label>
+					<label>Title</label>
 					<occurrences minimum="0" maximum="1"/>
 				</input>
 				<input type="ContentSelector" name="selectedForm">

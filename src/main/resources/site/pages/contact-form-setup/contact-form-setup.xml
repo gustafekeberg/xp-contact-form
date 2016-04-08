@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page>
-	<display-name>Contact form setup</display-name>
-	<config>
-		<!-- input fields... -->
-	</config>
+	<display-name>Contact form setup page</display-name>
+	<config/>
 	<regions>
 		<region name="main"/>
 	</regions>

@@ -1,5 +1,5 @@
 var portalLib   = require('/lib/xp/portal');
-var displayForm = require('/lib/contact-form-display');
+var renderForm = require('/lib/render-form');
 
 function log( string ) {
 	var util = require('/lib/enonic/util/util');
@@ -9,7 +9,8 @@ function log( string ) {
 exports.get = function(request) {
 	var component = portalLib.getComponent();
 	var selectedForm = component.config.selectedForm;
-	return displayForm.get(request, selectedForm);
+	var rendered_form = renderForm.get(request, selectedForm);
+	return rendered_form;
 };
 
 exports.post = function(request) {
