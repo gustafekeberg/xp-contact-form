@@ -1,6 +1,6 @@
-<div data-th-switch="${column_count}">
+<div data-th-switch="${column_count}" data-th-remove="tag">
 
-	<div data-th-case="'1'">
+	<div data-th-case="'1'" data-th-remove="tag">
 		<div class="row contact-form-setup-layout" data-th-attr="data-portal-component-type=${component.type}">
 			<div class="col-xs-12">
 				<div data-portal-region="column">
@@ -13,7 +13,7 @@
 		</div>
 	</div>
 
-	<div data-th-case="'2'">
+	<div data-th-case="'2'" data-th-remove="tag">
 		<div class="row contact-form-setup-layout" data-th-attr="data-portal-component-type=${component.type}">
 			<div class="col-xs-6" data-portal-region="column_1">
 				<div data-th-each="component : ${column_1.components}" data-th-remove="tag">
@@ -28,7 +28,7 @@
 		</div>
 	</div>
 
-	<div data-th-case="'3'">
+	<div data-th-case="'3'" data-th-remove="tag">
 		<div class="row contact-form-setup-layout" data-th-attr="data-portal-component-type=${component.type}">
 			<div class="col-xs-4" data-portal-region="column_1">
 				<div data-th-each="component : ${column_1.components}" data-th-remove="tag">
