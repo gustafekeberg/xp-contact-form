@@ -45,12 +45,14 @@ function handleGet(request, selectedForm) {
 		var placeholders    = {title: config.title};
 		var processedString = "", documentation, view, body, model;
 		var formAction      = portalLib.componentUrl({component: selectedComponent.path});
+		var language            = content.language;
 
 		var id = config.id;
 		if (!id) id = selectedForm;
 		
-		// log(config);
-		var title = config.title;
+		// log(selectedComponent);
+		var title = selectedComponent.displayName;
+		// if (!title) title = selectedComponent.displayName;
 
 		var form = {
 			title: title,
@@ -62,19 +64,21 @@ function handleGet(request, selectedForm) {
 		if (config.showDoc === true && request.mode == 'edit') {
 
 			// Set language for documentation depending on selected language for content.
-			var language;
-			switch (content.language) {
-				case 'sv':
-				case 'sv-SE':
-				case 'no':
-				case 'nn-NO':
-				case 'no-NO':
-				language = 'en';
-				break;
-				default:
-				language = 'en';
-			}
-			model = { language: language };
+			// var language;
+			// switch (content.language) {
+			// 	case 'sv':
+			// 	case 'sv-SE':
+			// 	case 'no':
+			// 	case 'nn-NO':
+			// 	case 'no-NO':
+			// 	language = 'en';
+			// 	break;
+			// 	default:
+			// 	language = 'en';
+			// }
+			model = {
+				// language: language
+			};
 			// view = resolve("mail-form-documentation.html");
 			// documentation = thymeleaf.render(view, model);
 		}
@@ -122,11 +126,12 @@ function handleGet(request, selectedForm) {
 			siteConfig: siteConfig,
 			phrases: phrases,
 			formData: formData,
+			language: language,
 			// componentUrl: componentUrl,
 		};
-		// log(formData);
+		log(formData.components);
 
-		view                = resolve("contact-form-display.html");
+		view                = resolve("form-view.html");
 		body                = thymeleaf.render(view, model);
 
 		var style           = '<link rel="stylesheet" href="' + assetUrl({path: '/css/style.css'}) + '">';

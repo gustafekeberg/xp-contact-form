@@ -1,0 +1,87 @@
+
+<div data-th-id="${form.id}" class="easy-contact-form">
+	<!-- <style data-th-if="${siteConfig.customCSS.CSS}" data-th-utext="${siteConfig.customCSS.CSS}" /> -->
+	<!-- <style data-th-if="${config.customCSS.CSS}" data-th-utext="${config.customCSS.CSS}" /> -->
+	<!-- <header>
+		<h2 data-th-text="${form.title}">Contact form display form</h2>
+	</header> -->
+	<form data-th-action="${form.action}">
+		<div data-th-each="component : ${formData.components}" data-th-remove="tag">
+
+			<div data-th-if="${component.type} == 'layout'" class="row">
+
+				<div data-th-switch="${component.name}" data-th-remove="tag">
+					<div data-th-case="'Contact Form Layout: 1 column'" data-th-remove="tag">
+						<fieldset data-th-each="column, iterStat : ${component.regions}" data-th-class="col-xs-12">
+							<legend data-th-if="${component.config.legends.text}" data-th-text="${component.config.legends.text}" />
+
+							<div data-th-remove="tag" data-th-fragment="regionFragment">
+								<div data-th-each="field : ${column.value.components}" data-th-remove="tag">
+
+									<div data-th-switch="${field.name}" data-th-remove="tag">
+										<div data-th-class="${field.config.required}? (${config.show_required_markers}? 'form-group required' : 'form-group') : 'form-group'">
+
+											<div data-th-if="${field.config.identifier}" data-th-remove="tag">
+												<div data-th-case="'Contact Form Input: Field'" data-th-remove="tag">
+													<div data-th-if="${field.config.label}" data-th-include="::labelFragment (fieldConfig=${field.config})" data-th-remove="tag" />
+													<input class="form-control" data-th-attr="id=${form.id + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', type=${field.config.type}" />
+												</div>
+												
+												<div data-th-case="'Contact Form Input: Text Area'" data-th-remove="tag">
+													<div data-th-if="${field.config.label}" data-th-include="::labelFragment (fieldConfig=${field.config})" />
+													<textarea data-th-class="${field.config.height_class}? 'form-control ' + ${field.config.height_class} : 'form-control'" data-th-attr="id=${form.id + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', style=${field.config.height_class == 'textarea-height-custom'}? 'height: ' + ${field.config.height_value}"></textarea>
+												</div>
+											</div>
+											<div data-th-case="'Contact Form: Custom Helper Text'" class="help-block">
+												<div data-th-utext="${field.config.custom_helper_text}" data-th-remove="tag" />	
+											</div>
+											<div data-th-case="'Contact Form: Required Field Helper Text'" class="help-block required">
+												<div data-th-utext="${config.required_field_helper_text}?: ${portal.localize({'_key=required_field_helper_text','_locale=' + language})}" data-th-remove="tag" />
+											</div>
+										</div>
+										
+									</div>	
+								</div>
+							</div>
+
+						</fieldset>
+					</div>
+					
+					<div data-th-case="'Contact Form Layout: 2 columns'" data-th-remove="tag">
+						<fieldset data-th-each="column, iterStat : ${component.regions}" data-th-class="col-md-6">
+							<legend data-th-if="${component.config.legends[iterStat.index].text}" data-th-text="${component.config.legends[iterStat.index].text}" />
+
+							<div data-th-include="::regionFragment" data-th-remove="tag" />
+						</fieldset>
+					</div>
+					
+					<div data-th-case="'Contact Form Layout: 3 columns'" data-th-remove="tag">
+						<fieldset data-th-each="column, iterStat : ${component.regions}" data-th-class="col-md-4">
+							<legend data-th-if="${component.config.legends[iterStat.index].text}" data-th-text="${component.config.legends[iterStat.index].text}" />
+							<div data-th-include="::regionFragment" data-th-remove="tag" />
+						</fieldset>
+					</div>
+				</div>
+
+			</div>	
+		</div>
+		<div class="row">
+			<fieldset class="col-xs-12">
+				<div class="form-group">
+					<button class="btn btn-success center-block" data-th-text="${phrases.submit}"/>
+				</div>
+			</fieldset>
+		</div>
+	</form>
+
+	<div class="status-message fade">
+		<div class="container" />
+	</div>
+
+</div>
+
+<div data-th-fragment="labelFragment (fieldConfig)" data-th-remove="all">
+	<label class="control-label" data-th-attr="for=${form.id + '_' + fieldConfig.identifier}" >
+		<span data-th-remove="tag" data-th-text="${field.config.label}"></span><!-- <span class="required-marker" data-th-if="${config.show_required_markers} AND ${field.config.required}" data-th-text="${phrases.required_field.marker == null}? ' *' : ' ' + ${phrases.required_field.marker}" /> -->
+	</label>
+</div>

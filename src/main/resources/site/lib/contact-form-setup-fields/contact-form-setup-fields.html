@@ -1,12 +1,14 @@
-<div class="contact-form-setup-field-wrapper">
+<div data-th-class="${'contact-form-setup-field-wrapper wrapper-type-' + config.type}">
 	<div class="field-padding">
 		
 		<div data-th-switch="${input_type}" data-th-remove="tag">	
 
-			<div data-th-case="'textarea'" data-th-remove="tag">
+			<div data-th-case="'input-textarea'" data-th-remove="tag">
 				<div><strong>TextArea</strong></div>
+				<div data-th-fragment="field_identifier" data-th-remove="tag">
+					<p data-th-unless="${config.identifier}" class="text-danger">Please enter an identifier!</p>
+				</div>
 				<div data-th-fragment="field_attributes" data-th-remove="tag">
-					<p data-th-unless="${config.identifier}" class="text-danger">Please enter something in the identifier field!</p>
 					<div data-th-each="key, iterStat : ${config}" data-th-remove="tag">
 						<span class="label label-default" data-th-name="${key.key}">
 							<span class="key" data-th-text="${key.key}" data-th-remove="none"/>: <span class="value" data-th-text="${key.value}" />
@@ -15,8 +17,18 @@
 				</div>
 			</div>
 
-			<div data-th-case="'input'" data-th-remove="tag">
-				<div><strong>Input field</strong></div>
+			<div data-th-case="'input-field'" data-th-remove="tag">
+				<div><strong>Input field</strong><span class="type" data-th-if="${config.type}" data-th-text="${' ' + config.type}" /></div>
+				<div data-th-include="::field_identifier" />
+				<p data-th-unless="${config.type}" class="text-danger">Please select type!</p>
+				<div data-th-include="::field_attributes" />
+			</div>
+
+			<div data-th-case="'required-helper'" data-th-remove="tag">
+				<div><strong>Required Field Helper Text</strong></div>
+			</div>
+			<div data-th-case="'custom-helper'" data-th-remove="tag">
+				<div><strong>Custom Helper Text</strong></div>
 				<div data-th-include="::field_attributes" />
 			</div>
 
