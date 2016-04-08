@@ -18,8 +18,7 @@
 			</h1>
 		</header>
 	</div>
-	<div class="container">
-
+	<div class="container" data-th-if="${data.show_editor}">
 		<section>
 			<header>
 				<h2>Config</h2>
@@ -31,9 +30,8 @@
 			</div>
 		</section>
 	</div>
-	<div class="container">
-		<hr />
-		<section data-th-if="${data.show_preview}">
+	<div class="container" data-th-if="${data.show_preview}">
+		<section>
 			<header>
 				<h2>Preview</h2>
 				<p class="text-muted">[ Save form to update preview. ]</p>
@@ -42,7 +40,6 @@
 		</section>
 	</div>
 	<div data-th-if="${data.show_help}" class="container">
-		<hr />
 		<div data-th-utext="${documentation}" data-th-remove="tag" />
 	</div>
 </body>
