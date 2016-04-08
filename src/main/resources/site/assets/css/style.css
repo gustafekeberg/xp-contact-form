@@ -21,7 +21,6 @@
 	height: 100%;
 	left: 0;
 	width: 100%;
-	/* overflow: scroll; */
 }
 
 .easy-contact-form .status-message .container {
@@ -44,10 +43,12 @@
 	margin-bottom: 0;
 }
 
-.easy-contact-form .required-marker {
+.required .control-label::after, .help-block.required::before {
+	content: '*';
 	color: #C74053;
-	font-weight: 100;
-	/* margin-left: .125em; */
+/* 	font-weight: 800; */
+/* font-size: 1.5em; */
+	margin-right: .25em;
 }
 .easy-contact-form textarea {
 }
