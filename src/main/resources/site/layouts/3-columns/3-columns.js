@@ -8,7 +8,7 @@ exports.get = function(req) {
   var config = component.config;
 
   // Resolve the view
-  var view = resolve('/views/form-config-layouts.html');
+  var view = resolve('/views/designer-layouts.html');
 
   // Define the model
   var model = {

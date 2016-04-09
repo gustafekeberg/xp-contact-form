@@ -131,7 +131,7 @@ function handleGet(request, selectedForm) {
 		};
 		log(formData.components);
 
-		view                = resolve("form-view.html");
+		view                = resolve('render-form.html');
 		body                = thymeleaf.render(view, model);
 
 		var style           = '<link rel="stylesheet" href="' + assetUrl({path: '/css/style.css'}) + '">';

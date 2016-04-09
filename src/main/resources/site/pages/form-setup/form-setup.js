@@ -33,7 +33,7 @@ exports.get = function(req) {
 		// 	language = 'en';
 		// }
 		// model = { language: language };
-		view = resolve("contact-form-documentation.html");
+		view = resolve("form-documentation.html");
 		documentation = thymeleaf.render(view);
 	}
 	// log(content);
@@ -44,7 +44,7 @@ exports.get = function(req) {
 	}
 
 	var mainRegion = content.page.regions.main;
-	view = resolve('contact-form-setup.html');
+	view = resolve('form-setup.html');
 	model = {
 		content: content,
 		mainRegion: mainRegion,

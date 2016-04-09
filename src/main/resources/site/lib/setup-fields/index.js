@@ -8,7 +8,7 @@ exports.field = function(type){
 		config: config,
 		input_type: type,
 	};
-	var view = resolve("contact-form-setup-fields.html");
+	var view = resolve('setup-fields.html');
 	var body = thymeleaf.render(view, model);
 	return {
 		body: body,

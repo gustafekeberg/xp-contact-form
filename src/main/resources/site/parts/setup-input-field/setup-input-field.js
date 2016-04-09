@@ -1,4 +1,4 @@
-var inputField  = require('/lib/contact-form-setup-fields');
+var inputField  = require('/lib/setup-fields');
 
 exports.get = function(request) {
 	return inputField.field('input-field');
