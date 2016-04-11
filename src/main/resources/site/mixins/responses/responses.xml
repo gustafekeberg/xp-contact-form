@@ -7,15 +7,6 @@
 			<occurrences minimum="1" maximum="0" />
 			<config />
 			<items>
-				<!-- 
-					subject
-					from
-					replyTo
-					to
-					cc
-					bcc
-					body
-				-->
 				<input type="TextLine" name="subject">
 					<label>Subject</label>
 					<occurrences minimum="1" maximum="1" />

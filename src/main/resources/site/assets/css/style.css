@@ -43,13 +43,20 @@
 	margin-bottom: 0;
 }
 
-.required .control-label::after, .help-block.required::before {
+.required .control-label::after {
 	content: '*';
 	color: #C74053;
-/* 	font-weight: 800; */
-/* font-size: 1.5em; */
-	margin-right: .25em;
+	margin-left: .25em;
 }
+
+.help-block.required-marker::before {
+	content: '*';
+	color: #C74053;
+	margin-right: .25em;
+    float: left;
+    font-size: initial;
+}
+
 .easy-contact-form textarea {
 }
 

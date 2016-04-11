@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mixin>
+	<display-name>Input configs</display-name>
+	<items>
+		<input type="TextLine" name="identifier">
+			<label>Identifier</label>
+			<occurrences minimum="1" maximum="1" />
+			<config>
+				<regexp>^\w*$</regexp>
+			</config>
+		</input>
+		<input type="TextLine" name="label">
+			<label>Label</label>
+			<occurrences minimum="1" maximum="1" />
+		</input>
+		<input type="CheckBox" name="hide_label">
+			<label>Hide label</label>
+			<occurrences minimum="0" maximum="1" />
+		</input>
+		<input type="TextLine" name="placeholder">
+			<label>Placeholder</label>
+			<occurrences minimum="0" maximum="1" />
+		</input>
+	</items>
+</mixin>

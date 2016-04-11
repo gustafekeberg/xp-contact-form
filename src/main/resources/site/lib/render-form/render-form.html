@@ -5,7 +5,7 @@
 	<!-- <header>
 		<h2 data-th-text="${form.title}">Contact form display form</h2>
 	</header> -->
-	<form data-th-action="${form.action}">
+	<form data-th-action="${form.action}" class="ws-validate">
 		<div data-th-each="component : ${formData.components}" data-th-remove="tag">
 
 			<div data-th-if="${component.type} == 'layout'" class="row">
@@ -19,6 +19,7 @@
 								<div data-th-each="field : ${column.value.components}" data-th-remove="tag">
 
 									<div data-th-switch="${field.name}" data-th-remove="tag">
+										
 										<div data-th-class="${field.config.required}? (${config.show_required_markers}? 'form-group required' : 'form-group') : 'form-group'">
 
 											<div data-th-if="${field.config.identifier}" data-th-remove="tag">
@@ -28,19 +29,17 @@
 												</div>
 												
 												<div data-th-case="'Contact Form Input: Text Area'" data-th-remove="tag">
-													<div data-th-if="${field.config.label}" data-th-include="::labelFragment (fieldConfig=${field.config})" />
+													<div data-th-if="${field.config.label}" data-th-include="::labelFragment (fieldConfig=${field.config})" data-th-remove="tag" />
 													<textarea data-th-class="${field.config.height_class}? 'form-control ' + ${field.config.height_class} : 'form-control'" data-th-attr="id=${form.id + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', style=${field.config.height_class == 'textarea-height-custom'}? 'height: ' + ${field.config.height_value}"></textarea>
 												</div>
 
 											</div>
+											
 											<div data-th-case="'Contact Form: Helper Text'">
-
-												<span data-th-if="${field.config.show_required_marker}">*</span>
-												<div>
-													<div data-th-unless="${field.config.custom_helper_text}" data-th-utext="${portal.localize({'_key=required_field_helper_text','_locale=' + language})}" data-th-remove="tag" />
+												<div data-th-class="${field.config.show_required_marker}? 'help-block required-marker' : 'help-block'">
+													<div data-th-unless="${field.config.custom_helper_text}" data-th-utext="${portal.localize({'_key=required_field.helper_text','_locale=' + language})}" data-th-remove="tag" />
 													<div data-th-if="${field.config.custom_helper_text}" data-th-utext="${field.config.custom_helper_text}" data-th-remove="tag" />
 												</div>
-												
 											</div>
 										</div>
 
@@ -72,7 +71,7 @@
 		<div class="row">
 			<fieldset class="col-xs-12">
 				<div class="form-group">
-					<button class="btn btn-success center-block" data-th-text="${phrases.submit}"/>
+					<button class="btn btn-success center-block" data-th-text="${phrases.button.submit}"/>
 				</div>
 			</fieldset>
 		</div>
@@ -85,7 +84,5 @@
 </div>
 
 <div data-th-fragment="labelFragment (fieldConfig)" data-th-remove="all">
-	<label class="control-label" data-th-attr="for=${form.id + '_' + fieldConfig.identifier}" >
-		<span data-th-remove="tag" data-th-text="${field.config.label}"></span><!-- <span class="required-marker" data-th-if="${config.show_required_markers} AND ${field.config.required}" data-th-text="${phrases.required_field.marker == null}? ' *' : ' ' + ${phrases.required_field.marker}" /> -->
-	</label>
+	<label data-th-class="${fieldConfig.hide_label}? 'control-label sr-only' : 'control-label'" data-th-attr="for=${form.id + '_' + fieldConfig.identifier}" data-th-text="${field.config.label}" />
 </div>

@@ -88,26 +88,29 @@ function handleGet(request, selectedForm) {
 		var customPhrases = siteConfig.phrases;
 		var phrases = {
 			sending: {
-				title: customPhrases.sending.title ? customPhrases.sending.title : localize('sending_title'),
-				message: customPhrases.sending.message ? customPhrases.sending.message : localize('sending_message'),
+				title: customPhrases.sending.title ? customPhrases.sending.title : localize('messages.sending_title'),
+				message: customPhrases.sending.message ? customPhrases.sending.message : localize('messages.sending_message'),
 			},
 			success: {
-				title: customPhrases.success.title ? customPhrases.success.title : localize('success_title'),
-				message: customPhrases.success.message ? customPhrases.success.message : localize('success_message'),
+				title: customPhrases.success.title ? customPhrases.success.title : localize('messages.success_title'),
+				message: customPhrases.success.message ? customPhrases.success.message : localize('messages.success_message'),
 				status: 'success'
 			},
 			danger: {
-				title: customPhrases.danger.title ? customPhrases.danger.title : localize('danger_title'),
-				message: customPhrases.danger.message ? customPhrases.danger.message : localize('danger_message'),
+				title: customPhrases.danger.title ? customPhrases.danger.title : localize('messages.danger_title'),
+				message: customPhrases.danger.message ? customPhrases.danger.message : localize('messages.danger_message'),
 				status: 'error'
 			},
 			warning: {
-				title: customPhrases.warning.title ? customPhrases.warning.title : localize('warning_title'),
-				message: customPhrases.warning.message ? customPhrases.warning.message : localize('warning_message'),
+				title: customPhrases.warning.title ? customPhrases.warning.title : localize('messages.warning_title'),
+				message: customPhrases.warning.message ? customPhrases.warning.message : localize('messages.warning_message'),
 				status: 'warning',
 			},
-			confirm: customPhrases.confirm ? customPhrases.confirm : localize('confirm'),
-			submit: customPhrases.submit ? customPhrases.submit : localize('submit'),
+			button:
+			{
+				confirm: customPhrases.confirm ? customPhrases.confirm : localize('button.confirm'),
+				submit: customPhrases.submit ? customPhrases.submit : localize('button.submit'),
+			},
 			required_field: {
 				marker: customPhrases.required_field.marker ? customPhrases.required_field.marker : localize('required_field_marker'),
 				note: customPhrases.required_field.note ? customPhrases.required_field.note : localize('required_field_note'),
@@ -129,7 +132,19 @@ function handleGet(request, selectedForm) {
 			language: language,
 			// componentUrl: componentUrl,
 		};
-		log(formData.components);
+		
+		var webshimConfig = {
+			iVal: {
+            sel: '.ws-validate',
+            handleBubble: 'hide', // hide error bubble
+            //add bootstrap specific classes
+            errorMessageClass: 'help-block',
+            successWrapperClass: 'has-success',
+            errorWrapperClass: 'has-error',
+            //add config to find right wrapper
+            fieldWrapper: '.form-group'
+        }
+			};
 
 		view                = resolve('render-form.html');
 		body                = thymeleaf.render(view, model);
@@ -139,7 +154,9 @@ function handleGet(request, selectedForm) {
 		// var getFormDataInit = '<script>var phrases = ' + JSON.stringify(phrases) + '; window.addEventListener("load", easyContactForm(phrases));</script>';
 		var getFormDataInit = '<script>var phrases = ' + JSON.stringify(phrases) + '; easyContactForm(phrases);</script>';
 		var webshimJS       = '<script src="' + assetUrl({path: '/js-webshim/minified/polyfiller.js'}) + '"></script>';
-		var webshimInit     = "<script>webshim.polyfill('forms');</script>";
+
+		var webshimContributions = '<script>webshim.setOptions("forms", ' + JSON.stringify(webshimConfig) + '); webshim.polyfill("forms");</script>';
+ 
 		return {
 			body: body,
 			cotentType: 'text/html',
@@ -151,7 +168,7 @@ function handleGet(request, selectedForm) {
 				getFormDataJS,
 				getFormDataInit,
 				webshimJS,
-				webshimInit
+				webshimContributions,
 				]
 			}
 		};

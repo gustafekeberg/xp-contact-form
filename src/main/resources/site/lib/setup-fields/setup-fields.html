@@ -7,6 +7,7 @@
 				<div><strong>TextArea</strong></div>
 				<div data-th-fragment="field_identifier" data-th-remove="tag">
 					<p data-th-unless="${config.identifier}" class="text-danger">Please enter an identifier!</p>
+					<p data-th-unless="${config.label}" class="text-danger">Please enter a label!</p>
 				</div>
 				<div data-th-fragment="field_attributes" data-th-remove="tag">
 					<div data-th-each="key, iterStat : ${config}" data-th-remove="tag">

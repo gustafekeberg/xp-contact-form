@@ -5,21 +5,7 @@
 		<field-set name="input_field">
 			<label>Input field</label>
 			<items>
-				<input type="TextLine" name="identifier">
-					<label>Identifier</label>
-					<occurrences minimum="1" maximum="1" />
-					<config>
-						<regexp>^\w*$</regexp>
-					</config>
-				</input>
-				<input type="TextLine" name="label">
-					<label>Label</label>
-					<occurrences minimum="0" maximum="1" />
-				</input>
-				<input type="TextLine" name="placeholder">
-					<label>Placeholder</label>
-					<occurrences minimum="0" maximum="1" />
-				</input>
+				<inline mixin="input-defaults" />
 				<input type="ComboBox" name="type">
 					<label>Type</label>
 					<occurrences minimum="1" maximum="1" />
