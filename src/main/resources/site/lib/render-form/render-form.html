@@ -31,22 +31,26 @@
 													<div data-th-if="${field.config.label}" data-th-include="::labelFragment (fieldConfig=${field.config})" />
 													<textarea data-th-class="${field.config.height_class}? 'form-control ' + ${field.config.height_class} : 'form-control'" data-th-attr="id=${form.id + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', style=${field.config.height_class == 'textarea-height-custom'}? 'height: ' + ${field.config.height_value}"></textarea>
 												</div>
+
 											</div>
-											<div data-th-case="'Contact Form: Custom Helper Text'" class="help-block">
-												<div data-th-utext="${field.config.custom_helper_text}" data-th-remove="tag" />	
-											</div>
-											<div data-th-case="'Contact Form: Required Field Helper Text'" class="help-block required">
-												<div data-th-utext="${config.required_field_helper_text}?: ${portal.localize({'_key=required_field_helper_text','_locale=' + language})}" data-th-remove="tag" />
+											<div data-th-case="'Contact Form: Helper Text'">
+
+												<span data-th-if="${field.config.show_required_marker}">*</span>
+												<div>
+													<div data-th-unless="${field.config.custom_helper_text}" data-th-utext="${portal.localize({'_key=required_field_helper_text','_locale=' + language})}" data-th-remove="tag" />
+													<div data-th-if="${field.config.custom_helper_text}" data-th-utext="${field.config.custom_helper_text}" data-th-remove="tag" />
+												</div>
+												
 											</div>
 										</div>
-										
+
 									</div>	
 								</div>
 							</div>
 
 						</fieldset>
 					</div>
-					
+
 					<div data-th-case="'Contact Form Layout: 2 columns'" data-th-remove="tag">
 						<fieldset data-th-each="column, iterStat : ${component.regions}" data-th-class="col-md-6">
 							<legend data-th-if="${component.config.legends[iterStat.index].text}" data-th-text="${component.config.legends[iterStat.index].text}" />
@@ -54,7 +58,7 @@
 							<div data-th-include="::regionFragment" data-th-remove="tag" />
 						</fieldset>
 					</div>
-					
+
 					<div data-th-case="'Contact Form Layout: 3 columns'" data-th-remove="tag">
 						<fieldset data-th-each="column, iterStat : ${component.regions}" data-th-class="col-md-4">
 							<legend data-th-if="${component.config.legends[iterStat.index].text}" data-th-text="${component.config.legends[iterStat.index].text}" />

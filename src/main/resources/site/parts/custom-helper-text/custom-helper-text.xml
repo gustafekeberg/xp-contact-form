@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <part>
-	<display-name>Contact Form: Custom Helper Text</display-name>
+	<display-name>Contact Form: Helper Text</display-name>
 	<config>
 		<field-set name="input_field">
-			<label>Custom Helper Text</label>
+			<label>Helper Text</label>
 			<items>
 				<input type="HtmlArea" name="custom_helper_text">
-					<label>Custom helper text</label>
+					<label>Helper text</label>
 					<occurrences minimum="1" maximum="1" />
 					<config/>
+				</input>
+				<input type="CheckBox" name="show_required_marker">
+					<label>Show required field marker on helper text?</label>
+					<occurrences minimum="0" maximum="1" />
 				</input>
 			</items>		
 		</field-set>

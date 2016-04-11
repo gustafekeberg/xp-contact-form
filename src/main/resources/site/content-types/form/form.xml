@@ -15,11 +15,7 @@
 					</config>
 				</input>
 				<input type="CheckBox" name="show_required_markers">
-					<label>Show 'required field' markers?</label>
-					<occurrences minimum="0" maximum="1" />
-				</input>
-				<input type="HtmlArea" name="required_field_helper_text">
-					<label>Helper text for 'required field'</label>
+					<label>Show markers on required fields</label>
 					<occurrences minimum="0" maximum="1" />
 				</input>
 				<field-set name="Display">
