@@ -19,28 +19,14 @@ exports.get = function(req) {
 	var documentation, model, view;
 
 	if (data.show_help) {
-		// Set language for documentation depending on selected language for content.
-		// var language;
-		// switch (content.language) {
-		// 	case 'sv':
-		// 	case 'sv-SE':
-		// 	case 'no':
-		// 	case 'nn-NO':
-		// 	case 'no-NO':
-		// 	language = 'en';
-		// 	break;
-		// 	default:
-		// 	language = 'en';
-		// }
-		// model = { language: language };
 		view = resolve("form-documentation.html");
 		documentation = thymeleaf.render(view);
 	}
-	// log(content);
-	var rendered_form;
+
+	var render_form_preview;
 	if (data.show_preview) {
 		var renderForm = require('/lib/render-form');
-		rendered_form = renderForm.get(req, content._id).body;
+		render_form_preview = renderForm.get(req, content._id).body;
 	}
 
 	var mainRegion = content.page.regions.main;
@@ -50,7 +36,7 @@ exports.get = function(req) {
 		mainRegion: mainRegion,
 		data: data,
 		documentation: documentation,
-		preview: rendered_form,
+		preview: render_form_preview,
 	};
 	
 	var body = thymeleaf.render(view, model);
