@@ -1,23 +1,25 @@
 {
-	"folders":
-	[
-	{
-		"folder_exclude_patterns":
-		[
-		".sass-cache",
-		".gradle",
-		"build",
-		"gradle",
-		],
-		"path": ".",
-		},
-		],
-		"settings":
-		{
-			"print_output": false,
-			"env_file":
-			{
-				"Darwin": "./personal_env_file.sh",
-				},
-			},
-		}
+    "folders": [
+        {
+            "name": "project root",
+            "path": ".",
+            "folder_exclude_patterns": [
+                ".sass-cache",
+                ".gradle",
+                "build",
+                "gradle"
+            ],
+        },
+        {
+            "name": "site",
+            "path": "./src/main/resources/site",
+            "folder_exclude_patterns": [],
+        }
+    ],
+    "settings": {
+        "print_output": false,
+        "env_file": {
+            "Darwin": "./personal_env_file.sh"
+        }
+    }
+}
