@@ -1,12 +1,12 @@
 
-<div data-th-id="${form.id}" class="easy-contact-form">
+<div data-th-id="${formAttributes.id}" class="easy-contact-form">
 	<!-- <style data-th-if="${siteConfig.customCSS.CSS}" data-th-utext="${siteConfig.customCSS.CSS}" /> -->
 	<!-- <style data-th-if="${config.customCSS.CSS}" data-th-utext="${config.customCSS.CSS}" /> -->
 	<!-- <header>
 		<h2 data-th-text="${form.title}">Contact form display form</h2>
 	</header> -->
-	<form data-th-action="${form.action}" class="ws-validate">
-		<div data-th-each="component : ${formData.components}" data-th-remove="tag">
+	<form data-th-action="${formAttributes.action}" class="ws-validate">
+		<div data-th-each="component : ${formComponents}" data-th-remove="tag">
 
 			<div data-th-if="${component.type} == 'layout'" class="row">
 
@@ -25,12 +25,12 @@
 											<div data-th-if="${field.config.identifier}" data-th-remove="tag">
 												<div data-th-case="'Contact Form Input: Field'" data-th-remove="tag">
 													<div data-th-if="${field.config.label}" data-th-include="::labelFragment (fieldConfig=${field.config})" data-th-remove="tag" />
-													<input class="form-control" data-th-attr="id=${form.id + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', type=${field.config.type}" />
+													<input class="form-control" data-th-attr="id=${formAttributes.id + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', type=${field.config.type}" />
 												</div>
 												
 												<div data-th-case="'Contact Form Input: Text Area'" data-th-remove="tag">
 													<div data-th-if="${field.config.label}" data-th-include="::labelFragment (fieldConfig=${field.config})" data-th-remove="tag" />
-													<textarea data-th-class="${field.config.height_class}? 'form-control ' + ${field.config.height_class} : 'form-control'" data-th-attr="id=${form.id + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', style=${field.config.height_class == 'textarea-height-custom'}? 'height: ' + ${field.config.height_value}"></textarea>
+													<textarea data-th-class="${field.config.height_class}? 'form-control ' + ${field.config.height_class} : 'form-control'" data-th-attr="id=${formAttributes.id + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', style=${field.config.height_class == 'textarea-height-custom'}? 'height: ' + ${field.config.height_value}"></textarea>
 												</div>
 
 											</div>
@@ -71,7 +71,7 @@
 		<div class="row">
 			<fieldset class="col-xs-12">
 				<div class="form-group">
-					<button class="btn btn-success center-block" data-th-text="${phrases.button.submit}"/>
+					<button class="btn btn-success center-block" data-th-text="${portal.localize({'_key=button.submit','_locale=' + language})}" />
 				</div>
 			</fieldset>
 		</div>
@@ -84,5 +84,5 @@
 </div>
 
 <div data-th-fragment="labelFragment (fieldConfig)" data-th-remove="all">
-	<label data-th-class="${fieldConfig.hide_label}? 'control-label sr-only' : 'control-label'" data-th-attr="for=${form.id + '_' + fieldConfig.identifier}" data-th-text="${field.config.label}" />
+	<label data-th-class="${fieldConfig.hide_label}? 'control-label sr-only' : 'control-label'" data-th-attr="for=${formAttributes.id + '_' + fieldConfig.identifier}" data-th-text="${field.config.label}" />
 </div>
