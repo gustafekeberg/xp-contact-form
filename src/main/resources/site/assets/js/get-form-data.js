@@ -219,7 +219,6 @@ function easyContactForm(phrases){
 				var error = "Error in response: " + errLoc.join(', ');
 				log(error, "error");
 			}
-			var confirm = phrases.confirm;
 
 			var btnDynClass = 'btn-success';
 			if (stat == 'danger') btnDynClass = 'btn-danger';
@@ -227,7 +226,12 @@ function easyContactForm(phrases){
 
 			var container = newElement({element: 'div'});
 			var content = newElement({element: 'p', content: message});
-			var button = newElement({element: 'button', type: 'button', class: ['btn', btnDynClass, 'center-block'], content: confirm});
+			var button = newElement({
+				element: 'button',
+				type: 'button',
+				class: [ 'btn', btnDynClass, 'center-block' ],
+				content: phrases.button.confirm
+			});
 			
 			button.addEventListener('click', function(event){
 				event.preventDefault();
@@ -278,7 +282,10 @@ function easyContactForm(phrases){
 			message: 'There were some errors when processing your message. Please try again later.',
 			status: 'warning',
 		},
-		confirm: 'OK',
+		button:
+		{
+			confirm: 'OK',
+		}
 	};
 
 	// Find all forms in document and initialize form functions
