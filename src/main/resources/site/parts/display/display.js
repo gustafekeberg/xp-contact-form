@@ -6,7 +6,7 @@ exports.get = function(request) {
 	var component = portalLib.getComponent();
 	var config = component.config;
 	var selectedFormID = config.selectedForm;
-	var rendered_form = renderForm.get(request, selectedFormID);
+	var rendered_form = renderForm.get({request: request, formId: selectedFormID});
 	var title = config.title;
 	
 	if (title.display) // If we should display a heading for the form, find out what it should be
@@ -33,6 +33,6 @@ exports.post = function(request) {
 	var component = portalLib.getComponent();
 	var config = component.config;
 	var selectedFormID = config.selectedForm;
-	var rendered_form = renderForm.post(request, selectedFormID);
+	var rendered_form = renderForm.post({request: request, formId: selectedFormID});
 	return rendered_form;
 };

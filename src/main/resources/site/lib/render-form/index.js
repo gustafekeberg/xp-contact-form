@@ -5,24 +5,28 @@ var mailLib     = require('/lib/xp/mail');
 var utilDataLib = require('/lib/enonic/util/data');
 var i18nLib     = require('/lib/xp/i18n');
 
-exports.get = function(request, selectedFormID) {
-	return handleGet(request, selectedFormID);
+exports.get = function(o) {
+	return handleGet(o);
 };
 
-exports.post = function(request, selectedFormID) {
+exports.post = function(o) {
 
+	var request = o.request;
 	var body = JSON.parse(request.body);
 
 	if (body.ajax === true)
 	{
-		return handleAjax(request, selectedFormID);
+		return handleAjax(o);
 	}
 
 	else
-		return handlePost(request, selectedFormID);
+		return handlePost(o);
 };
 
-function handleGet(request, selectedFormID) {
+function handleGet(o) {
+
+	var request = o.request;
+	var selectedFormID = o.formId;
 	
 	// If no selected form ID, exit execution with undefined return
 	if (!selectedFormID)
@@ -119,24 +123,26 @@ function handleGet(request, selectedFormID) {
     	cotentType: 'text/html',
     	"pageContributions": {
     		"headEnd": [
-	    		style
+    		style
     		],
     		"bodyEnd": [
-	    		getFormDataJS,
-	    		getFormDataInit,
-	    		webshimJS,
-	    		webshimContributions,
+    		getFormDataJS,
+    		getFormDataInit,
+    		webshimJS,
+    		webshimContributions,
     		]
     	}
     };
 }
 
-function handlePost(request, selectedFormID) {
+function handlePost(o) {
 	log.warning('Post data not supported.');
 	return;
 }
 
-function handleAjax(request, selectedFormID) {
+function handleAjax(o) {
+	var request = o.request;
+	var selectedFormID = o.formId;
 	var component = contentLib.get({key: selectedFormID});
 	var config    = component.data;
 	var body      = JSON.parse(request.body);
