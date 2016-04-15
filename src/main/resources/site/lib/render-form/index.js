@@ -38,11 +38,9 @@ function handleGet(request, selectedFormID) {
 	var formActionURL     = portalLib.componentUrl({component: selectedComponent.path});
 	var language          = content.language;
 	var inputFields       = utilDataLib.forceArray(config.inputField);
-	
-	var title = selectedComponent.displayName;
+
 
 	var formAttributes = {
-		title: title,
 		id: selectedFormID,
 		action: formActionURL,
 		inputFields: inputFields,
