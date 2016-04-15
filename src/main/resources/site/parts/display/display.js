@@ -16,6 +16,6 @@ exports.get = function(request) {
 exports.post = function(request) {
 	var component = portalLib.getComponent();
 	var selectedForm = component.config.selectedForm;
-	return displayForm.post(request, selectedForm);
+	return renderForm.post(request, selectedForm);
 };
 
