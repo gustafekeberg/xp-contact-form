@@ -19,7 +19,7 @@
     "settings": {
         "print_output": false,
         "env_file": {
-            "Darwin": "./personal_env_file.sh"
+            "Darwin": "./enonic_xp_environment.sh"
         }
     }
 }
