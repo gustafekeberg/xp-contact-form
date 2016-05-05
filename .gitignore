@@ -4,3 +4,4 @@ build
 gradle
 *.sublime-workspace
 personal_env_file.sh
+enonic_xp_environment.sh
