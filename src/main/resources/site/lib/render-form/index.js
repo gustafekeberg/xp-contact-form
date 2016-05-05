@@ -2,7 +2,7 @@ var portalLib   = require('/lib/xp/portal');
 var contentLib  = require('/lib/xp/content');
 var thymeleaf   = require('/lib/xp/thymeleaf');
 var mailLib     = require('/lib/xp/mail');
-var utilDataLib = require('/lib/enonic/util/data');
+var utilLibData = require('/lib/enonic/util/data');
 var i18nLib     = require('/lib/xp/i18n');
 
 exports.get = function(o) {
@@ -31,8 +31,13 @@ function handleGet(o) {
 	// If no selected form ID, exit execution with undefined return
 	if (!selectedFormID)
 	{
-		log.warning('No form is selected.');
-		return;
+		var msg = 'No form is selected.';
+		log.warning(msg);
+		var body = "<h3>" + msg + "</h3>";
+		return {
+			body: body,
+	    	cotentType: 'text/html',
+		};
 	}
 	
 	var selectedComponent = contentLib.get({key: selectedFormID});
@@ -41,7 +46,7 @@ function handleGet(o) {
 	var siteConfig        = portalLib.getSiteConfig();
 	var formActionURL     = portalLib.componentUrl({component: selectedComponent.path});
 	var language          = content.language;
-	var inputFields       = utilDataLib.forceArray(config.inputField);
+	var inputFields       = utilLibData.forceArray(config.inputField);
 
 
 	var formAttributes = {
@@ -141,13 +146,13 @@ function handlePost(o) {
 }
 
 function handleAjax(o) {
-	var request = o.request;
-	var selectedFormID = o.formId;
-	var component = contentLib.get({key: selectedFormID});
-	var config    = component.data;
-	var body      = JSON.parse(request.body);
-	var data      = body.data;	
-	var responseTemplates  = utilDataLib.forceArray(config.response); // Get configured response-templates
+	var request           = o.request;
+	var selectedFormID    = o.formId;
+	var component         = contentLib.get({key: selectedFormID});
+	var config            = component.data;
+	var body              = JSON.parse(request.body);
+	var data              = body.data;	
+	var responseTemplates = utilLibData.forceArray(config.response); // Get configured response-templates
 
 	function processResponseFields(fieldObj){
 		// Replace placeholders in all keys of response object, return processed object.
