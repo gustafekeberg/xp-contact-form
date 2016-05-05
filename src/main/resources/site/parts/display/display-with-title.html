@@ -1,12 +1,12 @@
-<section>
-	<header>
-		<div data-th-switch="${title.heading_level}" data-th-remove="tag">
-			<h1 data-th-case="'1'" data-th-text="${title.text}" />
-			<h2 data-th-case="'2'" data-th-text="${title.text}" />
-			<h3 data-th-case="'3'" data-th-text="${title.text}" />
-			<h4 data-th-case="'4'" data-th-text="${title.text}" />
-			<h5 data-th-case="'5'" data-th-text="${title.text}" />
-			<h6 data-th-case="'6'" data-th-text="${title.text}" />
+<section data-th-id="${container_id}">
+	<header data-th-if="${title_text}">
+		<div data-th-switch="${title_heading}" data-th-remove="tag">
+			<h1 data-th-case="'1'" data-th-text="${title_text}" />
+			<h2 data-th-case="'2'" data-th-text="${title_text}" />
+			<h3 data-th-case="'3'" data-th-text="${title_text}" />
+			<h4 data-th-case="'4'" data-th-text="${title_text}" />
+			<h5 data-th-case="'5'" data-th-text="${title_text}" />
+			<h6 data-th-case="'6'" data-th-text="${title_text}" />
 		</div>
 	</header>
 	<div data-th-remove="tag" data-th-utext="${form_body}" />

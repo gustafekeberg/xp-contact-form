@@ -5,7 +5,6 @@
 		<field-set name="Config">
 			<label>Config</label>
 			<items>
-
 				<item-set name="title">
 					<label>Title</label>
 					<occurrences minimum="0" maximum="1" />
@@ -29,9 +28,14 @@
 								<option value="5">H5</option>
 								<option value="6">H6</option>
 							</config>
+							<default>3</default>
 						</input>
 					</items>
 				</item-set>
+				<input type="TextLine" name="container_id">
+					<label>Optional ID to use on form container</label>
+					<occurrences minimum="0" maximum="1"/>
+				</input>
 				<input type="ContentSelector" name="selectedForm">
 					<label>Select form</label>
 					<occurrences minimum="1" maximum="1"/>
