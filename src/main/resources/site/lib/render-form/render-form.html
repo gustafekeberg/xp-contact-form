@@ -1,85 +1,69 @@
-
 <div data-th-id="${formAttributes.id}" class="easy-contact-form">
-	<!-- <style data-th-if="${siteConfig.customCSS.CSS}" data-th-utext="${siteConfig.customCSS.CSS}" /> -->
-	<!-- <style data-th-if="${config.customCSS.CSS}" data-th-utext="${config.customCSS.CSS}" /> -->
+	<!-- <style data-th-if="${siteConfig.customCSS.CSS}" data-th-utext="${siteConfig.customCSS.CSS}" ></style> -->
+	<!-- <style data-th-if="${config.customCSS.CSS}" data-th-utext="${config.customCSS.CSS}" ></style> -->
 	<form data-th-action="${formAttributes.action}" class="ws-validate">
 		<div data-th-each="component : ${formComponents}" data-th-remove="tag">
-
 			<div data-th-if="${component.type} == 'layout'" class="row">
-
 				<div data-th-switch="${component.name}" data-th-remove="tag">
 					<div data-th-case="'Contact Form Layout: 1 column'" data-th-remove="tag">
 						<fieldset data-th-each="column, iterStat : ${component.regions}" data-th-class="col-xs-12">
-							<legend data-th-if="${component.config.legends.text}" data-th-text="${component.config.legends.text}" />
-
+							<legend data-th-if="${component.config.legends.text}" data-th-text="${component.config.legends.text}" ></legend>
 							<div data-th-remove="tag" data-th-fragment="regionFragment">
 								<div data-th-each="field : ${column.value.components}" data-th-remove="tag">
-
 									<div data-th-switch="${field.name}" data-th-remove="tag">
 										
 										<div data-th-class="${field.config.required}? (${config.show_required_markers}? 'form-group required' : 'form-group') : 'form-group'">
-
 											<div data-th-if="${field.config.identifier}" data-th-remove="tag">
 												<div data-th-case="'Contact Form Input: Field'" data-th-remove="tag">
-													<div data-th-if="${field.config.label}" data-th-include="::labelFragment (fieldConfig=${field.config})" data-th-remove="tag" />
-													<input class="form-control" data-th-attr="id=${formAttributes.id + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', type=${field.config.type}" />
+													<div data-th-if="${field.config.label}" data-th-include="::labelFragment (fieldConfig=${field.config})" data-th-remove="tag" ></div>
+													<input class="form-control" data-th-attr="id=${formAttributes.id + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', type=${field.config.type}" ></input>
 												</div>
 												
 												<div data-th-case="'Contact Form Input: Text Area'" data-th-remove="tag">
-													<div data-th-if="${field.config.label}" data-th-include="::labelFragment (fieldConfig=${field.config})" data-th-remove="tag" />
+													<div data-th-if="${field.config.label}" data-th-include="::labelFragment (fieldConfig=${field.config})" data-th-remove="tag" ></div>
 													<textarea data-th-class="${field.config.height_class}? 'form-control ' + ${field.config.height_class} : 'form-control'" data-th-attr="id=${formAttributes.id + '_' + field.config.identifier}, name=${field.config.identifier}, placeholder=${field.config.placeholder}, required=${field.config.required}? 'required', style=${field.config.height_class == 'textarea-height-custom'}? 'height: ' + ${field.config.height_value}"></textarea>
 												</div>
-
 											</div>
 											
 											<div data-th-case="'Contact Form: Helper Text'">
 												<div data-th-class="${field.config.show_required_marker}? 'help-block required-marker' : 'help-block'">
-													<div data-th-unless="${field.config.custom_helper_text}" data-th-utext="${portal.localize({'_key=required_field.helper_text','_locale=' + language})}" data-th-remove="tag" />
-													<div data-th-if="${field.config.custom_helper_text}" data-th-utext="${field.config.custom_helper_text}" data-th-remove="tag" />
+													<div data-th-unless="${field.config.custom_helper_text}" data-th-utext="${portal.localize({'_key=required_field.helper_text','_locale=' + language})}" data-th-remove="tag" ></div>
+													<div data-th-if="${field.config.custom_helper_text}" data-th-utext="${field.config.custom_helper_text}" data-th-remove="tag" ></div>
 												</div>
 											</div>
 										</div>
-
-									</div>	
+									</div>
 								</div>
 							</div>
-
 						</fieldset>
 					</div>
-
 					<div data-th-case="'Contact Form Layout: 2 columns'" data-th-remove="tag">
 						<fieldset data-th-each="column, iterStat : ${component.regions}" data-th-class="col-md-6">
-							<legend data-th-if="${component.config.legends[iterStat.index].text}" data-th-text="${component.config.legends[iterStat.index].text}" />
-
-							<div data-th-include="::regionFragment" data-th-remove="tag" />
+							<legend data-th-if="${component.config.legends[iterStat.index].text}" data-th-text="${component.config.legends[iterStat.index].text}" ></legend>
+							<div data-th-include="::regionFragment" data-th-remove="tag" ></div>
 						</fieldset>
 					</div>
-
 					<div data-th-case="'Contact Form Layout: 3 columns'" data-th-remove="tag">
 						<fieldset data-th-each="column, iterStat : ${component.regions}" data-th-class="col-md-4">
-							<legend data-th-if="${component.config.legends[iterStat.index].text}" data-th-text="${component.config.legends[iterStat.index].text}" />
-							<div data-th-include="::regionFragment" data-th-remove="tag" />
+							<legend data-th-if="${component.config.legends[iterStat.index].text}" data-th-text="${component.config.legends[iterStat.index].text}" ></legend>
+							<div data-th-include="::regionFragment" data-th-remove="tag" ></div>
 						</fieldset>
 					</div>
 				</div>
-
-			</div>	
+			</div>
 		</div>
 		<div class="row">
 			<fieldset class="col-xs-12">
 				<div class="form-group">
-					<button class="btn btn-success center-block" data-th-text="${portal.localize({'_key=button.submit','_locale=' + language})}" />
+					<button class="btn btn-success center-block" data-th-text="${portal.localize({'_key=button.submit','_locale=' + language})}" ></button>
 				</div>
 			</fieldset>
 		</div>
 	</form>
-
 	<div class="status-message fade">
-		<div class="container" />
+		<div class="container" ></div>
 	</div>
-
 </div>
-
 <div data-th-fragment="labelFragment (fieldConfig)" data-th-remove="all">
-	<label data-th-class="${fieldConfig.hide_label}? 'control-label sr-only' : 'control-label'" data-th-attr="for=${formAttributes.id + '_' + fieldConfig.identifier}" data-th-text="${field.config.label}" />
+	<label data-th-class="${fieldConfig.hide_label}? 'control-label sr-only' : 'control-label'" data-th-attr="for=${formAttributes.id + '_' + fieldConfig.identifier}" data-th-text="${field.config.label}" ></label>
 </div>
