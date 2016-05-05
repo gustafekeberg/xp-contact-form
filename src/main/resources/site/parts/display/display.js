@@ -9,9 +9,14 @@ exports.get = function(request) {
 	var selectedFormID = config.selectedForm;
 	var rendered_form = renderForm.get({request: request, formId: selectedFormID});
 	var title = config.title;
-	var title_display = title.display;
-	var title_text = title.text;
-	var title_heading = title.heading_level;
+	var title_display, title_text, title_heading;
+
+	if ( title )
+	{
+		title_display = title.display;
+		title_text = title.text;
+		title_heading = title.heading_level;
+	}
 	var container_id = config.container_id;
 	
 	if (!title_text && title_display) // If title should be displayed and no custom text is set, use displayName for form
