@@ -57,6 +57,17 @@ function handleGet(o) {
 
 	// Prepare phrases for status messages
 	var customPhrases = siteConfig.phrases;
+	if (!customPhrases)
+		customPhrases = {
+			sending: { title: '', message: ''},
+			success: { title: '', message: ''},
+			danger: { title: '', message: ''},
+			warning: { title: '', message: ''},
+			confirm: '',
+			submit: '',
+			required_field: ''
+		};
+
 	var phrases = {
 		sending: {
 			title: customPhrases.sending.title ? customPhrases.sending.title : localize('messages.sending_title'),
