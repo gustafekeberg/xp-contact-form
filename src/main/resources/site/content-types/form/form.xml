@@ -24,10 +24,12 @@
 						<input type="CheckBox" name="show_editor">
 							<label>Display form editor?</label>
 							<occurrences minimum="0" maximum="1" />
+							<default>checked</default>
 						</input>
 						<input type="CheckBox" name="show_preview">
 							<label>Display form preview?</label>
 							<occurrences minimum="0" maximum="1" />
+							<default>checked</default>
 						</input>
 						<input type="CheckBox" name="show_help">
 							<label>Display form editor help?</label>
