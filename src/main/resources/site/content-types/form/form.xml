@@ -7,13 +7,6 @@
 		<field-set name="Config">
 			<label>Config</label>
 			<items>
-				<input type="TextLine" name="id">
-					<label>Form ID</label>
-					<occurrences minimum="0" maximum="1"/>
-					<config>
-						<regexp>[A-Za-z-_]*</regexp>
-					</config>
-				</input>
 				<input type="CheckBox" name="show_required_markers">
 					<label>Show markers on required fields</label>
 					<occurrences minimum="0" maximum="1" />
