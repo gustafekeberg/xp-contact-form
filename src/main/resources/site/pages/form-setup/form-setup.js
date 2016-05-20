@@ -26,7 +26,12 @@ exports.get = function(req) {
 	var render_form_preview;
 	if (data.show_preview) {
 		var renderForm = require('/lib/render-form');
-		render_form_preview = renderForm.get({request: req, formId: content._id}).body;
+		try {
+			render_form_preview = renderForm.get({request: req, formId: content._id}).body;
+		}
+		catch (error) {
+			render_form_preview = "<p>" + error + "</p>";
+		}
 	}
 
 	var mainRegion = content.page.regions.main;
